@@ -1,1 +1,2 @@
-# studia-projekt-zespolowy-backend
+# Studia - Projkt Zespolowy - Backend
+## Projekt - System do rezerwacji wycieczek
