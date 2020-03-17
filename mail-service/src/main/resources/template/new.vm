@@ -1,0 +1,4 @@
+<body>
+<p>Hi, ${params.firstName} ${params.lastName}!</p>
+<p>New task ${params.id}.</p>
+</body>
