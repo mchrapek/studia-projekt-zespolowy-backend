@@ -31,8 +31,9 @@ class CreateTokenIT extends Specification {
 
     def "send correct credentials should return token"() {
         given:
-        repository.save(new AppUser(UUID.randomUUID().toString(), "marek@marek.pl", encoder.encode("12345"), "USER"))
-        def userCredentials = new UserCredentialsRequest("marek@marek.pl", "12345")
+        repository.save(new AppUser(UUID.randomUUID().toString(), "james@bond.pl",
+                encoder.encode("12345"), "James", "Bond", "USER"))
+        def userCredentials = new UserCredentialsRequest("james@bond.pl", "12345")
         def json = new ObjectMapper().writeValueAsString(userCredentials)
 
         when:
@@ -48,7 +49,8 @@ class CreateTokenIT extends Specification {
 
     def "send incorrect credentials should return 400 status code without token"() {
         given:
-        repository.save(new AppUser(UUID.randomUUID().toString(), "marek@marek.pl", encoder.encode("12345"), "USER"))
+        repository.save(new AppUser(UUID.randomUUID().toString(), "james@bond.com",
+                encoder.encode("12345"), "James", "Bond", "USER"))
         def userCredentials = new UserCredentialsRequest("no@exists.pl", "12345")
         def json = new ObjectMapper().writeValueAsString(userCredentials)
 

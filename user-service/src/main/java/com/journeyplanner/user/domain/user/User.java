@@ -1,5 +1,6 @@
-package com.journeyplanner.auth.user.model;
+package com.journeyplanner.user.domain.user;
 
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 import org.springframework.data.annotation.Id;
@@ -7,8 +8,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Value
+@Builder
 @Document(collection = "appUser")
-public class AppUser {
+class User {
 
     @Id
     @NonNull
