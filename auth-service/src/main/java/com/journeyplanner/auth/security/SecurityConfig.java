@@ -1,8 +1,8 @@
 package com.journeyplanner.auth.security;
 
-import com.journeyplanner.auth.security.jwt.JwtProperties;
 import com.journeyplanner.auth.security.jwt.JwtTokenProvider;
 import com.journeyplanner.auth.user.AppUserService;
+import com.journeyplanner.common.config.security.JwtProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

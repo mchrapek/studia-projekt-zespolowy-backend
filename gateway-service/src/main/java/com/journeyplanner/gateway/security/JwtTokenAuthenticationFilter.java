@@ -1,5 +1,6 @@
-package pl.journeyplanner.gatewayservice.security;
+package com.journeyplanner.gateway.security;
 
+import com.journeyplanner.common.config.security.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -42,8 +42,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 @SuppressWarnings("unchecked")
                 List<String> authorities = (List<String>) claims.get("authorities");
 
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null ,
-                                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null,
+                        authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }

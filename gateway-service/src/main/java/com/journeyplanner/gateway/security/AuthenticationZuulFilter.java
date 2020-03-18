@@ -1,4 +1,4 @@
-package pl.journeyplanner.gatewayservice.security;
+package com.journeyplanner.gateway.security;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;

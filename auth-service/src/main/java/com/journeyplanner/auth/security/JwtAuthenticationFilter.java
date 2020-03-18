@@ -2,10 +2,10 @@ package com.journeyplanner.auth.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.journeyplanner.auth.security.dto.UserCredentialsRequest;
-import com.journeyplanner.auth.security.jwt.JwtProperties;
 import com.journeyplanner.auth.security.jwt.JwtTokenProvider;
 import com.journeyplanner.auth.user.AppUserService;
 import com.journeyplanner.auth.user.model.AppUser;
+import com.journeyplanner.common.config.security.JwtProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Optional;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

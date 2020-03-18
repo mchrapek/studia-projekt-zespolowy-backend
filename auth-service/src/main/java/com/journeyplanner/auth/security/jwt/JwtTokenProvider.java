@@ -1,15 +1,12 @@
 package com.journeyplanner.auth.security.jwt;
 
-import com.journeyplanner.auth.security.jwt.JwtProperties;
 import com.journeyplanner.auth.user.model.AppUser;
+import com.journeyplanner.common.config.security.JwtProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class JwtTokenProvider {

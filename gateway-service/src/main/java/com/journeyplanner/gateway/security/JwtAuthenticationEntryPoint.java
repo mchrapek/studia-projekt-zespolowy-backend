@@ -1,4 +1,4 @@
-package pl.journeyplanner.gatewayservice.security;
+package com.journeyplanner.gateway.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

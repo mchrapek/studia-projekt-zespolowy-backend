@@ -1,5 +1,7 @@
-package pl.journeyplanner.gatewayservice.security;
+package com.journeyplanner.gateway.security;
 
+import com.journeyplanner.common.config.paths.Paths;
+import com.journeyplanner.common.config.security.JwtProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,13 +28,17 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(new JwtTokenAuthenticationFilter(jwtProperties), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+
                 .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
-                .antMatchers(HttpMethod.POST, "/user/register").permitAll()
-                .antMatchers(HttpMethod.POST, "/user/reset").permitAll()
-                .antMatchers(HttpMethod.GET, "/user/info").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/user/block").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/user/block").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, Paths.POST_PERMIT_ALL_PATHS).permitAll()
+
+                .antMatchers(HttpMethod.GET, Paths.GET_USER_PATHS).hasRole("USER")
+                .antMatchers(HttpMethod.POST, Paths.POST_USER_PATHS).hasRole("USER")
+
+                .antMatchers(HttpMethod.GET, Paths.GET_ADMIN_PATHS).hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, Paths.POST_ADMIN_PATHS).hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, Paths.DELETE_ADMIN_PATHS).hasRole("ADMIN")
+
                 .anyRequest().authenticated();
     }
 }

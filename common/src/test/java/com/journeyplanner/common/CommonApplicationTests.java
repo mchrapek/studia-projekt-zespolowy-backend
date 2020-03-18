@@ -1,12 +1,13 @@
-package pl.journeyplanner.gatewayservice;
+package com.journeyplanner.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GatewayServiceApplicationTests {
+class CommonApplicationTests {
 
     @Test
     void contextLoads() {
     }
+
 }
