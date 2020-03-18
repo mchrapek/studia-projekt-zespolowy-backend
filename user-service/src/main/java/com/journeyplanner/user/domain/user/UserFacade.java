@@ -2,9 +2,7 @@ package com.journeyplanner.user.domain.user;
 
 import com.journeyplanner.user.domain.exceptions.UserWithEmailAlreadyExists;
 import com.journeyplanner.user.domain.password.PasswordFacade;
-import com.journeyplanner.user.infrastructure.request.CreateUserRequest;
-import com.journeyplanner.user.infrastructure.request.GenerateResetPasswordLinkRequest;
-import com.journeyplanner.user.infrastructure.request.ResetPasswordRequest;
+import com.journeyplanner.user.infrastructure.request.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,5 +33,13 @@ public class UserFacade {
     public void changePassword(final ResetPasswordRequest request) {
         passwordFacade.validateToken(request.getToken(), request.getEmail());
         repository.updatePassword(request.getEmail(), passwordFacade.encodePassword(request.getNewPassword()));
+    }
+
+    public void blockUser(final AddUserToBlacklistRequest request) {
+        repository.changeIsBlacklisted(request.getEmail(), Boolean.TRUE);
+    }
+
+    public void unblockedUser(final RemoveUserFromBlacklistRequest request) {
+        repository.changeIsBlacklisted(request.getEmail(), Boolean.FALSE);
     }
 }

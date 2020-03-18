@@ -41,4 +41,9 @@ class UserRepositoryInMemory implements UserRepository {
                 .build();
         db.put(user.getId(), updatedUser);
     }
+
+    @Override
+    public void changeIsBlacklisted(String email, boolean isBlocked) {
+        throw new UnsupportedOperationException();
+    }
 }

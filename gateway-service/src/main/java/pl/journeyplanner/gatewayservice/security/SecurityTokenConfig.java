@@ -30,6 +30,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/user/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/reset").permitAll()
                 .antMatchers(HttpMethod.GET, "/user/info").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/user/block").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/user/block").hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
 }

@@ -17,7 +17,18 @@ class UserCustomRepositoryImpl implements UserCustomRepository {
         query.addCriteria(Criteria.where("email").is(email));
 
         Update update = new Update();
-        update.set("password", Boolean.FALSE);
+        update.set("password", password);
+
+        mongoTemplate.updateFirst(query, update, User.class);
+    }
+
+    @Override
+    public void changeIsBlacklisted(final String email, final boolean isBlocked) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(email));
+
+        Update update = new Update();
+        update.set("isBlocked", isBlocked);
 
         mongoTemplate.updateFirst(query, update, User.class);
     }

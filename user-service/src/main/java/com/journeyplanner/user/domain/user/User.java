@@ -31,4 +31,7 @@ class User {
 
     @NonNull
     String role;
+
+    @NonNull
+    boolean isBlocked;
 }
