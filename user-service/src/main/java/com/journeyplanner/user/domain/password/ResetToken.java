@@ -1,4 +1,4 @@
-package com.journeyplanner.user.domain.resettoken;
+package com.journeyplanner.user.domain.password;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -15,8 +15,6 @@ class ResetToken {
     @NonNull String token;
 
     @NonNull String email;
-
-    @NonNull String userId;
 
     @NonNull boolean active;
 }

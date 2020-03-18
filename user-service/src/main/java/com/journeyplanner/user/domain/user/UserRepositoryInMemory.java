@@ -1,19 +1,44 @@
 package com.journeyplanner.user.domain.user;
 
+import com.journeyplanner.user.domain.exceptions.ResourceNotFound;
+
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 class UserRepositoryInMemory implements UserRepository {
 
-    private ConcurrentHashMap<String, User> store = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, User> db = new ConcurrentHashMap<>();
 
     @Override
     public User save(User user) {
-        return null;
+        return db.put(user.getId(), user);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        return db.values()
+                .stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst();
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return findByEmail(email).isPresent();
+    }
+
+    @Override
+    public void updatePassword(String email, String password) {
+        User user = findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFound("Cannot found user with this email"));
+        User updatedUser = User.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .secondName(user.getSecondName())
+                .role(user.getRole())
+                .password(password)
+                .build();
+        db.put(user.getId(), updatedUser);
     }
 }
