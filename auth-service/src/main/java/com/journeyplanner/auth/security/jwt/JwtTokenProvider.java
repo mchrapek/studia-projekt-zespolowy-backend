@@ -30,8 +30,8 @@ public class JwtTokenProvider {
         claims.put("id", UUID.randomUUID().toString());
 
         return Jwts.builder()
-                .setSubject(auth.getName())
                 .setClaims(claims)
+                .setSubject(auth.getName())
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtProperties.getExpirationTime() * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret().getBytes())
