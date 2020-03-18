@@ -2,6 +2,7 @@ package com.journeyplanner.user.domain.user;
 
 import com.journeyplanner.user.domain.exceptions.ResourceNotFound;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,6 +26,11 @@ class UserRepositoryInMemory implements UserRepository {
     @Override
     public boolean existsByEmail(String email) {
         return findByEmail(email).isPresent();
+    }
+
+    @Override
+    public List<User> findAll() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
