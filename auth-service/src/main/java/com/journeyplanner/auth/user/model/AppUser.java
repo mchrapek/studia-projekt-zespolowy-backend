@@ -29,4 +29,7 @@ public class AppUser {
 
     @NonNull
     String role;
+
+    @NonNull
+    boolean isBlocked;
 }

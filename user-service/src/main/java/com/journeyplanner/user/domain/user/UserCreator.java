@@ -14,6 +14,7 @@ class UserCreator {
                 .secondName(request.getSecondName())
                 .password(encodedPassword)
                 .role(UserRole.USER.getRoleName())
+                .isBlocked(Boolean.FALSE)
                 .build();
     }
 }

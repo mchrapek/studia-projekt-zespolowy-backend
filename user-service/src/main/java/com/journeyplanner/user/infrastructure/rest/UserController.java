@@ -1,9 +1,7 @@
 package com.journeyplanner.user.infrastructure.rest;
 
 import com.journeyplanner.user.domain.user.UserFacade;
-import com.journeyplanner.user.infrastructure.request.CreateUserRequest;
-import com.journeyplanner.user.infrastructure.request.GenerateResetPasswordLinkRequest;
-import com.journeyplanner.user.infrastructure.request.ResetPasswordRequest;
+import com.journeyplanner.user.infrastructure.request.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,7 +37,23 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
     public void resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
-        // TODO handle rest exception
+
         userFacade.changePassword(request);
+    }
+
+    @PostMapping("block")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = "*")
+    public void addUserToBlacklist(@RequestBody @Valid AddUserToBlacklistRequest request) {
+
+        userFacade.blockUser(request);
+    }
+
+    @DeleteMapping("block")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = "*")
+    public void removeUserFromBlacklist(@RequestBody @Valid RemoveUserFromBlacklistRequest request) {
+
+        userFacade.unblockedUser(request);
     }
 }
