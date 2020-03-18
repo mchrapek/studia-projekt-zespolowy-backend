@@ -1,7 +1,7 @@
 package com.journeyplanner.auth.it
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.journeyplanner.auth.security.dao.UserCredentialsRequest
+import com.journeyplanner.auth.security.dto.UserCredentialsRequest
 import com.journeyplanner.auth.user.AppUserRepository
 import com.journeyplanner.auth.user.model.AppUser
 import org.springframework.beans.factory.annotation.Autowired

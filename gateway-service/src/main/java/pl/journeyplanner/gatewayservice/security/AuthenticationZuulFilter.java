@@ -27,8 +27,10 @@ public class AuthenticationZuulFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            RequestContext ctx = RequestContext.getCurrentContext();
-            ctx.addZuulRequestHeader("x-username", authentication.getPrincipal().toString());
+            if (!authentication.getPrincipal().toString().equals("anonymousUser")) {
+                RequestContext ctx = RequestContext.getCurrentContext();
+                ctx.addZuulRequestHeader("x-username", authentication.getPrincipal().toString());
+            }
         }
         return null;
     }
