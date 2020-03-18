@@ -5,6 +5,8 @@ import com.journeyplanner.user.domain.password.PasswordFacade;
 import com.journeyplanner.user.infrastructure.request.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import static java.text.MessageFormat.format;
 
@@ -41,5 +43,9 @@ public class UserFacade {
 
     public void unblockedUser(final RemoveUserFromBlacklistRequest request) {
         repository.changeIsBlacklisted(request.getEmail(), Boolean.FALSE);
+    }
+
+    public Page<UserDto> findAllUsers(Pageable pageable) {
+        return repository.findAll(pageable).map(UserDto::from);
     }
 }

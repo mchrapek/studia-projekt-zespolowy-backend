@@ -2,9 +2,16 @@ package com.journeyplanner.user.infrastructure.rest;
 
 import com.journeyplanner.user.domain.user.UserFacade;
 import com.journeyplanner.user.infrastructure.request.*;
+import com.journeyplanner.user.domain.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -55,5 +62,14 @@ public class UserController {
     public void removeUserFromBlacklist(@RequestBody @Valid RemoveUserFromBlacklistRequest request) {
 
         userFacade.unblockedUser(request);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Page<UserDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
+            @SortDefault(sort = "email", direction = Sort.Direction.DESC)) Pageable pageable) {
+
+        return ResponseEntity.ok(userFacade.findAllUsers(pageable));
     }
 }
