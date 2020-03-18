@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Value
 @Builder
-public class ResetPasswordLinkRequest {
+public class GenerateResetPasswordLinkRequest {
 
     @NotNull(message = "Email value must not be empty")
     @Email(message = "Email should be valid")

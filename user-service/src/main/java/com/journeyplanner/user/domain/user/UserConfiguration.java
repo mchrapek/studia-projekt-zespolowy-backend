@@ -1,5 +1,6 @@
 package com.journeyplanner.user.domain.user;
 
+import com.journeyplanner.user.domain.password.PasswordFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 class UserConfiguration {
 
     @Bean
-    UserFacade userFacade(UserRepository userRepository) {
-        return new UserFacade(userRepository, new UserCreator());
+    UserFacade userFacade(UserRepository userRepository, PasswordFacade passwordFacade) {
+        return new UserFacade(userRepository, new UserCreator(), passwordFacade);
     }
 }
