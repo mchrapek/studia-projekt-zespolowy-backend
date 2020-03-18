@@ -24,36 +24,27 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Check header
         String header = request.getHeader(jwtProperties.getHeader());
-
         if (header == null || !header.startsWith(jwtProperties.getPrefix())) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Get token from header
         String token = header.replace(jwtProperties.getPrefix(), "").trim();
-
         try {
-            // Parse token
             Claims claims = Jwts.parser()
                     .setSigningKey(jwtProperties.getSecret().getBytes())
                     .parseClaimsJws(token)
                     .getBody();
-            // Get username
             String username = claims.getSubject();
 
             if (username != null) {
-                // Get roles
                 @SuppressWarnings("unchecked")
                 List<String> authorities = (List<String>) claims.get("authorities");
 
-                // Create auth object
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null ,
                                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
-                // Authenticate user
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (Exception e) {

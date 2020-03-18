@@ -1,4 +1,4 @@
-package com.journeyplanner.auth.security.dao;
+package com.journeyplanner.auth.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

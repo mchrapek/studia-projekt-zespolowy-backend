@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.journeyplanner.auth.infrastructure",
         "com.journeyplanner.auth.security",
         "com.journeyplanner.auth.user"
 })

@@ -2,6 +2,7 @@ package com.journeyplanner.auth.security;
 
 import com.journeyplanner.auth.security.jwt.JwtProperties;
 import com.journeyplanner.auth.security.jwt.JwtTokenProvider;
+import com.journeyplanner.auth.user.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtProperties jwtProperties;
     private final UserDetailsService userDetailsService;
+    private final AppUserService appUserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -31,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtProperties, jwtTokenProvider))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtProperties, jwtTokenProvider, appUserService))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .anyRequest().authenticated();
