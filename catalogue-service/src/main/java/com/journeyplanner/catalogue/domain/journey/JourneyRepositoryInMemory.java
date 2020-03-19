@@ -25,4 +25,9 @@ class JourneyRepositoryInMemory implements JourneyRepository {
     public Optional<Journey> findById(String id) {
         return Optional.empty();
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return false;
+    }
 }

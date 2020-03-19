@@ -7,9 +7,12 @@ public class Paths {
     };
 
     public final static String[] POST_PERMIT_ALL_PATHS = {
-            "/catalogue",
             "/user/register",
             "/user/reset"
+    };
+
+    public final static String[] PUT_PERMIT_ALL_PATHS = {
+
     };
 
     public final static String[] GET_USER_PATHS = {
@@ -25,7 +28,12 @@ public class Paths {
     };
 
     public final static String[] POST_ADMIN_PATHS = {
+            "/catalogue",
             "/user/block"
+    };
+
+    public final static String[] PUT_ADMIN_PATHS = {
+            "/catalogue"
     };
 
     public final static String[] DELETE_ADMIN_PATHS = {

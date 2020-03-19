@@ -32,12 +32,14 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
                 .antMatchers(HttpMethod.GET, Paths.GET_PERMIT_ALL_PATHS).permitAll()
                 .antMatchers(HttpMethod.POST, Paths.POST_PERMIT_ALL_PATHS).permitAll()
+                .antMatchers(HttpMethod.PUT, Paths.PUT_PERMIT_ALL_PATHS).permitAll()
 
                 .antMatchers(HttpMethod.GET, Paths.GET_USER_PATHS).hasRole("USER")
                 .antMatchers(HttpMethod.POST, Paths.POST_USER_PATHS).hasRole("USER")
 
                 .antMatchers(HttpMethod.GET, Paths.GET_ADMIN_PATHS).hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, Paths.POST_ADMIN_PATHS).hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, Paths.PUT_ADMIN_PATHS).hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, Paths.DELETE_ADMIN_PATHS).hasRole("ADMIN")
 
                 .anyRequest().authenticated();

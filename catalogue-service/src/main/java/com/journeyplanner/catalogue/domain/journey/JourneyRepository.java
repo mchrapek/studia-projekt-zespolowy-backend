@@ -14,4 +14,6 @@ interface JourneyRepository extends Repository<Journey, String> {
     Journey save(Journey journey);
 
     Optional<Journey> findById(String id);
+
+    boolean existsById(String id);
 }
