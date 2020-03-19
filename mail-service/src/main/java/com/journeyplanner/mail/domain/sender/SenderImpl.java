@@ -3,15 +3,19 @@ package com.journeyplanner.mail.domain.sender;
 import com.journeyplanner.mail.domain.Mail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.stereotype.Service;
 
 import static java.text.MessageFormat.format;
 
+@Service
 @Slf4j
+@Profile("email")
 class SenderImpl implements Sender {
 
     private final String subject;
