@@ -15,9 +15,6 @@ import java.util.Date;
 @Builder
 public class CreateJourneyRequest {
 
-    @NotNull(message = "Id value must not be empty")
-    String id;
-
     @NotNull(message = "Name value must not be empty")
     @Size(min = 5, max = 80, message = "Name must be between 5 - 80 signs")
     String name;

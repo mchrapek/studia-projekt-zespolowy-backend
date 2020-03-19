@@ -1,14 +1,16 @@
 package com.journeyplanner.catalogue.domain.journey;
 
+import com.journeyplanner.catalogue.exceptions.ResourcesNotFound;
 import com.journeyplanner.catalogue.infrastructure.rest.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.rest.request.UpdateJourneyRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.Instant;
+
+import static java.text.MessageFormat.format;
 
 @Slf4j
 @AllArgsConstructor
@@ -28,6 +30,11 @@ public class JourneyFacade {
     }
 
     public JourneyDto update(UpdateJourneyRequest request) {
-        throw new NotImplementedException();
+        if (!repository.existsById(request.getId())) {
+            throw new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId()));
+        }
+
+        Journey updatedJourney = repository.save(journeyUpdater.from(request));
+        return JourneyDto.from(updatedJourney);
     }
 }

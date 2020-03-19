@@ -1,5 +1,7 @@
 package com.journeyplanner.catalogue.infrastructure.rest.request;
 
+import lombok.Builder;
+import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMin;
@@ -9,7 +11,12 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Value
+@Builder
 public class UpdateJourneyRequest {
+
+    @NotNull(message = "Id value must not be empty")
+    String id;
 
     @NotNull(message = "Name value must not be empty")
     @Size(min = 5, max = 80, message = "Name must be between 5 - 80 signs")
