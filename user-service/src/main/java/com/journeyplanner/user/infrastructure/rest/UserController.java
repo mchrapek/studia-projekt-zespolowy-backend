@@ -64,7 +64,7 @@ public class UserController {
         userFacade.unblockedUser(request);
     }
 
-    @GetMapping
+    @GetMapping("all")
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
     public ResponseEntity<Page<UserDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
