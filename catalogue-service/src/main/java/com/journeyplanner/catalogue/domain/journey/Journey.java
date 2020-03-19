@@ -1,15 +1,16 @@
 package com.journeyplanner.catalogue.domain.journey;
 
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 @Value
+@Builder
 @Document(collection = "journey")
 class Journey {
 
@@ -18,32 +19,17 @@ class Journey {
 
     @NonNull String name;
 
+    @NonNull String country;
+
+    @NonNull String city;
+
     @NonNull String description;
 
-    @NonNull TransportType transportType;
+    @NonNull String transportType;
 
-    @NonNull BigInteger price;
-
-    @NonNull Accommodation accommodation;
-
-    @NonNull List<JourneyPlace> places;
+    @NonNull BigDecimal price;
 
     @NonNull Instant start;
 
     @NonNull Instant end;
-}
-
-@Value
-class JourneyPlace {
-
-    @NonNull String name;
-
-    @NonNull String country;
-
-    @NonNull String description;
-}
-
-enum TransportType {
-
-    BUS, PLAIN, TRAIN, OWN;
 }

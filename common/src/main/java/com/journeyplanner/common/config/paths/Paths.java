@@ -7,6 +7,7 @@ public class Paths {
     };
 
     public final static String[] POST_PERMIT_ALL_PATHS = {
+            "/catalogue",
             "/user/register",
             "/user/reset"
     };

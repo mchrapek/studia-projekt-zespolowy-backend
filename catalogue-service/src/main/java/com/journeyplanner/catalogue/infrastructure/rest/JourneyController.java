@@ -2,6 +2,8 @@ package com.journeyplanner.catalogue.infrastructure.rest;
 
 import com.journeyplanner.catalogue.domain.journey.JourneyDto;
 import com.journeyplanner.catalogue.domain.journey.JourneyFacade;
+import com.journeyplanner.catalogue.infrastructure.rest.request.CreateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.rest.request.UpdateJourneyRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping
 @Slf4j
@@ -22,11 +26,25 @@ public class JourneyController {
     private final JourneyFacade journeyFacade;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
     public ResponseEntity<Page<JourneyDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
             @SortDefault(sort = "start", direction = Sort.Direction.DESC)) Pageable pageable) {
 
         return ResponseEntity.ok(journeyFacade.getAll(pageable));
+    }
+
+    @PostMapping
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<JourneyDto> createJourney(@RequestBody @Valid CreateJourneyRequest request) {
+
+        return ResponseEntity.ok(journeyFacade.create(request));
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<JourneyDto> updateJourney(@RequestBody @Valid UpdateJourneyRequest request) {
+
+        return ResponseEntity.ok(journeyFacade.update(request));
     }
 }

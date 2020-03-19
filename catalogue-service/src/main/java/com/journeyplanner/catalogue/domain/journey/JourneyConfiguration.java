@@ -8,6 +8,6 @@ class JourneyConfiguration {
 
     @Bean
     JourneyFacade journeyFacade(JourneyRepository journeyRepository) {
-        return new JourneyFacade(journeyRepository);
+        return new JourneyFacade(journeyRepository, new JourneyCreator(), new JourneyUpdater());
     }
 }

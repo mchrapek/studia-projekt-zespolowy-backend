@@ -1,7 +1,7 @@
 package com.journeyplanner.user.domain.user;
 
 import com.journeyplanner.user.domain.password.PasswordFacade;
-import com.journeyplanner.user.infrastructure.output.MailSender;
+import com.journeyplanner.user.infrastructure.output.queue.MailSender;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
