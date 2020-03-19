@@ -14,9 +14,9 @@ import static java.text.MessageFormat.format;
 @AllArgsConstructor
 public class UserFacade {
 
-    private UserRepository repository;
-    private UserCreator userCreator;
-    private PasswordFacade passwordFacade;
+    private final UserRepository repository;
+    private final UserCreator userCreator;
+    private final PasswordFacade passwordFacade;
 
     public void createUser(final CreateUserRequest request) {
         if (repository.existsByEmail(request.getEmail())) {
@@ -32,20 +32,20 @@ public class UserFacade {
         passwordFacade.generateAndSendResetPasswordLinkWithToken(request.getEmail());
     }
 
-    public void changePassword(final ResetPasswordRequest request) {
+    public void resetPassword(final ResetPasswordRequest request) {
         passwordFacade.validateToken(request.getToken(), request.getEmail());
         repository.updatePassword(request.getEmail(), passwordFacade.encodePassword(request.getNewPassword()));
     }
 
-    public void blockUser(final AddUserToBlacklistRequest request) {
+    public void block(final AddUserToBlacklistRequest request) {
         repository.changeIsBlacklisted(request.getEmail(), Boolean.TRUE);
     }
 
-    public void unblockedUser(final RemoveUserFromBlacklistRequest request) {
+    public void unblock(final RemoveUserFromBlacklistRequest request) {
         repository.changeIsBlacklisted(request.getEmail(), Boolean.FALSE);
     }
 
-    public Page<UserDto> findAllUsers(Pageable pageable) {
+    public Page<UserDto> getAll(Pageable pageable) {
         return repository.findAll(pageable).map(UserDto::from);
     }
 }

@@ -17,7 +17,7 @@ public class JwtTokenProvider {
         long now = System.currentTimeMillis();
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", Collections.singletonList(appUser.getRole()));
+        claims.put("authorities", Collections.singletonList("ROLE_" + appUser.getRole()));
         claims.put("id", appUser.getId());
 
         return Jwts.builder()

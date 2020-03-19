@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 
-    private JwtProperties jwtProperties;
+    private final JwtProperties jwtProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,6 +30,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
+                .antMatchers(HttpMethod.GET, Paths.GET_PERMIT_ALL_PATHS).permitAll()
                 .antMatchers(HttpMethod.POST, Paths.POST_PERMIT_ALL_PATHS).permitAll()
 
                 .antMatchers(HttpMethod.GET, Paths.GET_USER_PATHS).hasRole("USER")
