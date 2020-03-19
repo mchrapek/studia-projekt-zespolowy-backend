@@ -1,8 +1,8 @@
-package com.journeyplanner.mail.domain.template;
+package com.journeyplanner.common.config.mail;
 
 public enum Template {
 
-    NEW("new.vm");
+    NEW_USER("new_user.vm");
 
     private final String path;
 

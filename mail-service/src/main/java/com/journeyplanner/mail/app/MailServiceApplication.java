@@ -9,7 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.journeyplanner.mail.domain"
+        "com.journeyplanner.mail.domain",
+        "com.journeyplanner.mail.infrastructure"
 })
 @EnableEurekaClient
 @EnableMongoRepositories(basePackages = {
