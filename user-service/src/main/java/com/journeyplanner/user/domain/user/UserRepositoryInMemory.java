@@ -38,6 +38,7 @@ class UserRepositoryInMemory implements UserRepository {
     public void updatePassword(String email, String password) {
         User user = findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFound("Cannot found user with this email"));
+
         User updatedUser = User.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -46,6 +47,7 @@ class UserRepositoryInMemory implements UserRepository {
                 .role(user.getRole())
                 .password(password)
                 .build();
+
         db.put(user.getId(), updatedUser);
     }
 
