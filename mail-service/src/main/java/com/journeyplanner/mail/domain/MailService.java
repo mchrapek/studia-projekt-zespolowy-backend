@@ -7,11 +7,11 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-class MailService {
+public class MailService {
 
-    private MailRepository repository;
+    private final MailRepository repository;
 
-    void createPendingMail(Mail mail) {
+    public void createPendingMail(Mail mail) {
         mail.setPendingStatus();
         repository.save(mail);
     }

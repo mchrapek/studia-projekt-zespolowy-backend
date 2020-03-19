@@ -1,12 +1,17 @@
 package com.journeyplanner.user.domain.user;
 
+import com.journeyplanner.common.config.events.SendMailEvent;
+import com.journeyplanner.common.config.mail.Template;
 import com.journeyplanner.user.domain.exceptions.UserWithEmailAlreadyExists;
 import com.journeyplanner.user.domain.password.PasswordFacade;
+import com.journeyplanner.user.infrastructure.output.MailSender;
 import com.journeyplanner.user.infrastructure.request.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.HashMap;
 
 import static java.text.MessageFormat.format;
 
@@ -16,6 +21,7 @@ public class UserFacade {
 
     private final UserRepository repository;
     private final UserCreator userCreator;
+    private final MailSender mailSender;
     private final PasswordFacade passwordFacade;
 
     public void createUser(final CreateUserRequest request) {
@@ -25,7 +31,15 @@ public class UserFacade {
 
         User userToSave = userCreator.from(request, passwordFacade.encodePassword(request.getPassword()));
         repository.save(userToSave);
-        // TODO send email
+
+        mailSender.publish(SendMailEvent.builder()
+                .to(userToSave.getEmail())
+                .templateName(Template.NEW_USER.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("firstName", userToSave.getFirstName());
+                    put("secondName", userToSave.getSecondName());
+                }})
+                .build());
     }
 
     public void sendResetPasswordToken(final GenerateResetPasswordLinkRequest request) {
