@@ -1,0 +1,132 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:4.0
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - main_network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 15672:15672
+    volumes:
+      - rabbitmq_log:/var/log/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - main_network
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025
+    networks:
+      - main_network
+
+  eureka:
+    container_name: eureka
+    build:
+      context: ./eureka-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 8761:8761
+    networks:
+      - main_network
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 8762:8762
+    networks:
+      - main_network
+
+  auth:
+    container_name: auth
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 9100:9100
+    networks:
+      - main_network
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+      - gateway
+
+  catalogue:
+    container_name: catalogue
+    build:
+      context: ./catalogue-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 9115:9115
+    networks:
+      - main_network
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+      - gateway
+
+  user:
+    container_name: user
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 9105:9105
+    networks:
+      - main_network
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+      - gateway
+
+  mail:
+    container_name: mail
+    build:
+      context: ./mail-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev,email"
+    ports:
+      - 9110:9110
+    networks:
+      - main_network
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+      - gateway
+
+volumes:
+  mongodb_data:
+  rabbitmq_log:
+  rabbitmq_data:
+
+networks:
+  main_network:

@@ -3,7 +3,6 @@ package com.journeyplanner.catalogue.domain.journey;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -13,7 +12,6 @@ import java.time.temporal.ChronoUnit;
 public class JourneyRepositoryConfiguration {
 
     @Bean
-    @Profile("dev")
     public CommandLineRunner init(JourneyRepository journeyRepository) {
         Journey journey = Journey.builder()
                 .id("57ee7379-eaa9-4029-9267-dd0eb6a51b2b")
