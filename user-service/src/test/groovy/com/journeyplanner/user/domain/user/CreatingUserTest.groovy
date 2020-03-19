@@ -2,7 +2,7 @@ package com.journeyplanner.user.domain.user
 
 import com.journeyplanner.user.domain.exceptions.UserWithEmailAlreadyExists
 import com.journeyplanner.user.domain.password.PasswordFacade
-import com.journeyplanner.user.infrastructure.request.CreateUserRequest
+import com.journeyplanner.user.infrastructure.input.request.CreateUserRequest
 import spock.lang.Specification
 
 class CreatingUserTest extends Specification {

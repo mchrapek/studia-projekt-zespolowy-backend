@@ -1,7 +1,5 @@
 package com.journeyplanner.user.domain.password;
 
-import com.journeyplanner.user.infrastructure.request.GenerateResetPasswordLinkRequest;
-
 import java.util.UUID;
 
 class ResetTokenCreator {

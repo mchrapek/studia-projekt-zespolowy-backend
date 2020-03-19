@@ -1,4 +1,4 @@
-package com.journeyplanner.user.infrastructure.output;
+package com.journeyplanner.user.infrastructure.output.queue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.journeyplanner.common.config.events.SendMailEvent;

@@ -1,8 +1,8 @@
-package com.journeyplanner.user.infrastructure.rest;
+package com.journeyplanner.user.infrastructure.input.rest;
 
 import com.journeyplanner.user.domain.user.UserDto;
 import com.journeyplanner.user.domain.user.UserFacade;
-import com.journeyplanner.user.infrastructure.request.*;
+import com.journeyplanner.user.infrastructure.input.request.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
