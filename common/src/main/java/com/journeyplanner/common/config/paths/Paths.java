@@ -3,7 +3,7 @@ package com.journeyplanner.common.config.paths;
 public class Paths {
 
     public final static String[] GET_PERMIT_ALL_PATHS = {
-
+            "/catalogue"
     };
 
     public final static String[] POST_PERMIT_ALL_PATHS = {
@@ -12,7 +12,7 @@ public class Paths {
     };
 
     public final static String[] GET_USER_PATHS = {
-            "/user/info"
+
     };
 
     public final static String[] POST_USER_PATHS = {

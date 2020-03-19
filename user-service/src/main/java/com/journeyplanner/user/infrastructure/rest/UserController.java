@@ -1,8 +1,8 @@
 package com.journeyplanner.user.infrastructure.rest;
 
+import com.journeyplanner.user.domain.user.UserDto;
 import com.journeyplanner.user.domain.user.UserFacade;
 import com.journeyplanner.user.infrastructure.request.*;
-import com.journeyplanner.user.domain.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,7 +45,7 @@ public class UserController {
     @CrossOrigin(origins = "*")
     public void resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
 
-        userFacade.changePassword(request);
+        userFacade.resetPassword(request);
     }
 
     @PostMapping("block")
@@ -53,7 +53,7 @@ public class UserController {
     @CrossOrigin(origins = "*")
     public void addUserToBlacklist(@RequestBody @Valid AddUserToBlacklistRequest request) {
 
-        userFacade.blockUser(request);
+        userFacade.block(request);
     }
 
     @DeleteMapping("block")
@@ -61,15 +61,15 @@ public class UserController {
     @CrossOrigin(origins = "*")
     public void removeUserFromBlacklist(@RequestBody @Valid RemoveUserFromBlacklistRequest request) {
 
-        userFacade.unblockedUser(request);
+        userFacade.unblock(request);
     }
 
-    @GetMapping("all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
     public ResponseEntity<Page<UserDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
             @SortDefault(sort = "email", direction = Sort.Direction.DESC)) Pageable pageable) {
 
-        return ResponseEntity.ok(userFacade.findAllUsers(pageable));
+        return ResponseEntity.ok(userFacade.getAll(pageable));
     }
 }
