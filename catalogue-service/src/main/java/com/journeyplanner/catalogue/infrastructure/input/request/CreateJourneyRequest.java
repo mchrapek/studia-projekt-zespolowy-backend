@@ -1,4 +1,4 @@
-package com.journeyplanner.catalogue.infrastructure.rest.request;
+package com.journeyplanner.catalogue.infrastructure.input.request;
 
 import lombok.Builder;
 import lombok.Value;

@@ -4,8 +4,7 @@ import com.journeyplanner.user.infrastructure.input.request.CreateUserRequest;
 
 import java.util.UUID;
 
-class
-UserCreator {
+class UserCreator {
 
     User from(CreateUserRequest request, String encodedPassword) {
         return User.builder()

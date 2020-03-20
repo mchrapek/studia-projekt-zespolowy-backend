@@ -1,4 +1,4 @@
-package com.journeyplanner.user.config;
+package com.journeyplanner.catalogue.config;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class QueueConfig {
 
     @Bean
-    public Queue mailQueue(@Value("${queue.mail.name}") String mailQueue) {
-        return new Queue(mailQueue, true);
+    public Queue reservationQueue(@Value("${queue.reservation.name}") String reservationQueue) {
+        return new Queue(reservationQueue, true);
     }
 }

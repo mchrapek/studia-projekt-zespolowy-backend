@@ -1,10 +1,10 @@
 package com.journeyplanner.catalogue.domain.journey;
 
-import com.journeyplanner.catalogue.infrastructure.rest.request.CreateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 
 import java.util.UUID;
 
-public class JourneyCreator {
+class JourneyCreator {
 
     Journey from(CreateJourneyRequest request) {
         return Journey.builder()

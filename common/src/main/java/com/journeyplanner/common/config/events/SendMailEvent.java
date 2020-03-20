@@ -11,9 +11,9 @@ import java.util.Map;
 @NoArgsConstructor
 public class SendMailEvent {
 
-    String to;
+    @NonNull String to;
 
-    String templateName;
+    @NonNull String templateName;
 
-    Map<String, String> params;
+    @NonNull Map<String, String> params;
 }
