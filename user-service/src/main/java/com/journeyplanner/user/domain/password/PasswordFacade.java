@@ -1,23 +1,36 @@
 package com.journeyplanner.user.domain.password;
 
+import com.journeyplanner.common.config.events.SendMailEvent;
+import com.journeyplanner.common.config.mail.Template;
 import com.journeyplanner.user.domain.exceptions.ResourceNotFound;
+import com.journeyplanner.user.infrastructure.output.queue.MailSender;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.HashMap;
 
 @Slf4j
 @AllArgsConstructor
 public class PasswordFacade {
 
-    private ResetTokenRepository resetTokenRepository;
-    private ResetTokenCreator resetTokenCreator;
-    private PasswordEncoder passwordEncoder;
+    private final ResetTokenRepository resetTokenRepository;
+    private final ResetTokenCreator resetTokenCreator;
+    private final MailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
-    public void generateAndSendResetPasswordLinkWithToken(final String email) {
-        // TODO deprecate old tokens
+    public void generateAndSendResetPasswordLinkWithToken(final String email, final String firstName) {
         ResetToken resetToken = resetTokenCreator.from(email);
         resetTokenRepository.save(resetToken);
-        // TODO send email
+
+        mailSender.publish(SendMailEvent.builder()
+                .to(email)
+                .templateName(Template.RESET_PASSWORD.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("firstName", firstName);
+                    put("link", resetToken.getToken());
+                }})
+                .build());
     }
 
     public void validateToken(final String token, final String email) {

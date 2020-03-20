@@ -1,0 +1,4 @@
+<body>
+<p>Hej ${params.firstName}!</p>
+<p>Zostałeś odblokowany przez administratora.</p>
+</body>
