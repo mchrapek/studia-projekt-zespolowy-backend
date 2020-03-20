@@ -1,9 +1,10 @@
-package com.journeyplanner.catalogue.infrastructure.rest;
+package com.journeyplanner.catalogue.infrastructure.input.rest;
 
 import com.journeyplanner.catalogue.domain.journey.JourneyDto;
 import com.journeyplanner.catalogue.domain.journey.JourneyFacade;
-import com.journeyplanner.catalogue.infrastructure.rest.request.CreateJourneyRequest;
-import com.journeyplanner.catalogue.infrastructure.rest.request.UpdateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.input.request.CreateReservationRequest;
+import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -46,5 +47,14 @@ public class JourneyController {
     public ResponseEntity<JourneyDto> updateJourney(@RequestBody @Valid UpdateJourneyRequest request) {
 
         return ResponseEntity.ok(journeyFacade.update(request));
+    }
+
+    @PostMapping("reservation")
+    @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin(origins = "*")
+    public void createReservation(@RequestBody @Valid CreateReservationRequest request,
+                                  @RequestHeader("x-username") String username) {
+
+        journeyFacade.createReservation(request, username);
     }
 }

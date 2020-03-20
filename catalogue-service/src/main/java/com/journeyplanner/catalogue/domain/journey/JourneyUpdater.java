@@ -1,8 +1,8 @@
 package com.journeyplanner.catalogue.domain.journey;
 
-import com.journeyplanner.catalogue.infrastructure.rest.request.UpdateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
 
-public class JourneyUpdater {
+class JourneyUpdater {
 
     Journey from(UpdateJourneyRequest request) {
         return Journey.builder()
