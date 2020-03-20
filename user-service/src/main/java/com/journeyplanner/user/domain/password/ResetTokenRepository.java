@@ -12,4 +12,6 @@ interface ResetTokenRepository extends Repository<ResetToken, String>, ResetToke
     List<ResetToken> findByEmail(String email);
 
     ResetToken save(ResetToken resetToken);
+
+    void deleteAll();
 }

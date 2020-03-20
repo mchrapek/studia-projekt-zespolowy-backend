@@ -16,4 +16,6 @@ interface JourneyRepository extends Repository<Journey, String> {
     Optional<Journey> findById(String id);
 
     boolean existsById(String id);
+
+    void deleteAll();
 }

@@ -1,7 +1,8 @@
 package com.journeyplanner.user.infrastructure.output.queue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.journeyplanner.common.config.events.SendMailEvent;
+import com.journeyplanner.common.config.events.Event;
+import com.journeyplanner.common.config.events.EventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,7 @@ import static java.text.MessageFormat.format;
 
 @Service
 @Slf4j
-public class MailSender {
+public class MailSender implements EventPublisher {
 
     private final String queueName;
     private final RabbitTemplate rabbitTemplate;
@@ -21,7 +22,8 @@ public class MailSender {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void publish(SendMailEvent event) {
+    @Override
+    public void publish(Event event) {
         try {
             String mappedEvent = new ObjectMapper().writeValueAsString(event);
             rabbitTemplate.convertAndSend(queueName, mappedEvent);

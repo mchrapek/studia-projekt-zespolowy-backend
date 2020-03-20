@@ -26,7 +26,7 @@ public class UserFacade {
     private final MailSender mailSender;
     private final PasswordFacade passwordFacade;
 
-    public void createUser(final CreateUserRequest request) {
+    public void create(final CreateUserRequest request) {
         if (repository.existsByEmail(request.getEmail())) {
             throw new UserWithEmailAlreadyExists(format("User with email {0} already exists", request.getEmail()));
         }

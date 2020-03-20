@@ -1,8 +1,8 @@
-package com.journeyplanner.user
+package com.journeyplanner.catalogue
 
-import com.journeyplanner.user.app.UserServiceApplication
-import com.journeyplanner.user.config.QueueConfig
-import com.journeyplanner.user.infrastructure.output.queue.MailSender
+import com.journeyplanner.catalogue.app.CatalogueServiceApplication
+import com.journeyplanner.catalogue.config.QueueConfig
+import com.journeyplanner.catalogue.infrastructure.output.queue.ReservationCreator
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -14,19 +14,19 @@ import org.springframework.test.context.TestPropertySource
 @SpringBootApplication
 @ComponentScan(
         basePackages = [
-                "com.journeyplanner.user",
+                "com.journeyplanner.catalogue",
                 "com.journeyplanner.common.config.security"
         ], excludeFilters = [
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = MailSender.class),
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CatalogueServiceApplication.class),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = QueueConfig.class),
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = UserServiceApplication.class)
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationCreator.class)
         ]
 )
 @TestPropertySource(locations="classpath:test.properties")
 @AutoConfigureDataMongo
-@EnableMongoRepositories(basePackages = "com.journeyplanner.user.domain")
+@EnableMongoRepositories(basePackages = "com.journeyplanner.catalogue.domain")
 class ApplicationTestConfig {
 
     @MockBean
-    MailSender mailSender
+    ReservationCreator reservationCreator
 }

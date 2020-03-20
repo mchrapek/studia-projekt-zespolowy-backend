@@ -27,13 +27,13 @@ public class UserController {
     @PostMapping("register")
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "*")
-    public void createAppUser(@RequestBody @Valid CreateUserRequest request) {
+    public void createUser(@RequestBody @Valid CreateUserRequest request) {
 
-        userFacade.createUser(request);
+        userFacade.create(request);
     }
 
     @PostMapping("reset")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
     public void generateResetPasswordLink(@RequestBody @Valid GenerateResetPasswordLinkRequest request) {
 
@@ -67,7 +67,7 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Page<UserDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
+    public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault @SortDefault.SortDefaults(
             @SortDefault(sort = "email", direction = Sort.Direction.DESC)) Pageable pageable) {
 
         return ResponseEntity.ok(userFacade.getAll(pageable));

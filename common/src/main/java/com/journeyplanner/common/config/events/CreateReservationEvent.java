@@ -10,7 +10,7 @@ import java.time.Instant;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateReservationEvent {
+public class CreateReservationEvent implements Event {
 
     @NonNull String id;
 

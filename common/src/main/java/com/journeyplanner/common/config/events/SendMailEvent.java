@@ -9,7 +9,7 @@ import java.util.Map;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SendMailEvent {
+public class SendMailEvent implements Event {
 
     @NonNull String to;
 
