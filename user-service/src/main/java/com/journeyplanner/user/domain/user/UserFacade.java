@@ -2,6 +2,8 @@ package com.journeyplanner.user.domain.user;
 
 import com.journeyplanner.common.config.events.SendMailEvent;
 import com.journeyplanner.common.config.mail.Template;
+import com.journeyplanner.user.domain.exceptions.IllegalOperation;
+import com.journeyplanner.user.domain.exceptions.ResourceNotFound;
 import com.journeyplanner.user.domain.exceptions.UserWithEmailAlreadyExists;
 import com.journeyplanner.user.domain.password.PasswordFacade;
 import com.journeyplanner.user.infrastructure.input.request.*;
@@ -43,7 +45,10 @@ public class UserFacade {
     }
 
     public void sendResetPasswordToken(final GenerateResetPasswordLinkRequest request) {
-        passwordFacade.generateAndSendResetPasswordLinkWithToken(request.getEmail());
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email {0}")));
+
+        passwordFacade.generateAndSendResetPasswordLinkWithToken(user.getEmail(), user.getFirstName());
     }
 
     public void resetPassword(final ResetPasswordRequest request) {
@@ -52,11 +57,37 @@ public class UserFacade {
     }
 
     public void block(final AddUserToBlacklistRequest request) {
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email {0}")));
+
+        if (user.getRole().equals("ADMIN")) {
+            throw new IllegalOperation("You cannot add to blacklist user with admin role");
+        }
+
         repository.changeIsBlacklisted(request.getEmail(), Boolean.TRUE);
+
+        mailSender.publish(SendMailEvent.builder()
+                .to(user.getEmail())
+                .templateName(Template.BLOCK_USER.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("firstName", user.getFirstName());
+                }})
+                .build());
     }
 
     public void unblock(final RemoveUserFromBlacklistRequest request) {
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email {0}")));
+
         repository.changeIsBlacklisted(request.getEmail(), Boolean.FALSE);
+
+        mailSender.publish(SendMailEvent.builder()
+                .to(user.getEmail())
+                .templateName(Template.UNBLOCK_USER.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("firstName", user.getFirstName());
+                }})
+                .build());
     }
 
     public Page<UserDto> getAll(Pageable pageable) {
