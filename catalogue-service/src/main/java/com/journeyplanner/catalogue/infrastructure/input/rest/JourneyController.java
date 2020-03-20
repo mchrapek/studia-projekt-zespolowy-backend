@@ -36,7 +36,7 @@ public class JourneyController {
 
     @PostMapping
     @CrossOrigin(origins = "*")
-    public ResponseEntity<JourneyDto> createJourney(@RequestBody @Valid CreateJourneyRequest request) {
+    public ResponseEntity<JourneyDto> create(@RequestBody @Valid CreateJourneyRequest request) {
 
         return ResponseEntity.ok(journeyFacade.create(request));
     }
@@ -44,7 +44,7 @@ public class JourneyController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<JourneyDto> updateJourney(@RequestBody @Valid UpdateJourneyRequest request) {
+    public ResponseEntity<JourneyDto> update(@RequestBody @Valid UpdateJourneyRequest request) {
 
         return ResponseEntity.ok(journeyFacade.update(request));
     }

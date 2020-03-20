@@ -23,11 +23,11 @@ public class UpdateJourneyRequest {
     String name;
 
     @NotNull(message = "Country value must not be empty")
-    @Size(min = 5, max = 80, message = "Country must be between 5 - 80 signs")
+    @Size(min = 3, max = 80, message = "Country must be between 5 - 80 signs")
     String country;
 
     @NotNull(message = "City value must not be empty")
-    @Size(min = 5, max = 80, message = "City must be between 5 - 80 signs")
+    @Size(min = 3, max = 80, message = "City must be between 5 - 80 signs")
     String city;
 
     @NotNull(message = "Description value must not be empty")
