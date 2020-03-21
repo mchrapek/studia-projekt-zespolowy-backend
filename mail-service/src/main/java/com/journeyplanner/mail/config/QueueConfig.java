@@ -1,4 +1,4 @@
-package com.journeyplanner.user.config;
+package com.journeyplanner.mail.config;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;

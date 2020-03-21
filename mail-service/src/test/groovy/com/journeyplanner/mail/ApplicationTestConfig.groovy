@@ -1,7 +1,7 @@
 package com.journeyplanner.mail
 
-
 import com.journeyplanner.mail.app.MailServiceApplication
+import com.journeyplanner.mail.config.QueueConfig
 import com.journeyplanner.mail.infrastructure.input.SendMailEventReceiver
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
@@ -15,6 +15,7 @@ import org.springframework.test.context.TestPropertySource
         "com.journeyplanner.mail"
 ], excludeFilters = [
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = MailServiceApplication.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = QueueConfig.class),
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SendMailEventReceiver.class)
 ])
 @TestPropertySource(locations = "classpath:test.properties")

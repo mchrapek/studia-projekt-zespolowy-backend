@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
+        "com.journeyplanner.mail.config",
         "com.journeyplanner.mail.domain",
         "com.journeyplanner.mail.infrastructure"
 })
