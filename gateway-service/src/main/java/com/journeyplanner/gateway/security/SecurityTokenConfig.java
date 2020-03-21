@@ -29,7 +29,9 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new JwtTokenAuthenticationFilter(jwtProperties), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
 
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
+
                 .antMatchers(HttpMethod.GET, Paths.GET_PERMIT_ALL_PATHS).permitAll()
                 .antMatchers(HttpMethod.POST, Paths.POST_PERMIT_ALL_PATHS).permitAll()
                 .antMatchers(HttpMethod.PUT, Paths.PUT_PERMIT_ALL_PATHS).permitAll()
