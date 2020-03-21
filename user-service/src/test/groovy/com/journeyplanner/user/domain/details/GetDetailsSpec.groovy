@@ -40,7 +40,7 @@ class GetDetailsSpec extends Specification {
         result.response.getContentAsString().contains("\"country\":null")
     }
 
-    def "should return user details"() {
+    def "should return user details by email"() {
         given:
         def email = "aragorn@middleearth.com"
         def userDetails = UserDetailsMotherObject.aUserDetails(email)
@@ -49,6 +49,22 @@ class GetDetailsSpec extends Specification {
         when:
         def result = mvc.perform(get("/details")
                 .header("x-username", email))
+                .andExpect(status().isOk())
+                .andReturn()
+
+        then:
+        result.response.getContentAsString().contains(userDetails.getCity())
+        result.response.getContentAsString().contains(userDetails.getPhoneNumber())
+    }
+
+    def "should return user details by id"() {
+        given:
+        def email = "aragorn@middleearth.com"
+        def userDetails = UserDetailsMotherObject.aUserDetails(email)
+        userDetailsRepository.save(userDetails)
+
+        when:
+        def result = mvc.perform(get("/details/" + userDetails.getId()))
                 .andExpect(status().isOk())
                 .andReturn()
 

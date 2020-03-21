@@ -96,6 +96,14 @@ public class UserController {
         return ResponseEntity.ok(userDetailsFacade.addOrUpdateDetails(username, request));
     }
 
+    @GetMapping("details/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<UserDetailsDto> getUserDetailsById(@PathVariable String id) {
+
+        return ResponseEntity.ok(userDetailsFacade.getDetailsById(id));
+    }
+
     @GetMapping(value = "avatar", produces = MediaType.IMAGE_JPEG_VALUE)
     @CrossOrigin(origins = "*")
     public ResponseEntity<byte[]> getAvatarForUser(@RequestHeader("x-username") String username) {
