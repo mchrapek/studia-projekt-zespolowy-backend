@@ -44,6 +44,30 @@ services:
     networks:
       - main_network
 
+  prometheus:
+    image: prom/prometheus:v2.4.3
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus/
+    networks:
+      - main_network
+
+  grafana:
+    image: grafana/grafana:5.2.4
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./monitoring/grafana/config.monitoring
+    networks:
+      - main_network
+    depends_on:
+      - prometheus
+
   gateway:
     container_name: gateway
     build:
@@ -55,6 +79,8 @@ services:
       - 8762:8762
     networks:
       - main_network
+    depends_on:
+      - eureka
 
   auth:
     container_name: auth
@@ -72,6 +98,7 @@ services:
       - mongodb
       - eureka
       - gateway
+      - prometheus
 
   catalogue:
     container_name: catalogue
@@ -89,6 +116,7 @@ services:
       - mongodb
       - eureka
       - gateway
+      - prometheus
 
   user:
     container_name: user
@@ -106,6 +134,7 @@ services:
       - mongodb
       - eureka
       - gateway
+      - prometheus
 
   mail:
     container_name: mail
@@ -123,6 +152,7 @@ services:
       - mongodb
       - eureka
       - gateway
+      - prometheus
 
 volumes:
   mongodb_data:
