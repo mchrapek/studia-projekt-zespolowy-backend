@@ -53,6 +53,7 @@ public class JourneyFacade {
                 .start(journey.getStart())
                 .end(journey.getEnd())
                 .price(journey.getPrice())
+                .eventTimeStamp(Instant.now())
                 .build());
     }
 }

@@ -23,4 +23,6 @@ public class CreateReservationEvent implements Event {
     @NonNull Instant start;
 
     @NonNull Instant end;
+
+    @NonNull Instant eventTimeStamp;
 }
