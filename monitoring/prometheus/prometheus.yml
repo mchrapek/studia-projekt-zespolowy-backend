@@ -41,6 +41,13 @@ scrape_configs:
     scrape_interval: 10s
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['reservation:9100']
+      - targets: ['reservation:9120']
         labels:
           application: 'reservation'
+  - job_name: 'payment'
+    scrape_interval: 10s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['payment:9125']
+        labels:
+          application: 'payment'

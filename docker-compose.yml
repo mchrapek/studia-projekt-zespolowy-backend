@@ -172,6 +172,24 @@ services:
       - gateway
       - prometheus
 
+  payment:
+    container_name: payment
+    build:
+      context: ./payment-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 9125:9125
+    networks:
+      - main_network
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+      - gateway
+      - prometheus
+
 volumes:
   mongodb_data:
   rabbitmq_log:

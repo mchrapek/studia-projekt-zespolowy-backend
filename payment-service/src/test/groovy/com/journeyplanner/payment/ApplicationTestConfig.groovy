@@ -1,6 +1,6 @@
-package com.journeyplanner.reservation.app
+package com.journeyplanner.payment
 
-import com.journeyplanner.reservation.config.QueueConfig
+import com.journeyplanner.payment.app.PaymentServiceApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.context.annotation.ComponentScan
@@ -11,14 +11,13 @@ import org.springframework.test.context.TestPropertySource
 @SpringBootApplication
 @ComponentScan(
         basePackages = [
-                "com.journeyplanner.reservation"
+                "com.journeyplanner.payment"
         ], excludeFilters = [
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = QueueConfig.class),
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationServiceApplication.class)
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PaymentServiceApplication.class)
         ]
 )
 @TestPropertySource(locations = "classpath:test.properties")
 @AutoConfigureDataMongo
-@EnableMongoRepositories(basePackages = "com.journeyplanner.reservation.domain")
+@EnableMongoRepositories(basePackages = "com.journeyplanner.payment.domain")
 class ApplicationTestConfig {
 }
