@@ -2,6 +2,7 @@ package com.journeyplanner.catalogue.infrastructure.input.rest;
 
 import com.journeyplanner.catalogue.domain.journey.JourneyDto;
 import com.journeyplanner.catalogue.domain.journey.JourneyFacade;
+import com.journeyplanner.catalogue.domain.photo.PhotoFacade;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateReservationRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
@@ -15,8 +16,10 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -25,6 +28,7 @@ import javax.validation.Valid;
 public class JourneyController {
 
     private final JourneyFacade journeyFacade;
+    private final PhotoFacade photoFacade;
 
     @GetMapping
     @CrossOrigin(origins = "*")
@@ -56,5 +60,19 @@ public class JourneyController {
                                   @RequestHeader("x-username") String username) {
 
         journeyFacade.createReservation(request, username);
+    }
+
+    @GetMapping(value = "journey/{journeyId}/photo")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<List<String>> getAllByJourneyId(@PathVariable String journeyId) {
+
+        return ResponseEntity.ok(photoFacade.getAllForJourney(journeyId));
+    }
+
+    @PostMapping(value = "journey/{journeyId}/photo")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> add(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
+
+        return ResponseEntity.ok(photoFacade.add(journeyId, file));
     }
 }
