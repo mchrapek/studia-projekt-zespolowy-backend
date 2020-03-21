@@ -12,4 +12,6 @@ interface PhotoRepository extends Repository<Photo, String> {
     Optional<Photo> findById(String id);
 
     List<Photo> findAllByJourneyId(String journeyId);
+
+    void deleteAll();
 }

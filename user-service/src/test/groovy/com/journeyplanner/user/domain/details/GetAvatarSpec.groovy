@@ -26,7 +26,7 @@ class GetAvatarSpec extends Specification {
         avatarRepository.deleteAll()
     }
 
-    def "should return avatar"() {
+    def "should get avatar"() {
         given:
         def email = "aragorn@middleearth.com"
         def avatar = AvatarMotherObject.aAvatar(email)

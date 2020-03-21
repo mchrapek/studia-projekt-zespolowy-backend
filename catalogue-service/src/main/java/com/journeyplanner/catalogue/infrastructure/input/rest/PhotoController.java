@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -22,23 +23,9 @@ public class PhotoController {
 
     @GetMapping(value = "{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<byte[]> getById(@PathVariable String id, Model model) {
+    public ResponseEntity<byte[]> getById(@PathVariable String id) {
 
         PhotoDto photoDto = photoFacade.getById(id);
         return ResponseEntity.ok(photoDto.getImage().getData());
-    }
-
-    @GetMapping(value = "journey/{journeyId}")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<List<String>> getAllByJourneyId(@PathVariable String journeyId) {
-
-        return ResponseEntity.ok(photoFacade.getAllForJourney(journeyId));
-    }
-
-    @PostMapping
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<String> add(@RequestParam("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
-
-        return ResponseEntity.ok(photoFacade.add(journeyId, file));
     }
 }
