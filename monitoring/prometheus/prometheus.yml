@@ -37,3 +37,10 @@ scrape_configs:
       - targets: ['auth:9100']
         labels:
           application: 'auth'
+  - job_name: 'reservation'
+    scrape_interval: 10s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['reservation:9100']
+        labels:
+          application: 'reservation'

@@ -1,4 +1,4 @@
-package com.journeyplanner.catalogue.app;
+package com.journeyplanner.reservation.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,16 +8,17 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.journeyplanner.catalogue.domain",
-        "com.journeyplanner.catalogue.infrastructure"
+        "com.journeyplanner.reservation.config",
+        "com.journeyplanner.reservation.domain",
+        "com.journeyplanner.reservation.infrastructure"
 })
 @EnableEurekaClient
 @EnableMongoRepositories(basePackages = {
-        "com.journeyplanner.catalogue.domain"
+        "com.journeyplanner.reservation.domain"
 })
-public class CatalogueServiceApplication {
+public class ReservationServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CatalogueServiceApplication.class, args);
+        SpringApplication.run(ReservationServiceApplication.class, args);
     }
 }

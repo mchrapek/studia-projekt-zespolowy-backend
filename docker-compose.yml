@@ -154,6 +154,24 @@ services:
       - gateway
       - prometheus
 
+  reservation:
+    container_name: reservation
+    build:
+      context: ./reservation-service
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - 9120:9120
+    networks:
+      - main_network
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+      - gateway
+      - prometheus
+
 volumes:
   mongodb_data:
   rabbitmq_log:
