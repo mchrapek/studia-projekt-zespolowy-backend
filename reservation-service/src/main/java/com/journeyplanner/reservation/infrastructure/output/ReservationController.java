@@ -5,10 +5,9 @@ import com.journeyplanner.reservation.domain.reservation.ReservationFacade;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -20,8 +19,8 @@ public class ReservationController {
 
     @GetMapping
     @CrossOrigin(origins = "*")
-    public ResponseEntity<ReservationDto> getUserReservation() {
+    public ResponseEntity<List<ReservationDto>> getUserReservation(@RequestHeader("x-username") String username) {
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(reservationFacade.getUserReservation(username));
     }
 }

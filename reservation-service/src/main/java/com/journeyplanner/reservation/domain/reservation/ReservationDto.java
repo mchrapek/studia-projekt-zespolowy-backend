@@ -1,4 +1,31 @@
 package com.journeyplanner.reservation.domain.reservation;
 
+import lombok.Builder;
+import lombok.Value;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
+@Value
+@Builder
 public class ReservationDto {
+
+    String id;
+    ReservationStatus status;
+    String mail;
+    String journeyId;
+    BigDecimal price;
+    Instant createdTime;
+    String paymentId;
+
+    static ReservationDto from(Reservation reservation) {
+        return ReservationDto.builder()
+                .id(reservation.getId())
+                .status(reservation.getStatus())
+                .journeyId(reservation.getJourneyId())
+                .price(reservation.getPrice())
+                .createdTime(reservation.getCreatedTime())
+                .paymentId(reservation.getPaymentId())
+                .build();
+    }
 }

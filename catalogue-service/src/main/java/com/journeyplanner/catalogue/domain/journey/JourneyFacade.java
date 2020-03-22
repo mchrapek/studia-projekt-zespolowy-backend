@@ -49,9 +49,7 @@ public class JourneyFacade {
         reservationCreator.publish(CreateReservationEvent.builder()
                 .id(journey.getId())
                 .email(username)
-                .name(journey.getName())
-                .start(journey.getStart())
-                .end(journey.getEnd())
+                .journeyId(journey.getId())
                 .price(journey.getPrice())
                 .eventTimeStamp(Instant.now())
                 .build());

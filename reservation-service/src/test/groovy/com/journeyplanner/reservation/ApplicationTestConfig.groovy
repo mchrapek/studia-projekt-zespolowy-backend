@@ -2,6 +2,7 @@ package com.journeyplanner.reservation
 
 import com.journeyplanner.reservation.app.ReservationServiceApplication
 import com.journeyplanner.reservation.config.QueueConfig
+import com.journeyplanner.reservation.infrastructure.input.ReservationCreateEventReceiver
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.context.annotation.ComponentScan
@@ -15,6 +16,7 @@ import org.springframework.test.context.TestPropertySource
                 "com.journeyplanner.reservation"
         ], excludeFilters = [
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = QueueConfig.class),
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationCreateEventReceiver.class),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationServiceApplication.class)
         ]
 )
