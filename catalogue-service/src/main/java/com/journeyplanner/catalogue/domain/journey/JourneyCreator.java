@@ -16,7 +16,7 @@ class JourneyCreator {
                 .transportType(request.getTransportType())
                 .price(request.getPrice())
                 .start(request.getStart().toInstant())
-                .end(request.getStart().toInstant())
+                .end(request.getEnd().toInstant())
                 .build();
     }
 }

@@ -6,11 +6,14 @@ import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import javax.ws.rs.core.MediaType
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -33,7 +36,7 @@ class CreateJourneySpec extends Specification {
     def "should create journey"() {
         given:
         def request = new CreateJourneyRequest("Name Journey", "Country", "CityCity", "Description", "PLAIN",
-                new BigDecimal(1000), new Date(System.currentTimeMillis() + 1200 * 1000), new Date(System.currentTimeMillis() + 3600 * 1000))
+                new BigDecimal(1000), new Date(1614556800000), new Date(1614729600000))
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
@@ -44,6 +47,7 @@ class CreateJourneySpec extends Specification {
                 .andReturn()
 
         then:
-        print result.response.getContentAsString()
+        result.response.getContentAsString().contains("2021-03-01")
+        result.response.getContentAsString().contains("2021-03-03")
     }
 }

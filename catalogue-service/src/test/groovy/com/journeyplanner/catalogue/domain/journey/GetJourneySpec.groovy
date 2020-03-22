@@ -45,7 +45,7 @@ class GetJourneySpec extends Specification {
         result.response.getContentAsString().contains("\"totalPages\":1")
         result.response.getContentAsString().contains("\"pageSize\":10")
         result.response.getContentAsString().contains("\"offset\":0")
-        result.response.getContentAsString().concat("\"numberOfElements\":3")
+        result.response.getContentAsString().contains("\"numberOfElements\":3")
     }
 }
 

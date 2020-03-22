@@ -20,15 +20,11 @@ class Reservation {
 
     @NonNull ReservationStatus status;
 
-    @NonNull String email;
+    @NonNull String mail;
 
-    @NonNull String name;
+    @NonNull String journeyId;
 
     @NonNull BigDecimal price;
-
-    @NonNull Instant start;
-
-    @NonNull Instant end;
 
     @NonNull Instant createdTime;
 
