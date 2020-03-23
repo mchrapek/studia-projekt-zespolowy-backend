@@ -53,6 +53,14 @@ public class JourneyController {
         return ResponseEntity.ok(journeyFacade.update(request));
     }
 
+    @DeleteMapping(value = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = "*")
+    public void cancel(@PathVariable String id) {
+
+        journeyFacade.cancel(id);
+    }
+
     @PostMapping("reservation")
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "*")

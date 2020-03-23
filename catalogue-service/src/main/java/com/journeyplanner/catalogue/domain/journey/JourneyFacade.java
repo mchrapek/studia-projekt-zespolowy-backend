@@ -42,6 +42,15 @@ public class JourneyFacade {
         return JourneyDto.from(updatedJourney);
     }
 
+    public void cancel(String id) {
+        Journey journey = repository.findById(id)
+                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", id)));
+
+        if (journey.getStatus() == JourneyStatus.ACTIVE) {
+            repository.updateJourneyStatus(journey.getId(), JourneyStatus.INACTIVE);
+        }
+    }
+
     public void createReservation(CreateReservationRequest request, String username) {
         Journey journey = repository.findById(request.getId())
                 .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId())));

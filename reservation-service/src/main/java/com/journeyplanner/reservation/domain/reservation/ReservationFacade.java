@@ -1,5 +1,6 @@
 package com.journeyplanner.reservation.domain.reservation;
 
+import com.journeyplanner.common.config.events.CancelJourneyEvent;
 import com.journeyplanner.common.config.events.CreateReservationEvent;
 import com.journeyplanner.reservation.exception.NotPermittedOperation;
 import com.journeyplanner.reservation.exception.ResourceNotFound;
@@ -19,6 +20,8 @@ public class ReservationFacade {
 
     private final ReservationRepository repository;
     private final ReservationCreator creator;
+    private final CancelJourneyRuleCreator cancelJourneyRuleCreator;
+    private final CancelJourneyRuleRepository cancelJourneyRuleRepository;
 
     public void createNew(final CreateReservationEvent event) {
         Reservation reservation = creator.from(event);
@@ -32,7 +35,11 @@ public class ReservationFacade {
                 .collect(Collectors.toList());
     }
 
-    public void cancelReservation(final String mail, final String reservationId) {
+    public List<Reservation> getActiveByJourney(String journeyId) {
+        return repository.getReservationByJourneyIdAndStatus(journeyId, ReservationStatus.ACTIVE);
+    }
+
+    public void cancelByUser(final String mail, final String reservationId) {
         Reservation reservation = repository.findByIdAndMail(reservationId, mail)
                 .orElseThrow(() -> new ResourceNotFound(format("Cannot found journey with id : {0}", reservationId)));
 
@@ -41,5 +48,13 @@ public class ReservationFacade {
         }
 
         repository.updateReservationStatusTo(reservation.getId(), ReservationStatus.CANCEL);
+    }
+
+    public void createNewCancelEvent(CancelJourneyEvent cancelJourneyEvent) {
+        cancelJourneyRuleRepository.save(cancelJourneyRuleCreator.from(cancelJourneyEvent));
+    }
+
+    public void cancelByAdmin(final String reservationId) {
+        repository.updateReservationStatusTo(reservationId, ReservationStatus.CANCEL);
     }
 }

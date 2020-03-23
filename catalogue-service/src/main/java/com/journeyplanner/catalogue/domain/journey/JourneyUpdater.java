@@ -8,6 +8,7 @@ class JourneyUpdater {
         return Journey.builder()
                 .id(journey.getId())
                 .name(request.getName())
+                .status(journey.getStatus())
                 .city(request.getCity())
                 .country(request.getName())
                 .description(request.getDescription())

@@ -7,7 +7,7 @@ import org.springframework.data.repository.Repository;
 import java.time.Instant;
 import java.util.Optional;
 
-interface JourneyRepository extends Repository<Journey, String> {
+interface JourneyRepository extends Repository<Journey, String>, CustomJourneyRepository {
 
     Page<Journey> findAllByStartAfter(Instant now, Pageable pageable);
 

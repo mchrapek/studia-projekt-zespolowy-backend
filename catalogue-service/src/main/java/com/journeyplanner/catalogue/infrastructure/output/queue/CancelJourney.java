@@ -12,12 +12,12 @@ import static java.text.MessageFormat.format;
 
 @Service
 @Slf4j
-public class ReservationCreator implements EventPublisher {
+public class CancelJourney implements EventPublisher {
 
     private final String queueName;
     private final RabbitTemplate rabbitTemplate;
 
-    public ReservationCreator(@Value("${queue.reservation.name}") String queueName, RabbitTemplate rabbitTemplate) {
+    public CancelJourney(@Value("${queue.cancel-journey.name}") String queueName, RabbitTemplate rabbitTemplate) {
         this.queueName = queueName;
         this.rabbitTemplate = rabbitTemplate;
     }

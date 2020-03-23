@@ -9,6 +9,7 @@ class JourneyCreator {
     Journey from(CreateJourneyRequest request) {
         return Journey.builder()
                 .id(UUID.randomUUID().toString())
+                .status(JourneyStatus.ACTIVE)
                 .name(request.getName())
                 .city(request.getCity())
                 .country(request.getName())

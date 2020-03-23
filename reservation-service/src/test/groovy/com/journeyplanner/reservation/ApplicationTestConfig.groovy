@@ -1,5 +1,6 @@
 package com.journeyplanner.reservation
 
+import com.journeyplanner.common.config.events.CancelJourneyEvent
 import com.journeyplanner.reservation.app.ReservationServiceApplication
 import com.journeyplanner.reservation.config.QueueConfig
 import com.journeyplanner.reservation.infrastructure.input.ReservationCreateEventReceiver
@@ -16,6 +17,7 @@ import org.springframework.test.context.TestPropertySource
                 "com.journeyplanner.reservation"
         ], excludeFilters = [
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = QueueConfig.class),
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CancelJourneyEvent.class),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationCreateEventReceiver.class),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationServiceApplication.class)
         ]

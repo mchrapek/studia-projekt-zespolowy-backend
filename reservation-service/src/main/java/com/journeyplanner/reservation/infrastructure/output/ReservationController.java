@@ -30,6 +30,6 @@ public class ReservationController {
     @CrossOrigin(origins = "*")
     public void cancelReservation(@RequestHeader("x-username") String username, @PathVariable String id) {
 
-        reservationFacade.cancelReservation(username, id);
+        reservationFacade.cancelByUser(username, id);
     }
 }
