@@ -3,8 +3,10 @@ package com.journeyplanner.user.infrastructure.input.request;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Value
 @Builder
