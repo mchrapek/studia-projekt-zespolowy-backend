@@ -16,8 +16,12 @@ class TransferScheduler {
 
     @Scheduled(cron = "${transfer.cron}")
     public void fetch() {
-        transferRepository.findPendingAndModifyStatus()
-                .ifPresent(this::makeTransfer);
+        try {
+            transferRepository.findPendingAndModifyStatus()
+                    .ifPresent(this::makeTransfer);
+        } catch (Exception e) {
+            log.error("ERROR : " + e.getMessage());
+        }
     }
 
     public void makeTransfer(Transfer transfer) {
