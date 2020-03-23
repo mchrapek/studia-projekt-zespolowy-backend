@@ -10,6 +10,7 @@ class JourneyMotherObject {
                 .id(id)
                 .name("NameJourney")
                 .country("Country")
+                .status(JourneyStatus.ACTIVE)
                 .city("City")
                 .description("Description")
                 .transportType("PLAIN")

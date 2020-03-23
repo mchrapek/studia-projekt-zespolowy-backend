@@ -17,6 +17,7 @@ public class JourneyRepositoryConfiguration {
                 .id("57ee7379-eaa9-4029-9267-dd0eb6a51b2b")
                 .name("Jarmark Bożonarodzeniowy Lipsk Express")
                 .city("Lipsk")
+                .status(JourneyStatus.ACTIVE)
                 .country("Niemcy")
                 .description("Dzień 1 Wyjazd wg rozkładu jazdy (wyjazd w nocy z piątku na sobotę). Przejazd do Lipska. Zwiedzanie - " +
                         "słynny Kościół św. Mikołaja, galeria handlowa Specks Hof, mały targ przekąsek, rynek ze Starym Ratuszem, Mädler Passage z " +

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class ReservationConfiguration {
 
     @Bean
-    ReservationFacade reservationFacade(ReservationRepository reservationRepository) {
-        return new ReservationFacade(reservationRepository, new ReservationCreator());
+    ReservationFacade reservationFacade(ReservationRepository reservationRepository, CancelJourneyRuleRepository cancelJourneyRuleRepository) {
+        return new ReservationFacade(reservationRepository, new ReservationCreator(), new CancelJourneyRuleCreator(), cancelJourneyRuleRepository);
     }
 }

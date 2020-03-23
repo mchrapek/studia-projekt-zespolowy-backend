@@ -17,6 +17,8 @@ class Journey {
     @Id
     @NonNull String id;
 
+    @NonNull JourneyStatus status;
+
     @NonNull String name;
 
     @NonNull String country;

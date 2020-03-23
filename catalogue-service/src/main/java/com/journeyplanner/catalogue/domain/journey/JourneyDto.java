@@ -14,18 +14,20 @@ public class JourneyDto {
     String id;
     String name;
     String country;
+    JourneyStatus status;
     String city;
     String description;
     String transportType;
     BigDecimal price;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant start;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant end;
 
     static JourneyDto from(final Journey journey) {
         return JourneyDto.builder()
                 .id(journey.getId())
+                .status(journey.getStatus())
                 .name(journey.getName())
                 .country(journey.getCountry())
                 .city(journey.getCity())

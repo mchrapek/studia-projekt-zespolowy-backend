@@ -1,6 +1,7 @@
 package com.journeyplanner.catalogue
 
 import com.journeyplanner.catalogue.app.CatalogueServiceApplication
+import com.journeyplanner.catalogue.infrastructure.output.queue.CancelJourney
 import com.journeyplanner.catalogue.infrastructure.output.queue.ReservationCreator
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
@@ -17,7 +18,8 @@ import org.springframework.test.context.TestPropertySource
                 "com.journeyplanner.common.config.security"
         ], excludeFilters = [
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CatalogueServiceApplication.class),
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationCreator.class)
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ReservationCreator.class),
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CancelJourney.class)
         ]
 )
 @TestPropertySource(locations = "classpath:test.properties")

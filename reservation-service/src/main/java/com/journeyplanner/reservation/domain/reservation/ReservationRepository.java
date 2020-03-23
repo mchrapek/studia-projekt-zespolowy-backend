@@ -9,7 +9,11 @@ interface ReservationRepository extends Repository<Reservation, String>, CustomR
 
     Reservation save(Reservation reservation);
 
+    Optional<Reservation> findById(String id);
+
     Optional<Reservation> findByIdAndMail(String id, String mail);
+
+    List<Reservation> getReservationByJourneyIdAndStatus(String journeyId, ReservationStatus status);
 
     List<Reservation> getReservationByMail(String mail);
 

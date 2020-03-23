@@ -12,4 +12,9 @@ public class QueueConfig {
     public Queue reservationQueue(@Value("${queue.reservation.name}") String reservationQueue) {
         return new Queue(reservationQueue, true);
     }
+
+    @Bean
+    public Queue cancelJourneyQueue(@Value("${queue.cancel-journey.name}") String cancelJourneyQueue) {
+        return new Queue(cancelJourneyQueue, true);
+    }
 }
