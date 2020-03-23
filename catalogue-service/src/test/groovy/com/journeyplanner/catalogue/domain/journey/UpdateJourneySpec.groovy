@@ -36,8 +36,7 @@ class UpdateJourneySpec extends Specification {
 
         and:
         def request = new UpdateJourneyRequest(journey.getId(), "NewName", journey.getCountry(),
-                journey.getCity(), journey.getDescription(), journey.getTransportType(), journey.getPrice(),
-                new Date(System.currentTimeMillis() + 1200 * 1000), new Date(System.currentTimeMillis() + 3600 * 1000))
+                journey.getCity(), journey.getDescription(), journey.getTransportType(), journey.getPrice())
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:

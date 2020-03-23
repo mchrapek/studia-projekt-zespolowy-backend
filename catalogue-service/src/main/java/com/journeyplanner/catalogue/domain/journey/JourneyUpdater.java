@@ -4,17 +4,17 @@ import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRe
 
 class JourneyUpdater {
 
-    Journey from(UpdateJourneyRequest request) {
+    Journey from(Journey journey, UpdateJourneyRequest request) {
         return Journey.builder()
-                .id(request.getId())
+                .id(journey.getId())
                 .name(request.getName())
                 .city(request.getCity())
                 .country(request.getName())
                 .description(request.getDescription())
                 .transportType(request.getTransportType())
                 .price(request.getPrice())
-                .start(request.getStart().toInstant())
-                .end(request.getStart().toInstant())
+                .start(journey.getStart())
+                .end(journey.getEnd())
                 .build();
     }
 }

@@ -41,14 +41,4 @@ public class UpdateJourneyRequest {
     @NotNull(message = "Price value must not be empty")
     @DecimalMin(value = "0.0", inclusive = false)
     BigDecimal price;
-
-    @NotNull(message = "Start date must not be empty")
-    @FutureOrPresent(message = "Start date must be not less than today")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date start;
-
-    @NotNull(message = "End date must not be empty")
-    @FutureOrPresent(message = "End date must be not less than today")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date end;
 }
