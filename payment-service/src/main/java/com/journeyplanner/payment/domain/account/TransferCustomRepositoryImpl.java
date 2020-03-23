@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import java.util.Optional;
 
 @AllArgsConstructor
-public class CustomTransferRepositoryImpl implements CustomTransferRepository {
+public class TransferCustomRepositoryImpl implements TransferCustomRepository {
 
     private MongoTemplate mongoTemplate;
 
@@ -19,7 +19,7 @@ public class CustomTransferRepositoryImpl implements CustomTransferRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("status").is(TransferStatus.PENDING));
         query.limit(1);
-        query.with(Sort.by(Sort.Direction.DESC, "eventTime"));
+        query.with(Sort.by(Sort.Direction.ASC, "eventTime"));
 
         Update update = new Update();
         update.set("status", TransferStatus.PROCESSING);

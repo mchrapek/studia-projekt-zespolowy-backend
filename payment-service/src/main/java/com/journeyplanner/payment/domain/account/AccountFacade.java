@@ -1,39 +1,75 @@
 package com.journeyplanner.payment.domain.account;
 
+import com.journeyplanner.payment.exceptions.IllegalOperation;
 import com.journeyplanner.payment.infrastructure.input.request.ChargeAccountRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.Instant;
-import java.util.UUID;
 
 @Slf4j
 @AllArgsConstructor
 public class AccountFacade {
 
-    private final AccountRepository repository;
+    private final AccountRepository accountRepository;
     private final AccountCreator creator;
+    private final AccountHistoryRepository accountHistoryRepository;
+    private final TransferRepository transferRepository;
+    private final AccountHistoryCreator accountHistoryCreator;
 
     public AccountDto getAccountByEmail(String email) {
-        return repository.findByEmail(email)
-                .map(AccountDto::from)
-                .orElseGet(() -> AccountDto.from(repository.save(creator.emptyAccount(email))));
+        Account account = accountRepository.findByEmail(email)
+                .orElseGet(() -> accountRepository.save(creator.emptyAccount(email)));
+
+        return AccountDto.from(account, accountHistoryRepository.findAllByAccountId(account.getId()));
     }
 
     public String chargeAccount(String email, ChargeAccountRequest request) {
-        Account account = repository.findByEmail(email)
-                .orElseGet(() -> repository.save(creator.emptyAccount(email)));
+        Account account = accountRepository.findByEmail(email)
+                .orElseGet(() -> accountRepository.save(creator.emptyAccount(email)));
 
-        repository.modifyAccountBalance(account.getId(), account.getBalance().add(request.getValue()));
-        String eventId = UUID.randomUUID().toString();
-        account.getEvents().add(AccountHistoryEvent.builder()
-                .id(eventId)
-                .createdTime(Instant.now())
-                .type(PaymentType.CHARGE)
-                .value(request.getValue())
-                .build());
+        accountRepository.modifyAccountBalance(account.getId(), account.getBalance().add(request.getValue()));
+        AccountHistory accountHistory = accountHistoryRepository
+                .save(accountHistoryCreator.chargeEvent(account.getId(), request.getValue()));
 
+        return accountHistory.getId();
+    }
 
-        return eventId;
+    public void savePendingTransfer(Transfer transfer) {
+        transferRepository.save(transfer);
+    }
+
+    public String loadTransfer(Transfer transfer) {
+        Account account = accountRepository.findByEmail(transfer.getEmail())
+                .orElseGet(() -> accountRepository.save(creator.emptyAccount(transfer.getEmail())));
+
+        if (account.getLastEventTime().isAfter(transfer.getEventTime())) {
+            transferRepository.findAndModifyStatus(transfer.getId(), TransferStatus.ERROR);
+            throw new IllegalOperation("Cannot process");
+        }
+
+        if (account.getBalance().compareTo(transfer.getValue()) == 0) {
+            transferRepository.findAndModifyStatus(transfer.getId(), TransferStatus.ERROR);
+            throw new IllegalOperation("Cannot process");
+        }
+
+        accountRepository.modifyAccountBalanceAndEventTime(account.getId(),
+                transfer.getEventTime(), account.getBalance().add(transfer.getValue()));
+
+        AccountHistory accountHistory = accountHistoryRepository
+                .save(accountHistoryCreator.loadEvent(account.getId(), transfer));
+
+        return accountHistory.getId();
+    }
+
+    public String returnTransfer(Transfer transfer) {
+        Account account = accountRepository.findByEmail(transfer.getEmail())
+                .orElseGet(() -> accountRepository.save(creator.emptyAccount(transfer.getEmail())));
+
+        accountRepository.modifyAccountBalanceAndEventTime(account.getId(),
+                transfer.getEventTime(), account.getBalance().add(transfer.getValue()));
+
+        AccountHistory accountHistory = accountHistoryRepository
+                .save(accountHistoryCreator.returnEvent(account.getId(), transfer));
+
+        return accountHistory.getId();
     }
 }

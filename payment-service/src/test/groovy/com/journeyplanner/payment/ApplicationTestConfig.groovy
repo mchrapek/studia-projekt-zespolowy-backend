@@ -1,6 +1,7 @@
 package com.journeyplanner.payment
 
 import com.journeyplanner.payment.app.PaymentServiceApplication
+import com.journeyplanner.payment.config.QueueConfig
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.context.annotation.ComponentScan
@@ -13,6 +14,7 @@ import org.springframework.test.context.TestPropertySource
         basePackages = [
                 "com.journeyplanner.payment"
         ], excludeFilters = [
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = QueueConfig.class),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PaymentServiceApplication.class)
         ]
 )

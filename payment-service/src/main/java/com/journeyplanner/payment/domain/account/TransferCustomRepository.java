@@ -2,7 +2,7 @@ package com.journeyplanner.payment.domain.account;
 
 import java.util.Optional;
 
-interface CustomTransferRepository {
+interface TransferCustomRepository {
 
     Optional<Transfer> findPendingAndModifyStatus();
 
