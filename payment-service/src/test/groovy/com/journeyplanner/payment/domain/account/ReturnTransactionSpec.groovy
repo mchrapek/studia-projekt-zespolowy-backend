@@ -1,7 +1,6 @@
 package com.journeyplanner.payment.domain.account
 
 import com.journeyplanner.common.config.events.TransferType
-import com.journeyplanner.payment.exceptions.IllegalOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -9,10 +8,13 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+
 @SpringBootTest
 @DirtiesContext
 @AutoConfigureMockMvc
-class LoadTransactionSpec extends Specification {
+class ReturnTransactionSpec extends Specification {
 
     @Autowired
     private MockMvc mvc
@@ -35,14 +37,14 @@ class LoadTransactionSpec extends Specification {
         transferRepository.deleteAll()
     }
 
-    def "should create return transaction"() {
+    def "should create load transaction"() {
         given:
         def email = "frodo@baggins.com"
-        def account = AccountMotherObject.aAccount(email, new BigDecimal(10.00))
+        def account = AccountMotherObject.aAccount(email)
         accountRepository.save(account)
 
         and:
-        def transfer = TransferMotherObject.aTransfer(email, TransferType.LOAD, new BigDecimal(8.00))
+        def transfer = TransferMotherObject.aTransfer(email, TransferType.RETURN)
         transferRepository.save(transfer)
 
         when:
@@ -51,23 +53,32 @@ class LoadTransactionSpec extends Specification {
         then:
         transferRepository.findById(transfer.getId()).get().status == TransferStatus.DONE
         accountHistoryRepository.findAllByAccountId(account.getId()).size() == 1
-        accountRepository.findByEmail(email).get().balance == new BigDecimal(2.00)
+        accountRepository.findByEmail(email).get().balance == BigDecimal.TEN
     }
 
-    def "should fail when user doesn't have enough money"() {
+    def "should load older transaction"() {
         given:
         def email = "frodo@baggins.com"
-        def account = AccountMotherObject.aAccount(email, new BigDecimal(10.00))
+        def account = AccountMotherObject.aAccount(email)
         accountRepository.save(account)
 
         and:
-        def transfer = TransferMotherObject.aTransfer(email, TransferType.LOAD, new BigDecimal(18.00))
-        transferRepository.save(transfer)
+        def transfer1 = TransferMotherObject.aTransfer(email, TransferType.RETURN)
+        transferRepository.save(transfer1)
+
+        and:
+        def transfer2 = TransferMotherObject.aTransfer(email, TransferType.RETURN,
+                new BigDecimal(20.00), Instant.now().minus(10, ChronoUnit.MINUTES))
+        transferRepository.save(transfer2)
 
         when:
         transferScheduler.fetch()
 
         then:
-        thrown IllegalOperation
+        transferRepository.findById(transfer1.getId()).get().status == TransferStatus.PENDING
+        transferRepository.findById(transfer2.getId()).get().status == TransferStatus.DONE
+        accountHistoryRepository.findAllByAccountId(account.getId()).size() == 1
+        accountRepository.findByEmail(email).get().balance == new BigDecimal(20.00)
     }
 }
+

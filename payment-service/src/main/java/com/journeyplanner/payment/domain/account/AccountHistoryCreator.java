@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
-public class AccountHistoryCreator {
+class AccountHistoryCreator {
 
     AccountHistory chargeEvent(String accountId, BigDecimal value) {
         return AccountHistory.builder()

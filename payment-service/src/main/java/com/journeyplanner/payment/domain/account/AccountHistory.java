@@ -11,7 +11,7 @@ import java.time.Instant;
 @Value
 @Builder
 @Document("accountHistory")
-public class AccountHistory {
+class AccountHistory {
 
     @NonNull
     String id;

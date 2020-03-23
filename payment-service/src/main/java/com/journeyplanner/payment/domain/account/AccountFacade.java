@@ -22,6 +22,10 @@ public class AccountFacade {
         return AccountDto.from(account, accountHistoryRepository.findAllByAccountId(account.getId()));
     }
 
+    public void savePendingTransfer(Transfer transfer) {
+        transferRepository.save(transfer);
+    }
+
     public String chargeAccount(String email, ChargeAccountRequest request) {
         Account account = accountRepository.findByEmail(email)
                 .orElseGet(() -> accountRepository.save(creator.emptyAccount(email)));
@@ -33,26 +37,16 @@ public class AccountFacade {
         return accountHistory.getId();
     }
 
-    public void savePendingTransfer(Transfer transfer) {
-        transferRepository.save(transfer);
-    }
-
     public String loadTransfer(Transfer transfer) {
         Account account = accountRepository.findByEmail(transfer.getEmail())
                 .orElseGet(() -> accountRepository.save(creator.emptyAccount(transfer.getEmail())));
 
-        if (account.getLastEventTime().isAfter(transfer.getEventTime())) {
+        if (account.getBalance().compareTo(transfer.getValue()) < 0) {
             transferRepository.findAndModifyStatus(transfer.getId(), TransferStatus.ERROR);
             throw new IllegalOperation("Cannot process");
         }
 
-        if (account.getBalance().compareTo(transfer.getValue()) == 0) {
-            transferRepository.findAndModifyStatus(transfer.getId(), TransferStatus.ERROR);
-            throw new IllegalOperation("Cannot process");
-        }
-
-        accountRepository.modifyAccountBalanceAndEventTime(account.getId(),
-                transfer.getEventTime(), account.getBalance().add(transfer.getValue()));
+        accountRepository.modifyAccountBalance(account.getId(), account.getBalance().subtract(transfer.getValue()));
 
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.loadEvent(account.getId(), transfer));
@@ -64,8 +58,7 @@ public class AccountFacade {
         Account account = accountRepository.findByEmail(transfer.getEmail())
                 .orElseGet(() -> accountRepository.save(creator.emptyAccount(transfer.getEmail())));
 
-        accountRepository.modifyAccountBalanceAndEventTime(account.getId(),
-                transfer.getEventTime(), account.getBalance().add(transfer.getValue()));
+        accountRepository.modifyAccountBalance(account.getId(), account.getBalance().add(transfer.getValue()));
 
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.returnEvent(account.getId(), transfer));
