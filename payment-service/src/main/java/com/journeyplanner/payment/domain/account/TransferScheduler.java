@@ -1,6 +1,6 @@
 package com.journeyplanner.payment.domain.account;
 
-import com.journeyplanner.common.config.events.TransferType;
+import com.journeyplanner.payment.exceptions.IllegalOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class TransferScheduler {
+class TransferScheduler {
 
     private final TransferRepository transferRepository;
     private final AccountFacade accountFacade;
@@ -21,10 +21,15 @@ public class TransferScheduler {
     }
 
     public void makeTransfer(Transfer transfer) {
-        if (transfer.getType() == TransferType.LOAD) {
-            accountFacade.loadTransfer(transfer);
-        } else if (transfer.getType() == TransferType.RETURN) {
-            accountFacade.returnTransfer(transfer);
+        switch (transfer.getType()) {
+            case LOAD:
+                accountFacade.loadTransfer(transfer);
+                break;
+            case RETURN:
+                accountFacade.returnTransfer(transfer);
+                break;
+            default:
+                throw new IllegalOperation("Not supported operation type");
         }
         transferRepository.findAndModifyStatus(transfer.getId(), TransferStatus.DONE);
     }

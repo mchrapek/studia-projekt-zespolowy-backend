@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 
 @Value
 @Builder
@@ -22,9 +21,6 @@ class Account {
     @Indexed(unique = true)
     @NonNull
     String email;
-
-    @NonNull
-    Instant lastEventTime;
 
     @NonNull
     BigDecimal balance;
