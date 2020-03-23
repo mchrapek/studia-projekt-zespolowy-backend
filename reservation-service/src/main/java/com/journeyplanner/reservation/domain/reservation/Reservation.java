@@ -26,6 +26,10 @@ class Reservation {
 
     @NonNull BigDecimal price;
 
+    @NonNull Instant start;
+
+    @NonNull Instant end;
+
     @NonNull Instant createdTime;
 
     @Indexed(unique = true)

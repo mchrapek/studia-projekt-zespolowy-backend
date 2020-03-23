@@ -20,5 +20,9 @@ public class CreateReservationEvent implements Event {
 
     @NonNull BigDecimal price;
 
+    @NonNull Instant start;
+
+    @NonNull Instant end;
+
     @NonNull Instant eventTimeStamp;
 }

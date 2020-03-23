@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
@@ -34,11 +35,10 @@ public class JourneyFacade {
     }
 
     public JourneyDto update(UpdateJourneyRequest request) {
-        if (!repository.existsById(request.getId())) {
-            throw new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId()));
-        }
+        Journey journey = repository.findById(request.getId())
+                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId())));
 
-        Journey updatedJourney = repository.save(journeyUpdater.from(request));
+        Journey updatedJourney = repository.save(journeyUpdater.from(journey, request));
         return JourneyDto.from(updatedJourney);
     }
 
@@ -47,7 +47,9 @@ public class JourneyFacade {
                 .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId())));
 
         reservationCreator.publish(CreateReservationEvent.builder()
-                .id(journey.getId())
+                .id(UUID.randomUUID().toString())
+                .start(journey.getStart())
+                .end(journey.getEnd())
                 .email(username)
                 .journeyId(journey.getId())
                 .price(journey.getPrice())
