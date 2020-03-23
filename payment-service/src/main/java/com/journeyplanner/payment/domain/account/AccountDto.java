@@ -17,11 +17,11 @@ public class AccountDto {
     BigDecimal balance;
     List<AccountHistoryEventDto> history;
 
-    static AccountDto from(Account account) {
+    static AccountDto from(Account account, List<AccountHistory> accountHistoryEvents) {
         return AccountDto.builder()
                 .id(account.getId())
                 .balance(account.getBalance())
-                .history(account.getEvents()
+                .history(accountHistoryEvents
                         .stream()
                         .map(e -> AccountHistoryEventDto.builder()
                                 .id(e.getId())
@@ -44,6 +44,6 @@ class AccountHistoryEventDto {
     String id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant createdTime;
-    PaymentType type;
+    AccountEventType type;
     BigDecimal value;
 }

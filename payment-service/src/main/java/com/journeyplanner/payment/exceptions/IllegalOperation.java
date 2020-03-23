@@ -1,4 +1,4 @@
-package com.journeyplanner.user.domain.exceptions;
+package com.journeyplanner.payment.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

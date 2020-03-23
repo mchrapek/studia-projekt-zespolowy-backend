@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 @Value
 @Builder
@@ -25,25 +24,8 @@ class Account {
     String email;
 
     @NonNull
+    Instant lastEventTime;
+
+    @NonNull
     BigDecimal balance;
-
-    @NonNull
-    List<AccountHistoryEvent> events;
-}
-
-@Value
-@Builder
-class AccountHistoryEvent {
-
-    @NonNull
-    String id;
-
-    @NonNull
-    Instant createdTime;
-
-    @NonNull
-    PaymentType type;
-
-    @NonNull
-    BigDecimal value;
 }

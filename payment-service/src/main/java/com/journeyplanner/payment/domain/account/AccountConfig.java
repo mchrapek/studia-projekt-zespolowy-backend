@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class AccountConfig {
 
     @Bean
-    AccountFacade accountFacade(AccountRepository accountRepository) {
-        return new AccountFacade(accountRepository, new AccountCreator());
+    AccountFacade accountFacade(AccountRepository accountRepository, AccountHistoryRepository accountHistoryRepository, TransferRepository transferRepository) {
+        return new AccountFacade(accountRepository, new AccountCreator(), accountHistoryRepository, transferRepository, new AccountHistoryCreator());
     }
 }

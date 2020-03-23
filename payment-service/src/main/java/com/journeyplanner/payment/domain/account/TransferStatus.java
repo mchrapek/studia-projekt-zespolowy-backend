@@ -1,6 +1,6 @@
 package com.journeyplanner.payment.domain.account;
 
-public enum PaymentStatus {
+public enum TransferStatus {
 
-    PENDING, DONE, ERROR;
+    PENDING, PROCESSING, DONE, ERROR;
 }

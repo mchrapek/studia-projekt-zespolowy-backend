@@ -1,4 +1,6 @@
 package com.journeyplanner.common.config.events;
 
-public class TransferType {
+public enum  TransferType {
+
+    LOAD, RETURN;
 }
