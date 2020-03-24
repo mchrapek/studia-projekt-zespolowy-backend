@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
+        "com.journeyplanner.catalogue.config",
         "com.journeyplanner.catalogue.domain",
         "com.journeyplanner.catalogue.infrastructure"
 })

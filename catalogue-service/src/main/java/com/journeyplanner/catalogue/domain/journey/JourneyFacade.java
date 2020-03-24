@@ -6,6 +6,7 @@ import com.journeyplanner.catalogue.infrastructure.input.request.CreateReservati
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.output.queue.ReservationCreator;
 import com.journeyplanner.common.config.events.CreateReservationEvent;
+import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,8 @@ public class JourneyFacade {
     private final JourneyUpdater journeyUpdater;
     private final ReservationCreator reservationCreator;
 
-    public Page<JourneyDto> getAll(Pageable pageable) {
-        return repository.findAllByStartAfter(Instant.now(), pageable).map(JourneyDto::from);
+    public Page<JourneyDto> getAll(Predicate predicate, Pageable pageable) {
+        return repository.findAll(predicate, pageable).map(JourneyDto::from);
     }
 
     public JourneyDto create(CreateJourneyRequest request) {

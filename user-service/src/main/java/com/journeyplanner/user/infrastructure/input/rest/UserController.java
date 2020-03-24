@@ -3,14 +3,17 @@ package com.journeyplanner.user.infrastructure.input.rest;
 import com.journeyplanner.user.domain.avatar.AvatarDto;
 import com.journeyplanner.user.domain.details.UserDetailsDto;
 import com.journeyplanner.user.domain.details.UserDetailsFacade;
+import com.journeyplanner.user.domain.user.User;
 import com.journeyplanner.user.domain.user.UserDto;
 import com.journeyplanner.user.domain.user.UserFacade;
 import com.journeyplanner.user.infrastructure.input.request.*;
+import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
@@ -73,10 +76,10 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault @SortDefault.SortDefaults(
-            @SortDefault(sort = "email", direction = Sort.Direction.DESC)) Pageable pageable) {
+    public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault @SortDefault.SortDefaults(@SortDefault(sort = "email", direction = Sort.Direction.DESC))
+                                                              Pageable pageable, @QuerydslPredicate(root = User.class) Predicate predicate) {
 
-        return ResponseEntity.ok(userFacade.getAll(pageable));
+        return ResponseEntity.ok(userFacade.getAll(predicate, pageable));
     }
 
     @GetMapping("details")

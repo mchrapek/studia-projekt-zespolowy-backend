@@ -37,7 +37,7 @@ class RetryTransactionSpec extends Specification {
         transferRepository.deleteAll()
     }
 
-    def "should retry transaction"() {
+    def "should retry transactionu"() {
         given:
         def email = "frodo@baggins.com"
         def account = AccountMotherObject.aAccount(email, BigDecimal.TEN)

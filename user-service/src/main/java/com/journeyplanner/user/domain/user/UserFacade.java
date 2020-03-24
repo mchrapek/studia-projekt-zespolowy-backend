@@ -8,6 +8,7 @@ import com.journeyplanner.user.domain.exceptions.UserWithEmailAlreadyExists;
 import com.journeyplanner.user.domain.password.PasswordFacade;
 import com.journeyplanner.user.infrastructure.input.request.*;
 import com.journeyplanner.user.infrastructure.output.queue.MailSender;
+import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -90,7 +91,7 @@ public class UserFacade {
                 .build());
     }
 
-    public Page<UserDto> getAll(Pageable pageable) {
-        return repository.findAll(pageable).map(UserDto::from);
+    public Page<UserDto> getAll(Predicate predicate, Pageable pageable) {
+        return repository.findAll(predicate, pageable).map(UserDto::from);
     }
 }

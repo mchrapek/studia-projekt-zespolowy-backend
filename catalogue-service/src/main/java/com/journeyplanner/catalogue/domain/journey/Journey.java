@@ -12,7 +12,7 @@ import java.time.Instant;
 @Value
 @Builder
 @Document(collection = "journey")
-class Journey {
+public class Journey {
 
     @Id
     @NonNull String id;

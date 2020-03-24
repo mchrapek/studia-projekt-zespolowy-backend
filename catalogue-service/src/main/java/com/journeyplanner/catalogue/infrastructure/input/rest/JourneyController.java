@@ -1,16 +1,19 @@
 package com.journeyplanner.catalogue.infrastructure.input.rest;
 
+import com.journeyplanner.catalogue.domain.journey.Journey;
 import com.journeyplanner.catalogue.domain.journey.JourneyDto;
 import com.journeyplanner.catalogue.domain.journey.JourneyFacade;
 import com.journeyplanner.catalogue.domain.photo.PhotoFacade;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateReservationRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
+import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
@@ -33,9 +36,9 @@ public class JourneyController {
     @GetMapping
     @CrossOrigin(origins = "*")
     public ResponseEntity<Page<JourneyDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
-            @SortDefault(sort = "start", direction = Sort.Direction.DESC)) Pageable pageable) {
+            @SortDefault(sort = "start", direction = Sort.Direction.DESC)) Pageable pageable, @QuerydslPredicate(root = Journey.class) Predicate predicate) {
 
-        return ResponseEntity.ok(journeyFacade.getAll(pageable));
+        return ResponseEntity.ok(journeyFacade.getAll(predicate, pageable));
     }
 
     @PostMapping
