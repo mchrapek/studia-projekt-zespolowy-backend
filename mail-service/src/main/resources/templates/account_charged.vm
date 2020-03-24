@@ -1,0 +1,4 @@
+<body>
+<p>Hej!</p>
+<p>Twoje konto zostało doładowane ${params.value}.</p>
+</body>

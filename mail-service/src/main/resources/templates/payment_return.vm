@@ -1,0 +1,4 @@
+<body>
+<p>Hej!</p>
+<p>Na Twoje konto została zwrócona kwota ${params.value}.</p>
+</body>
