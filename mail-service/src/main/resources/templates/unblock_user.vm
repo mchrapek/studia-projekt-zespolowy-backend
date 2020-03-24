@@ -1,4 +1,4 @@
 <body>
-<p>Hej ${params.firstName}!</p>
+<p>Hej!</p>
 <p>Zostałeś odblokowany przez administratora.</p>
 </body>

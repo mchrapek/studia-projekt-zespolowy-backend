@@ -70,9 +70,7 @@ public class UserFacade {
         mailSender.publish(SendMailEvent.builder()
                 .to(user.getEmail())
                 .templateName(Template.BLOCK_USER.getPath())
-                .params(new HashMap<String, String>() {{
-                    put("firstName", user.getFirstName());
-                }})
+                .params(new HashMap<String, String>())
                 .build());
     }
 
@@ -85,9 +83,7 @@ public class UserFacade {
         mailSender.publish(SendMailEvent.builder()
                 .to(user.getEmail())
                 .templateName(Template.UNBLOCK_USER.getPath())
-                .params(new HashMap<String, String>() {{
-                    put("firstName", user.getFirstName());
-                }})
+                .params(new HashMap<String, String>())
                 .build());
     }
 

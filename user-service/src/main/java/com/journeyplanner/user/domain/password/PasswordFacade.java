@@ -27,7 +27,6 @@ public class PasswordFacade {
                 .to(email)
                 .templateName(Template.RESET_PASSWORD.getPath())
                 .params(new HashMap<String, String>() {{
-                    put("firstName", firstName);
                     put("link", resetToken.getToken());
                 }})
                 .build());

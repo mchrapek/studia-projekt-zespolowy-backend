@@ -2,13 +2,17 @@ package com.journeyplanner.reservation.domain.reservation;
 
 import com.journeyplanner.common.config.events.CancelJourneyEvent;
 import com.journeyplanner.common.config.events.CreateReservationEvent;
+import com.journeyplanner.common.config.events.SendMailEvent;
+import com.journeyplanner.common.config.mail.Template;
 import com.journeyplanner.reservation.exception.NotPermittedOperation;
 import com.journeyplanner.reservation.exception.ResourceNotFound;
+import com.journeyplanner.reservation.infrastructure.output.MailSender;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +26,14 @@ public class ReservationFacade {
     private final ReservationCreator creator;
     private final CancelJourneyRuleCreator cancelJourneyRuleCreator;
     private final CancelJourneyRuleRepository cancelJourneyRuleRepository;
+    private final MailSender mailSender;
 
     public void createNew(final CreateReservationEvent event) {
         Reservation reservation = creator.from(event);
         repository.save(reservation);
+
+        mailSender.publish(SendMailEvent.builder().to(event.getEmail())
+                .templateName(Template.NEW_RESERVATION_CREATED.getPath()).params(new HashMap<>()).build());
     }
 
     public List<ReservationDto> getUserReservation(final String mail) {
@@ -48,13 +56,19 @@ public class ReservationFacade {
         }
 
         repository.updateReservationStatusTo(reservation.getId(), ReservationStatus.CANCEL);
+
+        mailSender.publish(SendMailEvent.builder().to(mail)
+                .templateName(Template.RESERVATION_CANCELED.getPath()).params(new HashMap<>()).build());
     }
 
     public void createNewCancelEvent(CancelJourneyEvent cancelJourneyEvent) {
         cancelJourneyRuleRepository.save(cancelJourneyRuleCreator.from(cancelJourneyEvent));
     }
 
-    public void cancelByAdmin(final String reservationId) {
+    public void cancelByAdmin(final String reservationId, final String email) {
         repository.updateReservationStatusTo(reservationId, ReservationStatus.CANCEL);
+
+        mailSender.publish(SendMailEvent.builder().to(email)
+                .templateName(Template.JOURNEY_CANCELED.getPath()).params(new HashMap<>()).build());
     }
 }

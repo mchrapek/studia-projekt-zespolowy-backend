@@ -35,7 +35,7 @@ public class CancelJourneyScheduler {
     public void cancelAllReservationForJourney(String journeyId) {
         List<Reservation> reservations = reservationFacade.getActiveByJourney(journeyId);
         for (Reservation reservation : reservations) {
-            reservationFacade.cancelByAdmin(reservation.getId());
+            reservationFacade.cancelByAdmin(reservation.getId(), reservation.getMail());
         }
     }
 }

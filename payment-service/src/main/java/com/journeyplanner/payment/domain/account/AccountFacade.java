@@ -1,13 +1,17 @@
 package com.journeyplanner.payment.domain.account;
 
+import com.journeyplanner.common.config.events.SendMailEvent;
 import com.journeyplanner.common.config.events.TransferType;
+import com.journeyplanner.common.config.mail.Template;
 import com.journeyplanner.payment.exceptions.IllegalOperation;
 import com.journeyplanner.payment.exceptions.NoPermission;
 import com.journeyplanner.payment.infrastructure.input.request.ChargeAccountRequest;
+import com.journeyplanner.payment.infrastructure.output.MailSender;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Slf4j
@@ -19,6 +23,7 @@ public class AccountFacade {
     private final AccountHistoryRepository accountHistoryRepository;
     private final TransferRepository transferRepository;
     private final AccountHistoryCreator accountHistoryCreator;
+    private final MailSender mailSender;
 
     public AccountDto getAccountByEmail(final String email) {
         Account account = accountRepository.findByEmail(email)
@@ -39,6 +44,11 @@ public class AccountFacade {
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.chargeEvent(account.getId(), request.getValue()));
 
+        mailSender.publish(SendMailEvent.builder().to(email).templateName(Template.ACCOUNT_CHARGED.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("value", request.getValue().toPlainString());
+                }}).build());
+
         return accountHistory.getId();
     }
 
@@ -56,6 +66,11 @@ public class AccountFacade {
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.loadEvent(account.getId(), transfer));
 
+        mailSender.publish(SendMailEvent.builder().to(transfer.getEmail()).templateName(Template.PAYMENT_LOAD.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("value", transfer.getValue().toPlainString());
+                }}).build());
+
         return accountHistory.getId();
     }
 
@@ -67,6 +82,11 @@ public class AccountFacade {
 
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.returnEvent(account.getId(), transfer));
+
+        mailSender.publish(SendMailEvent.builder().to(transfer.getEmail()).templateName(Template.PAYMENT_RETURN.getPath())
+                .params(new HashMap<String, String>() {{
+                    put("value", transfer.getValue().toPlainString());
+                }}).build());
 
         return accountHistory.getId();
     }
