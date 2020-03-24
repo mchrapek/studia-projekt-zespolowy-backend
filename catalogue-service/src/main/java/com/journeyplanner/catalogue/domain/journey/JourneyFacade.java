@@ -2,7 +2,6 @@ package com.journeyplanner.catalogue.domain.journey;
 
 import com.journeyplanner.catalogue.exceptions.ResourcesNotFound;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
-import com.journeyplanner.catalogue.infrastructure.input.request.CreateReservationRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.output.queue.ReservationCreator;
 import com.journeyplanner.common.config.events.CreateReservationEvent;
@@ -27,7 +26,10 @@ public class JourneyFacade {
     private final ReservationCreator reservationCreator;
 
     public Page<JourneyDto> getAll(Predicate predicate, Pageable pageable) {
-        return repository.findAll(predicate, pageable).map(JourneyDto::from);
+
+        return repository
+                .findAll(predicate, pageable)
+                .map(JourneyDto::from);
     }
 
     public JourneyDto create(CreateJourneyRequest request) {
@@ -35,9 +37,9 @@ public class JourneyFacade {
         return JourneyDto.from(savedJourney);
     }
 
-    public JourneyDto update(UpdateJourneyRequest request) {
-        Journey journey = repository.findById(request.getId())
-                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId())));
+    public JourneyDto update(String id, UpdateJourneyRequest request) {
+        Journey journey = repository.findById(id)
+                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", id)));
 
         Journey updatedJourney = repository.save(journeyUpdater.from(journey, request));
         return JourneyDto.from(updatedJourney);
@@ -52,9 +54,9 @@ public class JourneyFacade {
         }
     }
 
-    public void createReservation(CreateReservationRequest request, String username) {
-        Journey journey = repository.findById(request.getId())
-                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", request.getId())));
+    public void createReservation(String journeyId, String username) {
+        Journey journey = repository.findById(journeyId)
+                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", journeyId)));
 
         reservationCreator.publish(CreateReservationEvent.builder()
                 .id(UUID.randomUUID().toString())

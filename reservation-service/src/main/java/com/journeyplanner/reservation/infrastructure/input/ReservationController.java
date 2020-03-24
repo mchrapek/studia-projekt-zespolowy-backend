@@ -1,7 +1,9 @@
-package com.journeyplanner.reservation.infrastructure.output;
+package com.journeyplanner.reservation.infrastructure.input;
 
 import com.journeyplanner.reservation.domain.reservation.ReservationDto;
 import com.journeyplanner.reservation.domain.reservation.ReservationFacade;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,25 +13,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("reservations")
 @Slf4j
 @AllArgsConstructor
+@Api(tags = "ReservationAPI")
 public class ReservationController {
 
     public ReservationFacade reservationFacade;
 
     @GetMapping
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get User Reservations")
     public ResponseEntity<List<ReservationDto>> getUserReservation(@RequestHeader("x-username") String username) {
 
         return ResponseEntity.ok(reservationFacade.getUserReservation(username));
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    public void cancelReservation(@RequestHeader("x-username") String username, @PathVariable String id) {
+    @ApiOperation(value = "Cancel Reservation")
+    public void cancelReservation(@RequestHeader("x-username") String username,
+                                  @PathVariable("id") String paymentId) {
 
-        reservationFacade.cancelByUser(username, id);
+        reservationFacade.cancelByUser(username, paymentId);
     }
 }

@@ -8,6 +8,8 @@ import com.journeyplanner.user.domain.user.UserDto;
 import com.journeyplanner.user.domain.user.UserFacade;
 import com.journeyplanner.user.infrastructure.input.request.*;
 import com.querydsl.core.types.Predicate;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,33 +27,37 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping
+@RequestMapping("users")
 @Slf4j
 @AllArgsConstructor
+@Api(tags = "UserAPI")
 public class UserController {
 
     private final UserFacade userFacade;
     private final UserDetailsFacade userDetailsFacade;
 
     @PostMapping("register")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Register New User")
     public void createUser(@RequestBody @Valid CreateUserRequest request) {
 
         userFacade.create(request);
     }
 
     @PostMapping("reset")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Send Email With Reset Password Token")
     public void generateResetPasswordLink(@RequestBody @Valid GenerateResetPasswordLinkRequest request) {
 
         userFacade.sendResetPasswordToken(request);
     }
 
     @PostMapping("password")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Reset Password")
     public void resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
 
         userFacade.resetPassword(request);
@@ -60,6 +66,7 @@ public class UserController {
     @PostMapping("block")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Add User to blacklist")
     public void addUserToBlacklist(@RequestBody @Valid AddUserToBlacklistRequest request) {
 
         userFacade.block(request);
@@ -68,6 +75,7 @@ public class UserController {
     @DeleteMapping("block")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Remove User from blacklist")
     public void removeUserFromBlacklist(@RequestBody @Valid RemoveUserFromBlacklistRequest request) {
 
         userFacade.unblock(request);
@@ -76,6 +84,7 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get all Users")
     public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault @SortDefault.SortDefaults(@SortDefault(sort = "email", direction = Sort.Direction.DESC))
                                                               Pageable pageable, @QuerydslPredicate(root = User.class) Predicate predicate) {
 
@@ -83,32 +92,33 @@ public class UserController {
     }
 
     @GetMapping("details")
-    @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get User Details")
     public ResponseEntity<UserDetailsDto> getUserDetails(@RequestHeader("x-username") String username) {
 
         return ResponseEntity.ok(userDetailsFacade.getDetailsByMail(username));
     }
 
     @PostMapping("details")
-    @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<UserDetailsDto> createUserDetails(@RequestHeader("x-username") String username,
+    @ApiOperation(value = "Update User Details")
+    public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestHeader("x-username") String username,
                                                             @RequestBody @Valid UpdateUserDetailsRequest request) {
 
         return ResponseEntity.ok(userDetailsFacade.addOrUpdateDetails(username, request));
     }
 
     @GetMapping("details/{id}")
-    @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
-    public ResponseEntity<UserDetailsDto> getUserDetailsById(@PathVariable String id) {
+    @ApiOperation(value = "Get User Details By Id")
+    public ResponseEntity<UserDetailsDto> getUserDetailsById(@PathVariable("id") String userId) {
 
-        return ResponseEntity.ok(userDetailsFacade.getDetailsById(id));
+        return ResponseEntity.ok(userDetailsFacade.getDetailsById(userId));
     }
 
     @GetMapping(value = "avatar", produces = MediaType.IMAGE_JPEG_VALUE)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get User Avatar")
     public ResponseEntity<byte[]> getAvatarForUser(@RequestHeader("x-username") String username) {
 
         AvatarDto avatarDto = userDetailsFacade.getAvatarByMail(username);
@@ -116,8 +126,9 @@ public class UserController {
     }
 
     @PostMapping(value = "avatar")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Add/Update User Avatar")
     public void add(@RequestHeader("x-username") String username, @RequestParam("image") MultipartFile file) {
 
         userDetailsFacade.addAvatar(username, file);
