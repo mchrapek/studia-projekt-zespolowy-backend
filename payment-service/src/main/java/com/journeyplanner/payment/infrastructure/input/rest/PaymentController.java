@@ -1,54 +1,40 @@
 package com.journeyplanner.payment.infrastructure.input.rest;
 
-import com.journeyplanner.payment.domain.account.AccountDto;
 import com.journeyplanner.payment.domain.account.AccountFacade;
 import com.journeyplanner.payment.domain.account.TransferDto;
-import com.journeyplanner.payment.infrastructure.input.request.ChargeAccountRequest;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
-@RequestMapping
+@RequestMapping("/billing/payments")
 @Slf4j
 @AllArgsConstructor
+@Api(tags = "PaymentAPI")
 public class PaymentController {
 
     private final AccountFacade accountFacade;
 
-    @GetMapping("account")
+    @GetMapping("{id}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<AccountDto> get(@RequestHeader("x-username") String username) {
-
-        return ResponseEntity.ok(accountFacade.getAccountByEmail(username));
-    }
-
-    @GetMapping("payment/{id}")
-    @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get Payment")
     public ResponseEntity<TransferDto> getPayment(@RequestHeader("x-username") String username,
-                                                  @PathVariable String id) {
+                                                  @PathVariable("id") String paymentId) {
 
-        return ResponseEntity.ok(accountFacade.getTransactionStatus(username, id));
+        return ResponseEntity.ok(accountFacade.getTransactionStatus(username, paymentId));
     }
 
-    @PostMapping("payment/{id}")
+    @PostMapping("{id}/retry")
     @CrossOrigin(origins = "*")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Retry Payment")
     public void retryPayment(@RequestHeader("x-username") String username,
-                             @PathVariable String id) {
+                             @PathVariable("id") String paymentId) {
 
-        accountFacade.retryTransaction(username, id);
-    }
-
-    @PostMapping("charge")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<String> charge(@RequestHeader("x-username") String username,
-                                         @RequestBody @Valid ChargeAccountRequest request) {
-
-        return ResponseEntity.ok(accountFacade.chargeAccount(username, request));
+        accountFacade.retryTransaction(username, paymentId);
     }
 }
