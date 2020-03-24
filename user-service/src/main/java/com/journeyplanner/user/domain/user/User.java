@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Value
 @Builder
 @Document(collection = "appUser")
-class User {
+public class User {
 
     @Id
     @NonNull

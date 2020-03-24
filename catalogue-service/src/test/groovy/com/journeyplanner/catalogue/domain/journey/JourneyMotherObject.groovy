@@ -8,7 +8,7 @@ class JourneyMotherObject {
     static aJourney(String id = UUID.randomUUID().toString(), String name = "NameJourney") {
         Journey.builder()
                 .id(id)
-                .name("NameJourney")
+                .name(name)
                 .country("Country")
                 .status(JourneyStatus.ACTIVE)
                 .city("City")

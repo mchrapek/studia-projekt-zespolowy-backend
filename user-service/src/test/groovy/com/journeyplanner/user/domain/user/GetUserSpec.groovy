@@ -70,4 +70,46 @@ class GetUserSpec extends Specification {
         result.response.getContentAsString().contains("\"offset\":0")
         result.response.getContentAsString().concat("\"numberOfElements\":2")
     }
+
+    def "should get first page with email"() {
+        given:
+        def user1 = UserMotherObject.aUser("aragorn@middleearth.com")
+        def user2 = UserMotherObject.aUser("legolas@forest.com")
+        def user3 = UserMotherObject.aUser("gimli@moria.com")
+
+        userRepository.save(user1)
+        userRepository.save(user2)
+        userRepository.save(user3)
+
+        when:
+        def result = mvc.perform(get("/?email=aragorn"))
+                .andExpect(status().isOk())
+                .andReturn()
+
+        then:
+        result.response.getContentAsString().contains(user1.email)
+        !result.response.getContentAsString().contains(user2.email)
+        !result.response.getContentAsString().contains(user3.email)
+    }
+
+    def "should get first page with status"() {
+        given:
+        def user1 = UserMotherObject.aUser("aragorn@middleearth.com", "USER", Boolean.TRUE)
+        def user2 = UserMotherObject.aUser("legolas@forest.com")
+        def user3 = UserMotherObject.aUser("gimli@moria.com")
+
+        userRepository.save(user1)
+        userRepository.save(user2)
+        userRepository.save(user3)
+
+        when:
+        def result = mvc.perform(get("/?isBlocked=false"))
+                .andExpect(status().isOk())
+                .andReturn()
+
+        then:
+        !result.response.getContentAsString().contains(user1.email)
+        result.response.getContentAsString().contains(user2.email)
+        result.response.getContentAsString().contains(user3.email)
+    }
 }
