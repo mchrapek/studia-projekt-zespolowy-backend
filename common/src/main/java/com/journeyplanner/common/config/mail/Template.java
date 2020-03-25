@@ -6,6 +6,7 @@ public enum Template {
     BLOCK_USER("block_user.vm"),
     UNBLOCK_USER("unblock_user.vm"),
     RESET_PASSWORD("reset_password.vm"),
+    RESET_PASSWORD_ADMIN("reset_password_admin.vm"),
 
     NEW_RESERVATION_CREATED("new_reservation_created.vm"),
     RESERVATION_CANCELED("reservation_canceled.vm"),
