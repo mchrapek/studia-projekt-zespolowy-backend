@@ -20,7 +20,7 @@ public class PhotoController {
 
     @GetMapping(value = "{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get photo by id")
+    @ApiOperation(value = "Get photo by id", notes = "Anonymous")
     public ResponseEntity<byte[]> getById(@PathVariable("id") String photoId) {
 
         return ResponseEntity.ok(photoFacade.getById(photoId).getImage().getData());

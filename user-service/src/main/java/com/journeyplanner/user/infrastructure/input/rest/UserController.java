@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping("register")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Register New User")
+    @ApiOperation(value = "Register New User", notes = "Anonymous")
     public void createUser(@RequestBody @Valid CreateUserRequest request) {
 
         userFacade.create(request);
@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("reset")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Send Email With Reset Password Token")
+    @ApiOperation(value = "Send Email With Reset Password Token", notes = "Anonymous")
     public void generateResetPasswordLink(@RequestBody @Valid GenerateResetPasswordLinkRequest request) {
 
         userFacade.sendResetPasswordToken(request);
@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping("password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Reset Password")
+    @ApiOperation(value = "Reset Password", notes = "Anonymous")
     public void resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
 
         userFacade.resetPassword(request);
@@ -68,7 +68,7 @@ public class UserController {
     @PostMapping("block")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Add User to blacklist")
+    @ApiOperation(value = "Add User to blacklist", notes = "Admin")
     public void addUserToBlacklist(@RequestBody @Valid AddUserToBlacklistRequest request) {
 
         userFacade.block(request);
@@ -77,7 +77,7 @@ public class UserController {
     @DeleteMapping("block")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Remove User from blacklist")
+    @ApiOperation(value = "Remove User from blacklist", notes = "Admin")
     public void removeUserFromBlacklist(@RequestBody @Valid RemoveUserFromBlacklistRequest request) {
 
         userFacade.unblock(request);
@@ -86,16 +86,16 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get all Users")
+    @ApiOperation(value = "Get all Users", notes = "Admin")
     public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault @SortDefault.SortDefaults(@SortDefault(sort = "email", direction = Sort.Direction.DESC))
-                                                              Pageable pageable, @QuerydslPredicate(root = User.class) Predicate predicate) {
+                                                          Pageable pageable, @QuerydslPredicate(root = User.class) Predicate predicate) {
 
         return ResponseEntity.ok(userFacade.getAll(predicate, pageable));
     }
 
     @GetMapping("details")
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get User Details")
+    @ApiOperation(value = "Get User Details", notes = "User")
     public ResponseEntity<UserDetailsDto> getUserDetails(@RequestHeader("x-username") String username) {
 
         return ResponseEntity.ok(userDetailsFacade.getDetailsByEmail(username));
@@ -103,7 +103,7 @@ public class UserController {
 
     @PostMapping("details")
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Update User Details")
+    @ApiOperation(value = "Update User Details", notes = "User")
     public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestHeader("x-username") String username,
                                                             @RequestBody @Valid UpdateUserDetailsRequest request) {
 
@@ -112,7 +112,7 @@ public class UserController {
 
     @GetMapping("details/{id}")
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get User Details By Id")
+    @ApiOperation(value = "Get User Details By Id", notes = "Admin")
     public ResponseEntity<UserDetailsDto> getUserDetailsById(@PathVariable("id") String userId) {
 
         return ResponseEntity.ok(userDetailsFacade.getDetailsById(userId));
@@ -120,7 +120,7 @@ public class UserController {
 
     @GetMapping(value = "avatar", produces = MediaType.IMAGE_JPEG_VALUE)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get User Avatar")
+    @ApiOperation(value = "Get User Avatar", notes = "User")
     public ResponseEntity<byte[]> getAvatarForUser(@RequestHeader("x-username") String username) {
 
         AvatarDto avatarDto = userDetailsFacade.getAvatarByEmail(username);
@@ -130,7 +130,7 @@ public class UserController {
     @PostMapping(value = "avatar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Add/Update User Avatar")
+    @ApiOperation(value = "Add/Update User Avatar", notes = "User")
     public void add(@RequestHeader("x-username") String username, @RequestParam("image") MultipartFile file) {
 
         userDetailsFacade.addAvatar(username, file);
@@ -138,7 +138,7 @@ public class UserController {
 
     @GetMapping("guides")
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get Guides")
+    @ApiOperation(value = "Get Guides", notes = "Admin")
     public ResponseEntity<List<GuideDto>> guides() {
 
         return ResponseEntity.ok(userFacade.getGuides());
@@ -147,7 +147,7 @@ public class UserController {
     @PostMapping("register/guides")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Add new guide")
+    @ApiOperation(value = "Add new guide", notes = "Admin")
     public void createGuide(@RequestBody @Valid CreateGuideRequest request) {
 
         userFacade.createGuide(request);

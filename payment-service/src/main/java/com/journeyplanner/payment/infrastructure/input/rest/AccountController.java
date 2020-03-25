@@ -23,7 +23,7 @@ public class AccountController {
 
     @GetMapping
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Get User Account")
+    @ApiOperation(value = "Get User Account", notes = "User")
     public ResponseEntity<AccountDto> get(@RequestHeader("x-username") String username) {
 
         return ResponseEntity.ok(accountFacade.getAccountByEmail(username));
@@ -31,7 +31,7 @@ public class AccountController {
 
     @PostMapping("charge")
     @CrossOrigin(origins = "*")
-    @ApiOperation(value = "Charge Account")
+    @ApiOperation(value = "Charge Account", notes = "User")
     public ResponseEntity<String> charge(@RequestHeader("x-username") String username,
                                          @RequestBody @Valid ChargeAccountRequest request) {
 
