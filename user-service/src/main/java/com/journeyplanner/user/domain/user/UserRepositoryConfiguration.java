@@ -13,7 +13,7 @@ public class UserRepositoryConfiguration {
     @Bean
     public CommandLineRunner init(UserRepository userRepository, PasswordFacade passwordFacade) {
         User admin = User.builder()
-                .id(UUID.randomUUID().toString())
+                .id("c5eb23dc-b6d0-4485-b0a2-570523777313")
                 .email("Todd@journeyplanner.com")
                 .firstName("Todd")
                 .secondName("Ray")
@@ -26,7 +26,7 @@ public class UserRepositoryConfiguration {
         }
 
         User guide = User.builder()
-                .id(UUID.randomUUID().toString())
+                .id("fd1f2ec4-21d1-4c32-a692-eade9fd19cfe")
                 .email("maria@jourrapide.com")
                 .firstName("Maria")
                 .secondName("Kleins")
@@ -39,7 +39,7 @@ public class UserRepositoryConfiguration {
         }
 
         User user = User.builder()
-                .id(UUID.randomUUID().toString())
+                .id("380d1dad-bc3f-4cbb-9b12-7138afa170b2")
                 .email("BarbaraS@rhyta.com")
                 .firstName("Barbara")
                 .secondName("Siciliano")
