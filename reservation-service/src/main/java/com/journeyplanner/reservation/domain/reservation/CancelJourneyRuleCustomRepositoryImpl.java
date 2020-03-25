@@ -12,7 +12,7 @@ public class CancelJourneyRuleCustomRepositoryImpl implements CancelJourneyRuleC
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void updateCancelJourneyRuleStatusTo(String id, CancelJourneyRuleStatus status) {
+    public void updateCancelJourneyRuleStatusTo(final String id, final CancelJourneyRuleStatus status) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
 

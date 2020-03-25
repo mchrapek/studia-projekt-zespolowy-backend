@@ -9,10 +9,10 @@ import org.springframework.data.mongodb.core.query.Update;
 @AllArgsConstructor
 public class CustomReservationRepositoryImpl implements CustomReservationRepository {
 
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @Override
-    public void updateReservationStatusTo(String id, ReservationStatus status) {
+    public void updateReservationStatusTo(final String id, final ReservationStatus status) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
 

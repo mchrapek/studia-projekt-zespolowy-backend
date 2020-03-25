@@ -34,7 +34,7 @@ public class SenderScheduler {
         log.info("End scheduled action : fetching pending mails");
     }
 
-    private void sendMailAndUpdateStatus(Mail mail) {
+    private void sendMailAndUpdateStatus(final Mail mail) {
         Option<String> body = parser.parse(mail.getTemplateName(), mail.getParams());
 
         try {

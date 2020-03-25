@@ -13,10 +13,10 @@ public class ReservationDto {
 
     String id;
     ReservationStatus status;
-    String mail;
+    String email;
     String journeyId;
     BigDecimal price;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant createdTime;
     String paymentId;
 
@@ -24,6 +24,7 @@ public class ReservationDto {
         return ReservationDto.builder()
                 .id(reservation.getId())
                 .status(reservation.getStatus())
+                .email(reservation.getEmail())
                 .journeyId(reservation.getJourneyId())
                 .price(reservation.getPrice())
                 .createdTime(reservation.getCreatedTime())

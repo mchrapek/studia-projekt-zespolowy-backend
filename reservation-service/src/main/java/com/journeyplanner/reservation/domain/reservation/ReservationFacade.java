@@ -34,34 +34,37 @@ public class ReservationFacade {
 
         mailSender.publish(SendMailEvent.builder().to(event.getEmail())
                 .templateName(Template.NEW_RESERVATION_CREATED.getPath()).params(new HashMap<>()).build());
+
+        log.info(format("New reservation created for journey : {0} : for user : {1}", event.getJourneyId(), event.getEmail()));
     }
 
-    public List<ReservationDto> getUserReservation(final String mail) {
-        return repository.getReservationByMail(mail)
+    public List<ReservationDto> getUserReservation(final String email) {
+        return repository.getReservationByEmail(email)
                 .stream()
                 .map(ReservationDto::from)
                 .collect(Collectors.toList());
     }
 
-    public List<Reservation> getActiveByJourney(String journeyId) {
+    public List<Reservation> getActiveByJourney(final String journeyId) {
         return repository.getReservationByJourneyIdAndStatus(journeyId, ReservationStatus.ACTIVE);
     }
 
-    public void cancelByUser(final String mail, final String reservationId) {
-        Reservation reservation = repository.findByIdAndMail(reservationId, mail)
-                .orElseThrow(() -> new ResourceNotFound(format("Cannot found journey with id : {0}", reservationId)));
+    public void cancelByUser(final String email, final String reservationId) {
+        Reservation reservation = repository.findByIdAndEmail(reservationId, email)
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found reservation with id : {0}", reservationId)));
 
         if (Instant.now().plus(14, ChronoUnit.DAYS).isAfter(reservation.getStart())) {
-            throw new NotPermittedOperation(format("Cannot cancel reservation 14 days before start {0}", reservationId));
+            log.info(format("Cannot cancel reservation : {0} : 14 days before start for user : {1}", reservationId, email));
+            throw new NotPermittedOperation(format("Cannot cancel reservation 14 days before start : {0}", reservationId));
         }
 
         repository.updateReservationStatusTo(reservation.getId(), ReservationStatus.CANCEL);
 
-        mailSender.publish(SendMailEvent.builder().to(mail)
+        mailSender.publish(SendMailEvent.builder().to(email)
                 .templateName(Template.RESERVATION_CANCELED.getPath()).params(new HashMap<>()).build());
     }
 
-    public void createNewCancelEvent(CancelJourneyEvent cancelJourneyEvent) {
+    public void createNewCancelEvent(final CancelJourneyEvent cancelJourneyEvent) {
         cancelJourneyRuleRepository.save(cancelJourneyRuleCreator.from(cancelJourneyEvent));
     }
 

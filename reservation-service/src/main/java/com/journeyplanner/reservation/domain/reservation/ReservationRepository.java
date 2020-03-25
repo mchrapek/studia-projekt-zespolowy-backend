@@ -11,11 +11,11 @@ interface ReservationRepository extends Repository<Reservation, String>, CustomR
 
     Optional<Reservation> findById(String id);
 
-    Optional<Reservation> findByIdAndMail(String id, String mail);
+    Optional<Reservation> findByIdAndEmail(String id, String mail);
 
     List<Reservation> getReservationByJourneyIdAndStatus(String journeyId, ReservationStatus status);
 
-    List<Reservation> getReservationByMail(String mail);
+    List<Reservation> getReservationByEmail(String mail);
 
     void deleteAll();
 }

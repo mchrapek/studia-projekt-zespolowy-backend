@@ -6,7 +6,7 @@ import java.util.Optional;
 
 interface AvatarRepository extends Repository<Avatar, String> {
 
-    Optional<Avatar> findByMail(String mail);
+    Optional<Avatar> findByEmail(String email);
 
     Avatar save(Avatar avatar);
 

@@ -9,7 +9,7 @@ class AvatarMotherObject {
     static aAvatar(String mail, String content = "AVATAR") {
         Avatar.builder()
                 .id(UUID.randomUUID().toString())
-                .mail(mail)
+                .email(mail)
                 .image(new Binary(BsonBinarySubType.BINARY, content.getBytes()))
                 .build()
     }

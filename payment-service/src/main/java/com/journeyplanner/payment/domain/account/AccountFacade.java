@@ -14,6 +14,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static java.text.MessageFormat.format;
+
 @Slf4j
 @AllArgsConstructor
 public class AccountFacade {
@@ -49,6 +51,7 @@ public class AccountFacade {
                     put("value", request.getValue().toPlainString());
                 }}).build());
 
+        log.info(format("Account charged : {0} : {1} : {2}", account.getId(), account.getEmail(), account.getBalance()));
         return accountHistory.getId();
     }
 
@@ -58,7 +61,8 @@ public class AccountFacade {
 
         if (account.getBalance().compareTo(transfer.getValue()) < 0) {
             transferRepository.findAndModifyStatus(transfer.getId(), TransferStatus.ERROR);
-            throw new IllegalOperation("Cannot process");
+            log.info(format("You don't have enough money : {0} : {1}", transfer.getId(), transfer.getEmail()));
+            throw new IllegalOperation(format("You don't have enough money : {0} : {1}", transfer.getId(), transfer.getEmail()));
         }
 
         accountRepository.modifyAccountBalance(account.getId(), account.getBalance().subtract(transfer.getValue()));
@@ -71,6 +75,7 @@ public class AccountFacade {
                     put("value", transfer.getValue().toPlainString());
                 }}).build());
 
+        log.info(format("Account loaded : {0} : {1} : {2}", account.getId(), account.getEmail(), account.getBalance()));
         return accountHistory.getId();
     }
 
@@ -88,21 +93,25 @@ public class AccountFacade {
                     put("value", transfer.getValue().toPlainString());
                 }}).build());
 
+
+        log.info(format("Account return : {0} : {1} : {2}", account.getId(), account.getEmail(), account.getBalance()));
         return accountHistory.getId();
     }
 
     public void retryTransaction(final String email, final String paymentId) {
         Transfer transfer = transferRepository.findFirstByPaymentIdOrderByEventTimeDesc(paymentId)
-                .orElseThrow(() -> new IllegalOperation("Cannot find transaction"));
+                .orElseThrow(() -> new IllegalOperation(format("Cannot find transaction for payment : {0}", paymentId)));
 
         if (!transfer.getEmail().equals(email)) {
-            throw new NoPermission("You don't have permission");
+            throw new NoPermission(format("You don't have permission for transaction : {0}", transfer.getId()));
         }
 
         if (transfer.getStatus() != TransferStatus.ERROR) {
-            throw new IllegalOperation("Transaction already in progress");
+            log.warn(format("You cannot retry transaction : {0} : in status : {1}", transfer.getId(), transfer.getStatus()));
+            throw new IllegalOperation(format("Transaction already in progress : {0}", transfer.getId()));
         }
 
+        log.info(format("Retry transfer request : {0} : for paymentId : {1}", transfer.getId(), paymentId));
         savePendingTransfer(Transfer.builder()
                 .id(UUID.randomUUID().toString())
                 .email(email)
@@ -116,10 +125,10 @@ public class AccountFacade {
 
     public TransferDto getTransactionStatus(String email, String paymentId) {
         Transfer transfer = transferRepository.findFirstByPaymentIdOrderByEventTimeDesc(paymentId)
-                .orElseThrow(() -> new IllegalOperation("Cannot find transaction"));
+                .orElseThrow(() -> new IllegalOperation(format("Cannot find payment {0}", paymentId)));
 
         if (!transfer.getEmail().equals(email)) {
-            throw new NoPermission("You don't have permission");
+            throw new NoPermission(format("You don't have permission for transaction : {0}", transfer.getId()));
         }
 
         return TransferDto.from(transfer);

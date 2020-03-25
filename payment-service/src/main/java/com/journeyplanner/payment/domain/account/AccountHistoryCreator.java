@@ -6,7 +6,7 @@ import java.util.UUID;
 
 class AccountHistoryCreator {
 
-    AccountHistory chargeEvent(String accountId, BigDecimal value) {
+    AccountHistory chargeEvent(final String accountId, final BigDecimal value) {
         return AccountHistory.builder()
                 .id(UUID.randomUUID().toString())
                 .accountId(accountId)
@@ -16,7 +16,7 @@ class AccountHistoryCreator {
                 .build();
     }
 
-    AccountHistory loadEvent(String accountId, Transfer transfer) {
+    AccountHistory loadEvent(final String accountId, final Transfer transfer) {
         return AccountHistory.builder()
                 .id(UUID.randomUUID().toString())
                 .accountId(accountId)
@@ -26,7 +26,7 @@ class AccountHistoryCreator {
                 .build();
     }
 
-    AccountHistory returnEvent(String accountId, Transfer transfer) {
+    AccountHistory returnEvent(final String accountId, final Transfer transfer) {
         return AccountHistory.builder()
                 .id(UUID.randomUUID().toString())
                 .accountId(accountId)

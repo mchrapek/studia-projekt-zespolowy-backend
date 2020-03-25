@@ -6,12 +6,12 @@ import java.util.UUID;
 
 class ReservationCreator {
 
-    Reservation from(CreateReservationEvent event) {
+    Reservation from(final CreateReservationEvent event) {
         return Reservation.builder()
                 .id(UUID.randomUUID().toString())
                 .start(event.getStart())
                 .end(event.getEnd())
-                .mail(event.getEmail())
+                .email(event.getEmail())
                 .journeyId(event.getJourneyId())
                 .price(event.getPrice())
                 .status(ReservationStatus.ACTIVE)

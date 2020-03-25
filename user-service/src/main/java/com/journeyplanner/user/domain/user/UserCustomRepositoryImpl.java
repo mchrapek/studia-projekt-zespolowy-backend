@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Update;
 @AllArgsConstructor
 class UserCustomRepositoryImpl implements UserCustomRepository {
 
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public void updatePassword(final String email, final String password) {

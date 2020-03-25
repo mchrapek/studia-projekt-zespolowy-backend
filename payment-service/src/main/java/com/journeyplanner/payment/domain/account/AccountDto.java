@@ -17,7 +17,7 @@ public class AccountDto {
     BigDecimal balance;
     List<AccountHistoryEventDto> history;
 
-    static AccountDto from(Account account, List<AccountHistory> accountHistoryEvents) {
+    static AccountDto from(final Account account, final List<AccountHistory> accountHistoryEvents) {
         return AccountDto.builder()
                 .id(account.getId())
                 .balance(account.getBalance())

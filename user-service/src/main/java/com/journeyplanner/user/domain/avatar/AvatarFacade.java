@@ -15,18 +15,19 @@ public class AvatarFacade {
     private final AvatarRepository repository;
     private final AvatarCreator creator;
 
-    public AvatarDto getByMail(final String mail) {
-        return repository.findByMail(mail)
+    public AvatarDto getByEmail(final String email) {
+        return repository.findByEmail(email)
                 .map(AvatarDto::from)
-                .orElseThrow(() -> new ResourceNotFound(format("Cannot find avatar for : {0}", mail)));
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot find avatar for : {0}", email)));
     }
 
-    public void add(final String mail, MultipartFile file) {
-        Avatar updatedAvatar = repository.findByMail(mail)
-                .map(a -> creator.from(a.getId(), mail, file))
-                .orElseGet(() -> creator.from(mail, file))
-                .orElseThrow(() -> new CannotParseFile(format("Cannot parse avatar for journey : {0} : ", mail)));
+    public void add(final String email, final MultipartFile file) {
+        Avatar updatedAvatar = repository.findByEmail(email)
+                .map(a -> creator.from(a.getId(), email, file))
+                .orElseGet(() -> creator.from(email, file))
+                .orElseThrow(() -> new CannotParseFile(format("Cannot parse avatar for journey : {0} : ", email)));
 
         repository.save(updatedAvatar);
+        log.info(format("Avatar for user {0} updated", email));
     }
 }

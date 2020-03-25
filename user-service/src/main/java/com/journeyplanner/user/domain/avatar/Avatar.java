@@ -17,7 +17,7 @@ class Avatar {
     @NonNull String id;
 
     @Indexed(unique = true)
-    @NonNull String mail;
+    @NonNull String email;
 
     @NonNull Binary image;
 }

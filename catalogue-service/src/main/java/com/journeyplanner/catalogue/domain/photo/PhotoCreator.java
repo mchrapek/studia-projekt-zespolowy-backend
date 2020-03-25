@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class PhotoCreator {
 
-    Optional<Photo> from(String journeyId, MultipartFile file) {
+    Optional<Photo> from(final String journeyId, final MultipartFile file) {
         try {
             return Optional.ofNullable(Photo.builder()
                     .id(UUID.randomUUID().toString())

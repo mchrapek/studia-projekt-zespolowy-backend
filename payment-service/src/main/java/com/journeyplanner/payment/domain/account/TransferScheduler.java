@@ -28,7 +28,7 @@ class TransferScheduler {
             transfer.ifPresent(this::makeTransfer);
         } catch (Exception e) {
             transfer.ifPresent(this::sendMailWithError);
-            log.error("ERROR : " + e.getMessage());
+            log.error("Transfer error : " + e.getMessage());
         }
     }
 

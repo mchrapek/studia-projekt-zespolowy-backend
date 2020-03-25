@@ -6,7 +6,7 @@ import java.util.UUID;
 
 class UserCreator {
 
-    User from(CreateUserRequest request, String encodedPassword) {
+    User from(final CreateUserRequest request, final String encodedPassword) {
         return User.builder()
                 .id(UUID.randomUUID().toString())
                 .email(request.getEmail())

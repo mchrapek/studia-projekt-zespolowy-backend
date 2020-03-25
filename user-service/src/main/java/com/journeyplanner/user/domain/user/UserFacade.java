@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
@@ -29,13 +30,15 @@ public class UserFacade {
 
     public void create(final CreateUserRequest request) {
         if (repository.existsByEmail(request.getEmail())) {
-            throw new UserWithEmailAlreadyExists(format("User with email {0} already exists", request.getEmail()));
+            throw new UserWithEmailAlreadyExists(format("User with email : {0} : already exists", request.getEmail()));
         }
 
         User userToSave = userCreator.from(request, passwordFacade.encodePassword(request.getPassword()));
         repository.save(userToSave);
+        log.info(format("New user : {0} : created", userToSave.getEmail()));
 
         mailSender.publish(SendMailEvent.builder()
+                .id(UUID.randomUUID().toString())
                 .to(userToSave.getEmail())
                 .templateName(Template.NEW_USER.getPath())
                 .params(new HashMap<String, String>() {{
@@ -47,7 +50,7 @@ public class UserFacade {
 
     public void sendResetPasswordToken(final GenerateResetPasswordLinkRequest request) {
         User user = repository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email {0}")));
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email : {0}", request.getEmail())));
 
         passwordFacade.generateAndSendResetPasswordLinkWithToken(user.getEmail(), user.getFirstName());
     }
@@ -59,15 +62,18 @@ public class UserFacade {
 
     public void block(final AddUserToBlacklistRequest request) {
         User user = repository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email {0}")));
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email : {0}", request.getEmail())));
 
         if (user.getRole().equals("ADMIN")) {
+            log.warn("Cannot add admin to blacklist");
             throw new IllegalOperation("You cannot add to blacklist user with admin role");
         }
 
         repository.changeIsBlacklisted(request.getEmail(), Boolean.TRUE);
+        log.info("User added to blacklist : {0}");
 
         mailSender.publish(SendMailEvent.builder()
+                .id(UUID.randomUUID().toString())
                 .to(user.getEmail())
                 .templateName(Template.BLOCK_USER.getPath())
                 .params(new HashMap<String, String>())
@@ -76,11 +82,13 @@ public class UserFacade {
 
     public void unblock(final RemoveUserFromBlacklistRequest request) {
         User user = repository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email {0}")));
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email : {0}", request.getEmail())));
 
         repository.changeIsBlacklisted(request.getEmail(), Boolean.FALSE);
+        log.info(format("User removed from blacklist : {0}", request.getEmail()));
 
         mailSender.publish(SendMailEvent.builder()
+                .id(UUID.randomUUID().toString())
                 .to(user.getEmail())
                 .templateName(Template.UNBLOCK_USER.getPath())
                 .params(new HashMap<String, String>())

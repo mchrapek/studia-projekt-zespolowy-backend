@@ -23,6 +23,7 @@ public class PhotoFacade {
                 .orElseThrow(() -> new CannotParseFile(format("Cannot parse photo for journey : {0} : ", journeyId)));
 
         photoRepository.save(photo);
+        log.info(format("Photo added to journey : {0}", journeyId));
 
         return photo.getId();
     }
@@ -33,7 +34,7 @@ public class PhotoFacade {
                 .orElseThrow(() -> new ResourcesNotFound(format("Cannot found photo with id : {0} : ", photoId)));
     }
 
-    public List<String> getAllForJourney(String journeyId) {
+    public List<String> getAllForJourney(final String journeyId) {
         return photoRepository.findAllByJourneyId(journeyId)
                 .stream()
                 .map(Photo::getId)

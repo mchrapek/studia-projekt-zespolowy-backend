@@ -6,7 +6,7 @@ import java.util.UUID;
 
 class UserDetailsCreator {
 
-    public UserDetails createFrom(UserDetails userDetails, UpdateUserDetailsRequest request) {
+    public UserDetails createFrom(final UserDetails userDetails, final UpdateUserDetailsRequest request) {
         return UserDetails.builder()
                 .id(userDetails.getId())
                 .email(userDetails.getEmail())
@@ -18,10 +18,10 @@ class UserDetailsCreator {
                 .build();
     }
 
-    public UserDetails createFrom(String mail, UpdateUserDetailsRequest request) {
+    public UserDetails createFrom(final String email, final UpdateUserDetailsRequest request) {
         return UserDetails.builder()
                 .id(UUID.randomUUID().toString())
-                .email(mail)
+                .email(email)
                 .country(request.getCountry())
                 .city(request.getCity())
                 .street(request.getStreet())

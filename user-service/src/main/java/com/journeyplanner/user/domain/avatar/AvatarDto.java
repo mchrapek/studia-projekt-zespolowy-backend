@@ -10,14 +10,14 @@ public class AvatarDto {
 
     String id;
 
-    String mail;
+    String email;
 
     Binary image;
 
     static AvatarDto from(Avatar avatar) {
         return AvatarDto.builder()
                 .id(avatar.getId())
-                .mail(avatar.getMail())
+                .email(avatar.getEmail())
                 .image(avatar.getImage())
                 .build();
     }
