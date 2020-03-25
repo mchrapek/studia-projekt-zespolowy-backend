@@ -56,6 +56,15 @@ public class UserController {
         userFacade.sendResetPasswordToken(request);
     }
 
+    @PostMapping("reset/request")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Send Email With Request Reset Password", notes = "Admin")
+    public void generateResetPasswordLinkByAdminRequest(@RequestBody @Valid GenerateResetPasswordLinkRequest request) {
+
+        userFacade.sendResetPasswordTokenByAdminRequest(request);
+    }
+
     @PostMapping("password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")

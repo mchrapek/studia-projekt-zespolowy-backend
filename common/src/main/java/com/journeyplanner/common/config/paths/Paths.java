@@ -45,6 +45,7 @@ public class Paths {
 
     public final static String[] POST_ADMIN_PATHS = {
             "/users/block",
+            "/users/reset/request",
             "/register/guides",
             "/catalogue/journeys"
     };

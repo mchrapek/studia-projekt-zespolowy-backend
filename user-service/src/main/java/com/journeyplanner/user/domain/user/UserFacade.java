@@ -67,6 +67,14 @@ public class UserFacade {
         passwordFacade.generateAndSendResetPasswordLinkWithToken(user.getEmail(), user.getFirstName());
     }
 
+    public void sendResetPasswordTokenByAdminRequest(final GenerateResetPasswordLinkRequest request) {
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email : {0}", request.getEmail())));
+
+        passwordFacade.generateAndSendResetPasswordLinkWithTokenByAdmin(user.getEmail(), user.getFirstName());
+    }
+
+
     public void resetPassword(final ResetPasswordRequest request) {
         passwordFacade.validateToken(request.getToken(), request.getEmail());
         repository.updatePassword(request.getEmail(), passwordFacade.encodePassword(request.getNewPassword()));
