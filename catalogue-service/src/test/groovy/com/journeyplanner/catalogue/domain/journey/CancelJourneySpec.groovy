@@ -32,7 +32,7 @@ class CancelJourneySpec extends Specification {
         journeyRepository.save(journey)
 
         when:
-        mvc.perform(delete("/" + journey.getId()))
+        mvc.perform(delete("/catalogue/journeys/" + journey.getId()))
                 .andExpect(status().isNoContent())
                 .andReturn()
 

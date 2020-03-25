@@ -53,7 +53,7 @@ class GetTransactionSpec extends Specification {
         transferScheduler.fetch()
 
         when:
-        def result = mvc.perform(get("/payment/" + transfer.getPaymentId())
+        def result = mvc.perform(get("/billing/payments/" + transfer.getPaymentId())
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -93,7 +93,7 @@ class GetTransactionSpec extends Specification {
         transferRepository.save(transfer2)
 
         when:
-        def result = mvc.perform(get("/payment/" + transfer2.getPaymentId())
+        def result = mvc.perform(get("/billing/payments/" + transfer2.getPaymentId())
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()

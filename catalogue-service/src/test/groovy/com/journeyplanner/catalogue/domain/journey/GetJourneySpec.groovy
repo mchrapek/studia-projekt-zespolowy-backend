@@ -40,7 +40,7 @@ class GetJourneySpec extends Specification {
         journeyRepository.save(journey3)
 
         when:
-        def result = mvc.perform(get("/"))
+        def result = mvc.perform(get("/catalogue/journeys"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -58,7 +58,7 @@ class GetJourneySpec extends Specification {
         journeys.each { value -> journeyRepository.save(value) }
 
         when:
-        def result = mvc.perform(get("/?status=ACTIVE"))
+        def result = mvc.perform(get("/catalogue/journeys/?status=ACTIVE"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -74,7 +74,7 @@ class GetJourneySpec extends Specification {
         journeys.each { value -> journeyRepository.save(value) }
 
         when:
-        def result = mvc.perform(get("/?price=20&price=200"))
+        def result = mvc.perform(get("/catalogue/journeys/?price=20&price=200"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -90,7 +90,7 @@ class GetJourneySpec extends Specification {
         journeys.each { value -> journeyRepository.save(value) }
 
         when:
-        def result = mvc.perform(get("/?start=2020-03-01T00:00:00.000Z&status=ACTIVE"))
+        def result = mvc.perform(get("/catalogue/journeys/?start=2020-03-01T00:00:00.000Z&status=ACTIVE"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -112,6 +112,8 @@ class GetJourneySpec extends Specification {
                 .price(new BigDecimal(10))
                 .start(Instant.now().plus(10, ChronoUnit.DAYS))
                 .end(Instant.now().plus(12, ChronoUnit.DAYS))
+                .guideEmail("")
+                .guideName("")
                 .build()
 
         def journey2 = Journey.builder()
@@ -125,6 +127,8 @@ class GetJourneySpec extends Specification {
                 .price(new BigDecimal(100))
                 .start(Instant.now().plus(15, ChronoUnit.DAYS))
                 .end(Instant.now().plus(16, ChronoUnit.DAYS))
+                .guideEmail("")
+                .guideName("")
                 .build()
 
         def journey3 = Journey.builder()
@@ -138,6 +142,8 @@ class GetJourneySpec extends Specification {
                 .price(new BigDecimal(1000))
                 .start(Instant.now().plus(20, ChronoUnit.DAYS))
                 .end(Instant.now().plus(22, ChronoUnit.DAYS))
+                .guideEmail("")
+                .guideName("")
                 .build()
 
         [journey1, journey2, journey3]

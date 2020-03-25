@@ -14,6 +14,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.text.MessageFormat.format;
@@ -32,7 +33,7 @@ public class ReservationFacade {
         Reservation reservation = creator.from(event);
         repository.save(reservation);
 
-        mailSender.publish(SendMailEvent.builder().to(event.getEmail())
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(event.getEmail())
                 .templateName(Template.NEW_RESERVATION_CREATED.getPath()).params(new HashMap<>()).build());
 
         log.info(format("New reservation created for journey : {0} : for user : {1}", event.getJourneyId(), event.getEmail()));
@@ -60,7 +61,7 @@ public class ReservationFacade {
 
         repository.updateReservationStatusTo(reservation.getId(), ReservationStatus.CANCEL);
 
-        mailSender.publish(SendMailEvent.builder().to(email)
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(email)
                 .templateName(Template.RESERVATION_CANCELED.getPath()).params(new HashMap<>()).build());
     }
 
@@ -71,7 +72,7 @@ public class ReservationFacade {
     public void cancelByAdmin(final String reservationId, final String email) {
         repository.updateReservationStatusTo(reservationId, ReservationStatus.CANCEL);
 
-        mailSender.publish(SendMailEvent.builder().to(email)
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(email)
                 .templateName(Template.JOURNEY_CANCELED.getPath()).params(new HashMap<>()).build());
     }
 }

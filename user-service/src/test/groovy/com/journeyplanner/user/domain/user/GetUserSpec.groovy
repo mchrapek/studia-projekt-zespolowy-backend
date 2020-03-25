@@ -36,7 +36,7 @@ class GetUserSpec extends Specification {
         userRepository.save(user3)
 
         when:
-        def result = mvc.perform(get("/"))
+        def result = mvc.perform(get("/users"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -59,7 +59,7 @@ class GetUserSpec extends Specification {
         userRepository.save(user3)
 
         when:
-        def result = mvc.perform(get("/?page=0&size=2"))
+        def result = mvc.perform(get("/users/?page=0&size=2"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -82,7 +82,7 @@ class GetUserSpec extends Specification {
         userRepository.save(user3)
 
         when:
-        def result = mvc.perform(get("/?email=aragorn"))
+        def result = mvc.perform(get("/users/?email=aragorn"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -103,7 +103,7 @@ class GetUserSpec extends Specification {
         userRepository.save(user3)
 
         when:
-        def result = mvc.perform(get("/?isBlocked=false"))
+        def result = mvc.perform(get("/users/?isBlocked=false"))
                 .andExpect(status().isOk())
                 .andReturn()
 

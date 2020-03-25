@@ -32,7 +32,7 @@ class GetAccountSpec extends Specification {
         accountRepository.save(account)
 
         when:
-        def result = mvc.perform(get("/account")
+        def result = mvc.perform(get("/billing/accounts")
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -46,7 +46,7 @@ class GetAccountSpec extends Specification {
         def email = "james@bond.com"
 
         when:
-        def result = mvc.perform(get("/account")
+        def result = mvc.perform(get("/billing/accounts")
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()

@@ -50,10 +50,10 @@ class ResetPasswordSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/password")
+        mvc.perform(post("/users/password")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         then:

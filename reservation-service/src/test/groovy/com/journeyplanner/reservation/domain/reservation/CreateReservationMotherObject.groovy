@@ -14,6 +14,8 @@ class CreateReservationMotherObject {
                 .journeyId(journeyId)
                 .price(new BigDecimal(1000))
                 .eventTimeStamp(Instant.now())
+                .start(Instant.now().plus(2, ChronoUnit.DAYS))
+                .end(Instant.now().plus(2, ChronoUnit.DAYS))
                 .build()
     }
 }

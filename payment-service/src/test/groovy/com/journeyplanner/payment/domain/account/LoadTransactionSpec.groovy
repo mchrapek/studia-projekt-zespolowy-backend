@@ -68,6 +68,6 @@ class LoadTransactionSpec extends Specification {
         transferScheduler.fetch()
 
         then:
-        thrown IllegalOperation
+        transferRepository.findById(transfer.getId()).get().status == TransferStatus.ERROR
     }
 }

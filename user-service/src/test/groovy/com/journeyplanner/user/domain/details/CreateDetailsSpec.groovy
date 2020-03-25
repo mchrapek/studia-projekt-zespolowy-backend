@@ -36,7 +36,7 @@ class CreateDetailsSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/details")
+        mvc.perform(post("/users/details")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("x-username", email)
                 .content(json))
@@ -54,7 +54,7 @@ class CreateDetailsSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/details")
+        mvc.perform(post("/users/details")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().is4xxClientError())
@@ -75,7 +75,7 @@ class CreateDetailsSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/details")
+        mvc.perform(post("/users/details")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("x-username", email)
                 .content(json))

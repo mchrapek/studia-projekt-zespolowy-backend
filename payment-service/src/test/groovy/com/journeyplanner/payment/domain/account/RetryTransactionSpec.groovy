@@ -37,7 +37,7 @@ class RetryTransactionSpec extends Specification {
         transferRepository.deleteAll()
     }
 
-    def "should retry transactionu"() {
+    def "should retry transaction"() {
         given:
         def email = "frodo@baggins.com"
         def account = AccountMotherObject.aAccount(email, BigDecimal.TEN)
@@ -54,9 +54,9 @@ class RetryTransactionSpec extends Specification {
         transferScheduler.fetch()
 
         when:
-        mvc.perform(post("/payment/" + transfer1.getPaymentId())
+        mvc.perform(post("/billing/payments/" + transfer1.getPaymentId() + "/retry")
                 .header("x-username", email))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         and:

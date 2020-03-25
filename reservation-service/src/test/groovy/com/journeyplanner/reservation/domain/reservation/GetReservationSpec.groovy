@@ -32,7 +32,7 @@ class GetReservationSpec extends Specification {
         repository.save(reservation)
 
         when:
-        def result = mvc.perform(get("/")
+        def result = mvc.perform(get("/reservations/")
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()

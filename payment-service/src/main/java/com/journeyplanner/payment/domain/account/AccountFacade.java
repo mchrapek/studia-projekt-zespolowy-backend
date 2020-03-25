@@ -46,7 +46,7 @@ public class AccountFacade {
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.chargeEvent(account.getId(), request.getValue()));
 
-        mailSender.publish(SendMailEvent.builder().to(email).templateName(Template.ACCOUNT_CHARGED.getPath())
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(email).templateName(Template.ACCOUNT_CHARGED.getPath())
                 .params(new HashMap<String, String>() {{
                     put("value", request.getValue().toPlainString());
                 }}).build());
@@ -70,7 +70,7 @@ public class AccountFacade {
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.loadEvent(account.getId(), transfer));
 
-        mailSender.publish(SendMailEvent.builder().to(transfer.getEmail()).templateName(Template.PAYMENT_LOAD.getPath())
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(transfer.getEmail()).templateName(Template.PAYMENT_LOAD.getPath())
                 .params(new HashMap<String, String>() {{
                     put("value", transfer.getValue().toPlainString());
                 }}).build());
@@ -88,7 +88,7 @@ public class AccountFacade {
         AccountHistory accountHistory = accountHistoryRepository
                 .save(accountHistoryCreator.returnEvent(account.getId(), transfer));
 
-        mailSender.publish(SendMailEvent.builder().to(transfer.getEmail()).templateName(Template.PAYMENT_RETURN.getPath())
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(transfer.getEmail()).templateName(Template.PAYMENT_RETURN.getPath())
                 .params(new HashMap<String, String>() {{
                     put("value", transfer.getValue().toPlainString());
                 }}).build());
