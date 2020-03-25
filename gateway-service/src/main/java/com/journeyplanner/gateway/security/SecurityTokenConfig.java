@@ -44,6 +44,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, Paths.PUT_ADMIN_PATHS).hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, Paths.DELETE_ADMIN_PATHS).hasRole("ADMIN")
 
+                .antMatchers(HttpMethod.GET, Paths.GET_GUIDE_PATHS).hasRole("GUIDE")
+
                 .anyRequest().authenticated();
     }
 }

@@ -54,6 +54,10 @@ public class ReservationFacade {
         Reservation reservation = repository.findByIdAndEmail(reservationId, email)
                 .orElseThrow(() -> new ResourceNotFound(format("Cannot found reservation with id : {0}", reservationId)));
 
+        if (reservation.getEmail().equals(email)) {
+            throw new NotPermittedOperation("You don't have permission");
+        }
+
         if (Instant.now().plus(14, ChronoUnit.DAYS).isAfter(reservation.getStart())) {
             log.info(format("Cannot cancel reservation : {0} : 14 days before start for user : {1}", reservationId, email));
             throw new NotPermittedOperation(format("Cannot cancel reservation 14 days before start : {0}", reservationId));
