@@ -28,7 +28,7 @@ public class TransferCustomRepositoryImpl implements TransferCustomRepository {
     }
 
     @Override
-    public Optional<Transfer> findAndModifyStatus(String id, TransferStatus status) {
+    public Optional<Transfer> findAndModifyStatus(final String id, final TransferStatus status) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
 

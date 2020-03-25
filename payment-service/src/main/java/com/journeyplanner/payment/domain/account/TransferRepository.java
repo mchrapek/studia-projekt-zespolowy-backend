@@ -7,8 +7,6 @@ import java.util.Optional;
 
 interface TransferRepository extends Repository<Transfer, String>, TransferCustomRepository {
 
-    List<Transfer> findAll();
-
     Transfer save(Transfer transfer);
 
     Optional<Transfer> findFirstByPaymentIdOrderByEventTimeDesc(String paymentId);

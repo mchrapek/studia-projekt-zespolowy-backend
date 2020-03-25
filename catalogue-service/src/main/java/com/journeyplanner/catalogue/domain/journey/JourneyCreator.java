@@ -6,7 +6,7 @@ import java.util.UUID;
 
 class JourneyCreator {
 
-    Journey from(CreateJourneyRequest request) {
+    Journey from(final CreateJourneyRequest request) {
         return Journey.builder()
                 .id(UUID.randomUUID().toString())
                 .status(JourneyStatus.ACTIVE)

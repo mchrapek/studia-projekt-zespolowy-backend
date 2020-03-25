@@ -11,7 +11,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ResetTokenCustomRepositoryImpl implements ResetTokenCustomRepository {
 
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public Optional<ResetToken> deprecateToken(final String token) {

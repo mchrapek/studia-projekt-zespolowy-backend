@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Update;
 @AllArgsConstructor
 class CustomJourneyRepositoryImpl implements CustomJourneyRepository {
 
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public void updateJourneyStatus(String id, JourneyStatus status) {

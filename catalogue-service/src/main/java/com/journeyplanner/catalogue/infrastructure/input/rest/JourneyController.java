@@ -53,27 +53,30 @@ public class JourneyController {
     }
 
     @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Update Journey")
-    public ResponseEntity<JourneyDto> update(@PathVariable("id") String journeyId, @RequestBody @Valid UpdateJourneyRequest request) {
+    public ResponseEntity<JourneyDto> update(@PathVariable("id") String journeyId,
+                                             @RequestBody @Valid UpdateJourneyRequest request) {
 
         return ResponseEntity.ok(journeyFacade.update(journeyId, request));
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping(value = "{journeyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Cancel Journey")
-    public void cancel(@PathVariable("id") String journeyId) {
+    public void cancel(@PathVariable("journeyId") String journeyId) {
 
         journeyFacade.cancel(journeyId);
     }
 
-    @PostMapping("{id}/reservations")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping("{journeyId}/reservation")
+    @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Create Journey reservation")
-    public void createReservation(@PathVariable("id") String journeyId, @RequestHeader("x-username") String username) {
+    public void createReservation(@PathVariable("journeyId") String journeyId,
+                                  @RequestHeader("x-username") String username) {
 
         journeyFacade.createReservation(journeyId, username);
     }

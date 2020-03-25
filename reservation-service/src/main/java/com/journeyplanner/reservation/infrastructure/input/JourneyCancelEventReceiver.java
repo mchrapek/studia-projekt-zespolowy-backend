@@ -15,7 +15,7 @@ import static java.text.MessageFormat.format;
 @AllArgsConstructor
 public class JourneyCancelEventReceiver {
 
-    private ReservationFacade reservationFacade;
+    private final ReservationFacade reservationFacade;
 
     @RabbitListener(queues = "${queue.reservation.name}")
     public void publish(String event) {

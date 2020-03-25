@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class CancelJourneyRuleCreator {
 
-    CancelJourneyRule from(CancelJourneyEvent event) {
+    CancelJourneyRule from(final CancelJourneyEvent event) {
         return CancelJourneyRule.builder()
                 .id(UUID.randomUUID().toString())
                 .journeyId(event.getJourneyId())

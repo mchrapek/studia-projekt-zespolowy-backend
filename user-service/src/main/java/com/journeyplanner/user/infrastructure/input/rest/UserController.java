@@ -96,7 +96,7 @@ public class UserController {
     @ApiOperation(value = "Get User Details")
     public ResponseEntity<UserDetailsDto> getUserDetails(@RequestHeader("x-username") String username) {
 
-        return ResponseEntity.ok(userDetailsFacade.getDetailsByMail(username));
+        return ResponseEntity.ok(userDetailsFacade.getDetailsByEmail(username));
     }
 
     @PostMapping("details")
@@ -121,7 +121,7 @@ public class UserController {
     @ApiOperation(value = "Get User Avatar")
     public ResponseEntity<byte[]> getAvatarForUser(@RequestHeader("x-username") String username) {
 
-        AvatarDto avatarDto = userDetailsFacade.getAvatarByMail(username);
+        AvatarDto avatarDto = userDetailsFacade.getAvatarByEmail(username);
         return ResponseEntity.ok(avatarDto.getImage().getData());
     }
 

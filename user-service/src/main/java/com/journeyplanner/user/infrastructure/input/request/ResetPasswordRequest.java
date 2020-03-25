@@ -19,6 +19,6 @@ public class ResetPasswordRequest {
     String email;
 
     @NotNull(message = "New password")
-    @Size(min = 5, max = 20, message = "Password must be between 3 - 20 signs")
+    @Size(min = 5, max = 20, message = "Password must be between 5 - 20 signs")
     String newPassword;
 }

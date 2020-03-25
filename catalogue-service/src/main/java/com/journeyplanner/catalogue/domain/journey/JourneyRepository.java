@@ -25,8 +25,6 @@ interface JourneyRepository extends
 
     Optional<Journey> findById(String id);
 
-    boolean existsById(String id);
-
     void deleteAll();
 
     @Override

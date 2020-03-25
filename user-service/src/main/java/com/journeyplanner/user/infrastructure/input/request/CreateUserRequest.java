@@ -16,7 +16,7 @@ public class CreateUserRequest {
     String email;
 
     @NotNull(message = "Password value must not be empty")
-    @Size(min = 5, max = 20, message = "Password must be between 3 - 20 signs")
+    @Size(min = 5, max = 20, message = "Password must be between 5 - 20 signs")
     String password;
 
     @NotNull(message = "First name must not be empty")

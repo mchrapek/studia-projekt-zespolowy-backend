@@ -25,23 +25,26 @@ public class JourneyFacade {
     private final JourneyUpdater journeyUpdater;
     private final ReservationCreator reservationCreator;
 
-    public Page<JourneyDto> getAll(Predicate predicate, Pageable pageable) {
-
+    public Page<JourneyDto> getAll(final Predicate predicate, final Pageable pageable) {
         return repository
                 .findAll(predicate, pageable)
                 .map(JourneyDto::from);
     }
 
-    public JourneyDto create(CreateJourneyRequest request) {
+    public JourneyDto create(final CreateJourneyRequest request) {
         Journey savedJourney = repository.save(journeyCreator.from(request));
+
+        log.info(format("Journey created : {0}", savedJourney.getId()));
         return JourneyDto.from(savedJourney);
     }
 
-    public JourneyDto update(String id, UpdateJourneyRequest request) {
-        Journey journey = repository.findById(id)
-                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", id)));
+    public JourneyDto update(String journeyId, UpdateJourneyRequest request) {
+        Journey journey = repository.findById(journeyId)
+                .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", journeyId)));
 
         Journey updatedJourney = repository.save(journeyUpdater.from(journey, request));
+        log.info(format("Journey updated : {0}", updatedJourney.getId()));
+
         return JourneyDto.from(updatedJourney);
     }
 
@@ -58,6 +61,7 @@ public class JourneyFacade {
         Journey journey = repository.findById(journeyId)
                 .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", journeyId)));
 
+        log.info(format("Request for reservation for journey : {0}", journeyId));
         reservationCreator.publish(CreateReservationEvent.builder()
                 .id(UUID.randomUUID().toString())
                 .start(journey.getStart())

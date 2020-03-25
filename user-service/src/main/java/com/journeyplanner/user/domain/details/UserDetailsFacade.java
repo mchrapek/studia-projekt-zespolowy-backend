@@ -15,8 +15,8 @@ public class UserDetailsFacade {
     private final UserDetailsCreator creator;
     private final AvatarFacade avatarFacade;
 
-    public UserDetailsDto getDetailsByMail(final String mail) {
-        return repository.findByEmail(mail)
+    public UserDetailsDto getDetailsByEmail(final String email) {
+        return repository.findByEmail(email)
                 .map(UserDetailsDto::from)
                 .orElseGet(UserDetailsDto::empty);
     }
@@ -27,19 +27,19 @@ public class UserDetailsFacade {
                 .orElseGet(UserDetailsDto::empty);
     }
 
-    public UserDetailsDto addOrUpdateDetails(final String mail, final UpdateUserDetailsRequest request) {
-        UserDetails updatedUserDetails = repository.findByEmail(mail)
+    public UserDetailsDto addOrUpdateDetails(final String email, final UpdateUserDetailsRequest request) {
+        UserDetails updatedUserDetails = repository.findByEmail(email)
                 .map(d -> creator.createFrom(d, request))
-                .orElseGet(() -> creator.createFrom(mail, request));
+                .orElseGet(() -> creator.createFrom(email, request));
 
         return UserDetailsDto.from(repository.save(updatedUserDetails));
     }
 
-    public AvatarDto getAvatarByMail(final String mail) {
-        return avatarFacade.getByMail(mail);
+    public AvatarDto getAvatarByEmail(final String email) {
+        return avatarFacade.getByEmail(email);
     }
 
-    public void addAvatar(final String mail, final MultipartFile file) {
-        avatarFacade.add(mail, file);
+    public void addAvatar(final String email, final MultipartFile file) {
+        avatarFacade.add(email, file);
     }
 }

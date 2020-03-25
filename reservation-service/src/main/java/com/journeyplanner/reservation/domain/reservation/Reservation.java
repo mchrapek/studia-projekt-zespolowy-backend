@@ -20,7 +20,7 @@ class Reservation {
 
     @NonNull ReservationStatus status;
 
-    @NonNull String mail;
+    @NonNull String email;
 
     @NonNull String journeyId;
 

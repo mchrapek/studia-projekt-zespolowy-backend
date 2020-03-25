@@ -9,9 +9,7 @@ import org.bson.types.Binary;
 public class PhotoDto {
 
     String id;
-
     String journeyId;
-
     Binary image;
 
     static PhotoDto from(final Photo photo) {

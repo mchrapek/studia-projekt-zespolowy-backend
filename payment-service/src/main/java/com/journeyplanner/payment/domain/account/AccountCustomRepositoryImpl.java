@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 class AccountCustomRepositoryImpl implements AccountCustomRepository {
 
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public void modifyAccountBalance(String id, BigDecimal balance) {
