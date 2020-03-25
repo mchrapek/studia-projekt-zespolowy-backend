@@ -40,7 +40,7 @@ class BlockUserSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/block")
+        mvc.perform(post("/users/block")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isNoContent())
@@ -59,7 +59,7 @@ class BlockUserSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/block")
+        mvc.perform(post("/users/block")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().is4xxClientError())

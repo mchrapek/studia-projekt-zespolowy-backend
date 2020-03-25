@@ -136,7 +136,7 @@ public class UserController {
         userDetailsFacade.addAvatar(username, file);
     }
 
-    @GetMapping
+    @GetMapping("guides")
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get Guides")
     public ResponseEntity<List<GuideDto>> guides() {

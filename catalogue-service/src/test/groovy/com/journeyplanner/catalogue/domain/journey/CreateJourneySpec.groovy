@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
-@DirtiesContext
 @AutoConfigureMockMvc
 class CreateJourneySpec extends Specification {
 
@@ -40,7 +39,7 @@ class CreateJourneySpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        def result = mvc.perform(post("/")
+        def result = mvc.perform(post("/catalogue/journeys")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk())

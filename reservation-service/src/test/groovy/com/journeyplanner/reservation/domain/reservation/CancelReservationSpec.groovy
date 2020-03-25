@@ -35,14 +35,14 @@ class CancelReservationSpec extends Specification {
         repository.save(reservation)
 
         when:
-        mvc.perform(delete("/" + reservation.getId())
+        mvc.perform(delete("/reservations/" + reservation.getId())
                 .header("x-username", email))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         then:
-        repository.getReservationByMail(email).get(0).id == reservation.getId()
-        repository.getReservationByMail(email).get(0).status == ReservationStatus.CANCEL
+        repository.getReservationByEmail(email).get(0).id == reservation.getId()
+        repository.getReservationByEmail(email).get(0).status == ReservationStatus.CANCEL
     }
 
     def "should fail when cancel reservation 14 days before"() {
@@ -52,13 +52,13 @@ class CancelReservationSpec extends Specification {
         repository.save(reservation)
 
         when:
-        mvc.perform(delete("/" + reservation.getId())
+        mvc.perform(delete("/reservations/" + reservation.getId())
                 .header("x-username", email))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
 
         then:
-        repository.getReservationByMail(email).get(0).id == reservation.getId()
-        repository.getReservationByMail(email).get(0).status == ReservationStatus.ACTIVE
+        repository.getReservationByEmail(email).get(0).id == reservation.getId()
+        repository.getReservationByEmail(email).get(0).status == ReservationStatus.ACTIVE
     }
 }

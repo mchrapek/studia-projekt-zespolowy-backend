@@ -32,7 +32,7 @@ class AddPhotoSpec extends Specification {
         def request = new MockMultipartFile("image", "AVATAR".getBytes())
 
         when:
-        mvc.perform(multipart("/journey/" + journeyId + "/photo")
+        mvc.perform(multipart("/catalogue/journeys/" + journeyId + "/photos")
                 .file(request))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -47,13 +47,13 @@ class AddPhotoSpec extends Specification {
         def request = new MockMultipartFile("image", "AVATAR".getBytes())
 
         when:
-        mvc.perform(multipart("/journey/" + journeyId + "/photo")
+        mvc.perform(multipart("/catalogue/journeys/" + journeyId + "/photos")
                 .file(request))
                 .andExpect(status().isOk())
                 .andReturn()
 
         and:
-        mvc.perform(multipart("/journey/" + journeyId + "/photo")
+        mvc.perform(multipart("/catalogue/journeys/" + journeyId + "/photos")
                 .file(request))
                 .andExpect(status().isOk())
                 .andReturn()

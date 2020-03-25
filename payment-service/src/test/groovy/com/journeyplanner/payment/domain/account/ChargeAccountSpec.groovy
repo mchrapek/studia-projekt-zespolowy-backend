@@ -41,7 +41,7 @@ class ChargeAccountSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/charge")
+        mvc.perform(post("/billing/accounts/charge")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("x-username", email)
                 .content(json))

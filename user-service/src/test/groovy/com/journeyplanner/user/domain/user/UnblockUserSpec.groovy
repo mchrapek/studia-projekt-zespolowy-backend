@@ -40,7 +40,7 @@ class UnblockUserSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(delete("/block")
+        mvc.perform(delete("/users/block")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isNoContent())
@@ -57,7 +57,7 @@ class UnblockUserSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(delete("/block")
+        mvc.perform(delete("/users/block")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().is4xxClientError())

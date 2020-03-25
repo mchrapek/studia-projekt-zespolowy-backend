@@ -39,14 +39,14 @@ class CreateAvatarSpec extends Specification {
         def request = new MockMultipartFile("image", "AVATAR".getBytes())
 
         when:
-        mvc.perform(multipart("/avatar")
+        mvc.perform(multipart("/users/avatar")
                 .file(request)
                 .header("x-username", email))
-                .andExpect(status().isCreated())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         then:
-        avatarRepository.findByMail(email).get().image.data.length != 0
+        avatarRepository.findByEmail(email).get().image.data.length != 0
     }
 
     def "should update avatar"() {
@@ -59,14 +59,14 @@ class CreateAvatarSpec extends Specification {
         def request = new MockMultipartFile("image", "S".getBytes())
 
         when:
-        mvc.perform(multipart("/avatar")
+        mvc.perform(multipart("/users/avatar")
                 .file(request)
                 .header("x-username", email))
-                .andExpect(status().isCreated())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         then:
-        avatarRepository.findByMail(email).get().image.data.length != 0
-        avatarRepository.findByMail(email).get().image.data == [83]
+        avatarRepository.findByEmail(email).get().image.data.length != 0
+        avatarRepository.findByEmail(email).get().image.data == [83]
     }
 }

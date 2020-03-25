@@ -46,10 +46,10 @@ class GenerateResetPasswordTokenSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/reset")
+        mvc.perform(post("/users/reset")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         then:

@@ -36,10 +36,10 @@ class CreateUserSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(post("/register")
+        mvc.perform(post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isCreated())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         then:
@@ -53,14 +53,14 @@ class CreateUserSpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when: "first attempt"
-        mvc.perform(post("/register")
+        mvc.perform(post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isCreated())
+                .andExpect(status().isNoContent())
                 .andReturn()
 
         and: "second attempt"
-        mvc.perform(post("/register")
+        mvc.perform(post("/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().is4xxClientError())

@@ -32,7 +32,7 @@ class GetPhotoSpec extends Specification {
         photoRepository.save(photo)
 
         when:
-        def result = mvc.perform(get("/journey/" + journeyId + "/photo"))
+        def result = mvc.perform(get("/catalogue/journeys/" + journeyId + "/photos"))
                 .andExpect(status().isOk())
                 .andReturn()
 
@@ -48,7 +48,7 @@ class GetPhotoSpec extends Specification {
         photoRepository.save(photo)
 
         when:
-        def result = mvc.perform(get("/photo/" + photo.getId()))
+        def result = mvc.perform(get("/catalogue/photos/" + photo.getId()))
                 .andExpect(status().isOk())
                 .andReturn()
 

@@ -31,7 +31,7 @@ class GetDetailsSpec extends Specification {
         def email = "aragorn@middleearth.com"
 
         when:
-        def result = mvc.perform(get("/details")
+        def result = mvc.perform(get("/users/details")
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -47,7 +47,7 @@ class GetDetailsSpec extends Specification {
         userDetailsRepository.save(userDetails)
 
         when:
-        def result = mvc.perform(get("/details")
+        def result = mvc.perform(get("/users/details")
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -64,7 +64,7 @@ class GetDetailsSpec extends Specification {
         userDetailsRepository.save(userDetails)
 
         when:
-        def result = mvc.perform(get("/details/" + userDetails.getId()))
+        def result = mvc.perform(get("/users/details/" + userDetails.getId()))
                 .andExpect(status().isOk())
                 .andReturn()
 

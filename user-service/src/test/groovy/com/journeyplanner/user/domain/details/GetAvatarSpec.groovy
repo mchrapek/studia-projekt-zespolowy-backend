@@ -33,7 +33,7 @@ class GetAvatarSpec extends Specification {
         avatarRepository.save(avatar)
 
         when:
-        def result = mvc.perform(get("/avatar")
+        def result = mvc.perform(get("/users/avatar")
                 .header("x-username", email))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -47,7 +47,7 @@ class GetAvatarSpec extends Specification {
         def email = "aragorn@middleearth.com"
 
         when:
-        def result = mvc.perform(get("/avatar")
+        def result = mvc.perform(get("/users/avatar")
                 .header("x-username", email))
                 .andExpect(status().is4xxClientError())
                 .andReturn()

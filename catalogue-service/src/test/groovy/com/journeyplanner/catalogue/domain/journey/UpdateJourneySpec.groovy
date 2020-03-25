@@ -40,7 +40,7 @@ class UpdateJourneySpec extends Specification {
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(put("/")
+        mvc.perform(put("/catalogue/journeys/" + journey.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk())

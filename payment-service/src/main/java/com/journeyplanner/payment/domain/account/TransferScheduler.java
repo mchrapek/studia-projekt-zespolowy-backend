@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -47,7 +48,8 @@ class TransferScheduler {
     }
 
     public void sendMailWithError(Transfer transfer) {
-        mailSender.publish(SendMailEvent.builder().to(transfer.getEmail()).templateName(Template.PAYMENT_ERROR.getPath())
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString())
+                .to(transfer.getEmail()).templateName(Template.PAYMENT_ERROR.getPath())
                 .params(new HashMap<String, String>() {{
                     put("value", transfer.getValue().toPlainString());
                 }}).build());
