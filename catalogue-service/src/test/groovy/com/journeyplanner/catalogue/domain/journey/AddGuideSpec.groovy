@@ -1,6 +1,7 @@
 package com.journeyplanner.catalogue.domain.journey
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.journeyplanner.catalogue.infrastructure.input.request.AddGuideToJourneyRequest
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -17,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @DirtiesContext
 @AutoConfigureMockMvc
-class UpdateJourneySpec extends Specification {
+class AddGuideSpec extends Specification {
 
     @Autowired
     private MockMvc mvc
@@ -29,24 +30,24 @@ class UpdateJourneySpec extends Specification {
         journeyRepository.deleteAll()
     }
 
-    def "should update journey"() {
+    def "should add guide to journey"() {
         given:
-        Journey journey = JourneyMotherObject.aJourney()
+        def journey = JourneyMotherObject.aJourney()
         journeyRepository.save(journey)
 
         and:
-        def request = new UpdateJourneyRequest("NewName", journey.getCountry(), journey.getCity(),
-                journey.getDescription(), journey.getTransportType(), journey.getPrice())
+        def request = new AddGuideToJourneyRequest("m@m.pl", "FirstName", "SecondName")
         def json = new ObjectMapper().writeValueAsString(request)
 
         when:
-        mvc.perform(put("/")
+        mvc.perform(put("/catalogue/journeys/" + journey.getId() + "/guides")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk())
                 .andReturn()
 
         then:
-        journeyRepository.findById(journey.getId()).get().getName() == request.getName()
+        journeyRepository.findById(journey.getId()).get().guideEmail == request.getEmail()
+        journeyRepository.findById(journey.getId()).get().guideName == request.getFirstName() + " " + request.getSecondName()
     }
 }

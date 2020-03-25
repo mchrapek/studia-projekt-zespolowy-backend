@@ -4,12 +4,14 @@ import com.journeyplanner.catalogue.domain.journey.Journey;
 import com.journeyplanner.catalogue.domain.journey.JourneyDto;
 import com.journeyplanner.catalogue.domain.journey.JourneyFacade;
 import com.journeyplanner.catalogue.domain.photo.PhotoFacade;
+import com.journeyplanner.catalogue.infrastructure.input.request.AddGuideToJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,7 +74,7 @@ public class JourneyController {
     }
 
     @PostMapping("{journeyId}/reservation")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Create Journey reservation")
     public void createReservation(@PathVariable("journeyId") String journeyId,
@@ -81,19 +83,36 @@ public class JourneyController {
         journeyFacade.createReservation(journeyId, username);
     }
 
-    @GetMapping(value = "{id}/photos")
+    @GetMapping(value = "{journeyId}/photos")
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get all id photos for Journey")
-    public ResponseEntity<List<String>> getAllByJourneyId(@PathVariable("id") String journeyId) {
+    public ResponseEntity<List<String>> getAllByJourneyId(@PathVariable("journeyId") String journeyId) {
 
         return ResponseEntity.ok(photoFacade.getAllForJourney(journeyId));
     }
 
-    @PostMapping(value = "{id}/photos")
+    @PostMapping(value = "{journeyId}/photos")
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add photo to Journey")
-    public ResponseEntity<String> add(@PathVariable("id") String journeyId, @RequestParam("image") MultipartFile file) {
+    public ResponseEntity<String> add(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
 
         return ResponseEntity.ok(photoFacade.add(journeyId, file));
+    }
+
+    @PutMapping("/{journeyId}/guides")
+    @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Add Guide to Journey")
+    public ResponseEntity<JourneyDto> addGuideToJourney(@PathVariable("journeyId") String journeyId,
+                                                        @RequestBody @Valid AddGuideToJourneyRequest request) {
+
+        return ResponseEntity.ok(journeyFacade.addGuide(journeyId, request));
+    }
+
+    @GetMapping("guides")
+    @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get Guide Journeys")
+    public ResponseEntity<List<JourneyDto>> getGuideJourneys(@RequestHeader("x-username") String username) {
+
+        return ResponseEntity.ok(journeyFacade.getGuideJourneys(username));
     }
 }

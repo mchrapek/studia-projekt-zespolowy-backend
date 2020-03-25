@@ -17,6 +17,8 @@ class JourneyMotherObject {
                 .price(new BigDecimal(1000))
                 .start(Instant.now().plus(10, ChronoUnit.DAYS))
                 .end(Instant.now().plus(12, ChronoUnit.DAYS))
+                .guideName("")
+                .guideEmail("")
                 .build()
     }
 }

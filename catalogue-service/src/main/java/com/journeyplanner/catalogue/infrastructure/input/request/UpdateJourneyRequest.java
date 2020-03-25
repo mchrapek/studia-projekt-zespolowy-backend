@@ -20,11 +20,11 @@ public class UpdateJourneyRequest {
     String name;
 
     @NotNull(message = "Country value must not be empty")
-    @Size(min = 3, max = 80, message = "Country must be between 5 - 80 signs")
+    @Size(min = 3, max = 80, message = "Country must be between 3 - 80 signs")
     String country;
 
     @NotNull(message = "City value must not be empty")
-    @Size(min = 3, max = 80, message = "City must be between 5 - 80 signs")
+    @Size(min = 3, max = 80, message = "City must be between 3 - 80 signs")
     String city;
 
     @NotNull(message = "Description value must not be empty")
@@ -32,7 +32,7 @@ public class UpdateJourneyRequest {
     String description;
 
     @NotNull(message = "Transport type value must not be empty")
-    @Size(min = 3, max = 80, message = "Transport type must be between 5 - 80 signs")
+    @Size(min = 3, max = 80, message = "Transport type must be between 3 - 80 signs")
     String transportType;
 
     @NotNull(message = "Price value must not be empty")

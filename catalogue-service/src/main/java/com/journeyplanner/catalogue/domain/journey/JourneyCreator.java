@@ -18,6 +18,8 @@ class JourneyCreator {
                 .price(request.getPrice())
                 .start(request.getStart().toInstant())
                 .end(request.getEnd().toInstant())
+                .guideEmail("")
+                .guideName("")
                 .build();
     }
 }

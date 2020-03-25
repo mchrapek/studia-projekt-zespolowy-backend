@@ -10,6 +10,7 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 interface UserRepository extends
@@ -19,6 +20,8 @@ interface UserRepository extends
     User save(User user);
 
     Optional<User> findByEmail(String email);
+
+    List<User> findByRole(String role);
 
     boolean existsByEmail(String email);
 
