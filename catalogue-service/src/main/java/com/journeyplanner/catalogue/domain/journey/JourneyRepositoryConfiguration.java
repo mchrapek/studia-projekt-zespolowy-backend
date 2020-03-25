@@ -37,6 +37,8 @@ public class JourneyRepositoryConfiguration {
                 .price(new BigDecimal(1000L))
                 .start(Instant.now().plus(100, ChronoUnit.DAYS))
                 .end(Instant.now().plus(102, ChronoUnit.DAYS))
+                .guideEmail("")
+                .guideName("")
                 .build();
         if (!journeyRepository.findById(journey.getId()).isPresent()) {
             journeyRepository.save(journey);

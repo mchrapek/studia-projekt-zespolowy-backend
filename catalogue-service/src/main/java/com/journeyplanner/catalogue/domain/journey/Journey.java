@@ -34,4 +34,8 @@ public class Journey {
     @NonNull Instant start;
 
     @NonNull Instant end;
+
+    @NonNull String guideEmail;
+
+    @NonNull String guideName;
 }

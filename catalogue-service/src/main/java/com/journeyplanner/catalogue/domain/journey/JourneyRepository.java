@@ -21,6 +21,8 @@ interface JourneyRepository extends
 
     Page<Journey> findAll(Predicate predicate, Pageable pageable);
 
+    List<Journey> findByGuideEmail(String email);
+
     Journey save(Journey journey);
 
     Optional<Journey> findById(String id);

@@ -3,6 +3,7 @@ package com.journeyplanner.user.infrastructure.input.rest;
 import com.journeyplanner.user.domain.avatar.AvatarDto;
 import com.journeyplanner.user.domain.details.UserDetailsDto;
 import com.journeyplanner.user.domain.details.UserDetailsFacade;
+import com.journeyplanner.user.domain.user.GuideDto;
 import com.journeyplanner.user.domain.user.User;
 import com.journeyplanner.user.domain.user.UserDto;
 import com.journeyplanner.user.domain.user.UserFacade;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -132,5 +134,22 @@ public class UserController {
     public void add(@RequestHeader("x-username") String username, @RequestParam("image") MultipartFile file) {
 
         userDetailsFacade.addAvatar(username, file);
+    }
+
+    @GetMapping
+    @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Get Guides")
+    public ResponseEntity<List<GuideDto>> guides() {
+
+        return ResponseEntity.ok(userFacade.getGuides());
+    }
+
+    @PostMapping("register/guides")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = "*")
+    @ApiOperation(value = "Add new guide")
+    public void createGuide(@RequestBody @Valid CreateGuideRequest request) {
+
+        userFacade.createGuide(request);
     }
 }

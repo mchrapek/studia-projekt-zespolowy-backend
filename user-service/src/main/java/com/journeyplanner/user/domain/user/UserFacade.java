@@ -15,7 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static java.text.MessageFormat.format;
 
@@ -46,6 +48,16 @@ public class UserFacade {
                     put("secondName", userToSave.getSecondName());
                 }})
                 .build());
+    }
+
+    public void createGuide(final CreateGuideRequest request) {
+        if (repository.existsByEmail(request.getEmail())) {
+            throw new UserWithEmailAlreadyExists(format("User with email : {0} : already exists", request.getEmail()));
+        }
+
+        User userToSave = userCreator.from(request, passwordFacade.encodePassword(request.getPassword()));
+        repository.save(userToSave);
+        log.info(format("New guide : {0} : created", userToSave.getEmail()));
     }
 
     public void sendResetPasswordToken(final GenerateResetPasswordLinkRequest request) {
@@ -97,5 +109,12 @@ public class UserFacade {
 
     public Page<UserDto> getAll(Predicate predicate, Pageable pageable) {
         return repository.findAll(predicate, pageable).map(UserDto::from);
+    }
+
+    public List<GuideDto> getGuides() {
+        return repository.findByRole(UserRole.GUIDE.getRoleName())
+                .stream()
+                .map(GuideDto::from)
+                .collect(Collectors.toList());
     }
 }
