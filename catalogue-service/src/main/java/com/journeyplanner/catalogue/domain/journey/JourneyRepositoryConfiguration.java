@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import static com.journeyplanner.catalogue.domain.journey.JourneyStatus.*;
-
 @Configuration
 public class JourneyRepositoryConfiguration {
 
@@ -17,7 +15,7 @@ public class JourneyRepositoryConfiguration {
     public CommandLineRunner init(JourneyRepository journeyRepository) {
         Journey journey = Journey.builder()
                 .id("57ee7379-eaa9-4029-9267-dd0eb6a51b2b")
-                .status(ACTIVE)
+                .status(JourneyStatus.ACTIVE)
                 .name("Jarmark Bożonarodzeniowy Lipsk Express")
                 .country("Niemcy")
                 .city("Lipsk")
