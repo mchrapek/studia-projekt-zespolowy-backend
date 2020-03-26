@@ -64,6 +64,10 @@ public class JourneyFacade {
         Journey journey = repository.findById(journeyId)
                 .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", journeyId)));
 
+        if (journey.getStatus() == JourneyStatus.INACTIVE) {
+            throw new ResourcesNotFound(format("Journey : {0} : is inactive", journeyId));
+        }
+
         log.info(format("Request for reservation for journey : {0}", journeyId));
         reservationCreator.publish(CreateReservationEvent.builder()
                 .id(UUID.randomUUID().toString())

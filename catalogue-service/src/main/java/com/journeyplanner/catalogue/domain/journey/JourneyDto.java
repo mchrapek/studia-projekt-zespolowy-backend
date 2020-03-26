@@ -1,6 +1,5 @@
 package com.journeyplanner.catalogue.domain.journey;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
 
@@ -19,10 +18,10 @@ public class JourneyDto {
     String description;
     String transportType;
     BigDecimal price;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant start;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant end;
+    String guideEmail;
+    String guideName;
 
     static JourneyDto from(final Journey journey) {
         return JourneyDto.builder()
@@ -36,6 +35,8 @@ public class JourneyDto {
                 .price(journey.getPrice())
                 .start(journey.getStart())
                 .end(journey.getEnd())
+                .guideEmail(journey.getGuideEmail())
+                .guideName(journey.getGuideName())
                 .build();
     }
 }

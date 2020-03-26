@@ -1,4 +1,4 @@
-package com.journeyplanner.catalogue.infrastructure.output.queue;
+package com.journeyplanner.reservation.infrastructure.output;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,12 +13,12 @@ import static java.text.MessageFormat.format;
 
 @Service
 @Slf4j
-public class ReservationCreator implements EventPublisher {
+public class PaymentCreator implements EventPublisher {
 
     private final String queueName;
     private final RabbitTemplate rabbitTemplate;
 
-    public ReservationCreator(@Value("${queue.reservation.name}") String queueName, RabbitTemplate rabbitTemplate) {
+    public PaymentCreator(@Value("${queue.payment.name}") String queueName, RabbitTemplate rabbitTemplate) {
         this.queueName = queueName;
         this.rabbitTemplate = rabbitTemplate;
     }

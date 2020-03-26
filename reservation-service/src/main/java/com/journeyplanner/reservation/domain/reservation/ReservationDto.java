@@ -1,6 +1,5 @@
 package com.journeyplanner.reservation.domain.reservation;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
 
@@ -16,9 +15,10 @@ public class ReservationDto {
     String email;
     String journeyId;
     BigDecimal price;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant createdTime;
     String paymentId;
+    Instant start;
+    Instant end;
 
     static ReservationDto from(Reservation reservation) {
         return ReservationDto.builder()
@@ -29,6 +29,8 @@ public class ReservationDto {
                 .price(reservation.getPrice())
                 .createdTime(reservation.getCreatedTime())
                 .paymentId(reservation.getPaymentId())
+                .start(reservation.getStart())
+                .end(reservation.getEnd())
                 .build();
     }
 }

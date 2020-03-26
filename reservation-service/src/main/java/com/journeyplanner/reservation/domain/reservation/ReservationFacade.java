@@ -1,12 +1,11 @@
 package com.journeyplanner.reservation.domain.reservation;
 
-import com.journeyplanner.common.config.events.CancelJourneyEvent;
-import com.journeyplanner.common.config.events.CreateReservationEvent;
-import com.journeyplanner.common.config.events.SendMailEvent;
+import com.journeyplanner.common.config.events.*;
 import com.journeyplanner.common.config.mail.Template;
 import com.journeyplanner.reservation.exception.NotPermittedOperation;
 import com.journeyplanner.reservation.exception.ResourceNotFound;
 import com.journeyplanner.reservation.infrastructure.output.MailSender;
+import com.journeyplanner.reservation.infrastructure.output.PaymentCreator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +27,20 @@ public class ReservationFacade {
     private final CancelJourneyRuleCreator cancelJourneyRuleCreator;
     private final CancelJourneyRuleRepository cancelJourneyRuleRepository;
     private final MailSender mailSender;
+    private final PaymentCreator paymentCreator;
 
     public void createNew(final CreateReservationEvent event) {
         Reservation reservation = creator.from(event);
         repository.save(reservation);
+
+        paymentCreator.publish(CreateTransferEvent.builder()
+                .id(UUID.randomUUID().toString())
+                .email(event.getEmail())
+                .paymentId(reservation.getPaymentId())
+                .value(reservation.getPrice())
+                .type(TransferType.LOAD)
+                .createdTime(Instant.now())
+                .build());
 
         mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(event.getEmail())
                 .templateName(Template.NEW_RESERVATION_CREATED.getPath()).params(new HashMap<>()).build());
@@ -54,7 +63,7 @@ public class ReservationFacade {
         Reservation reservation = repository.findByIdAndEmail(reservationId, email)
                 .orElseThrow(() -> new ResourceNotFound(format("Cannot found reservation with id : {0}", reservationId)));
 
-        if (reservation.getEmail().equals(email)) {
+        if (!reservation.getEmail().equals(email)) {
             throw new NotPermittedOperation("You don't have permission");
         }
 
@@ -65,6 +74,15 @@ public class ReservationFacade {
 
         repository.updateReservationStatusTo(reservation.getId(), ReservationStatus.CANCEL);
 
+        paymentCreator.publish(CreateTransferEvent.builder()
+                .id(UUID.randomUUID().toString())
+                .email(email)
+                .paymentId(reservation.getPaymentId())
+                .value(reservation.getPrice())
+                .type(TransferType.RETURN)
+                .createdTime(Instant.now())
+                .build());
+
         mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(email)
                 .templateName(Template.RESERVATION_CANCELED.getPath()).params(new HashMap<>()).build());
     }
@@ -73,10 +91,19 @@ public class ReservationFacade {
         cancelJourneyRuleRepository.save(cancelJourneyRuleCreator.from(cancelJourneyEvent));
     }
 
-    public void cancelByAdmin(final String reservationId, final String email) {
-        repository.updateReservationStatusTo(reservationId, ReservationStatus.CANCEL);
+    public void cancelByAdmin(final Reservation reservation) {
+        repository.updateReservationStatusTo(reservation.getId(), ReservationStatus.CANCEL);
 
-        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(email)
+        paymentCreator.publish(CreateTransferEvent.builder()
+                .id(UUID.randomUUID().toString())
+                .email(reservation.getEmail())
+                .paymentId(reservation.getPaymentId())
+                .value(reservation.getPrice())
+                .type(TransferType.RETURN)
+                .createdTime(Instant.now())
+                .build());
+
+        mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(reservation.getEmail())
                 .templateName(Template.JOURNEY_CANCELED.getPath()).params(new HashMap<>()).build());
     }
 }

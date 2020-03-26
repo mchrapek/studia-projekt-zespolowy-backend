@@ -94,7 +94,7 @@ public class JourneyController {
     @PostMapping(value = "{journeyId}/photos")
     @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add photo to Journey", notes = "Admin")
-    public ResponseEntity<String> add(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
+    public ResponseEntity<String> addPhoto(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
 
         return ResponseEntity.ok(photoFacade.add(journeyId, file));
     }

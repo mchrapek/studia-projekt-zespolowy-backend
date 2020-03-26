@@ -1,6 +1,7 @@
 package com.journeyplanner.mail.infrastructure.input;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.journeyplanner.common.config.events.SendMailEvent;
 import com.journeyplanner.mail.domain.Mail;
 import com.journeyplanner.mail.domain.MailService;
@@ -21,7 +22,8 @@ public class SendMailEventReceiver {
     @RabbitListener(queues = "${queue.mail.name}")
     public void publish(String event) {
         try {
-            SendMailEvent mailEvent = new ObjectMapper().readValue(event, SendMailEvent.class);
+            SendMailEvent mailEvent = new ObjectMapper().findAndRegisterModules()
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).readValue(event, SendMailEvent.class);
             log.info(format("Event received : {0}", mailEvent.toString()));
             mailService.createPendingMail(from(mailEvent));
         } catch (Exception e) {

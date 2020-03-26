@@ -1,6 +1,7 @@
 package com.journeyplanner.payment.infrastructure.output;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.journeyplanner.common.config.events.Event;
 import com.journeyplanner.common.config.events.EventPublisher;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,8 @@ public class MailSender implements EventPublisher {
     @Override
     public void publish(Event event) {
         try {
-            String mappedEvent = new ObjectMapper().writeValueAsString(event);
+            String mappedEvent = new ObjectMapper().findAndRegisterModules()
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writeValueAsString(event);
             rabbitTemplate.convertAndSend(queueName, mappedEvent);
             log.info(format("Event send : {0} : {1}", queueName, mappedEvent));
         } catch (Exception e) {

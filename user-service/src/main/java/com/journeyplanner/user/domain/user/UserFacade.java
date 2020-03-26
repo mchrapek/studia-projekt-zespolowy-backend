@@ -125,4 +125,10 @@ public class UserFacade {
                 .map(GuideDto::from)
                 .collect(Collectors.toList());
     }
+
+    public UserDto findById(final String id) {
+        return repository.findById(id)
+                .map(UserDto::from)
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with id : {0}", id)));
+    }
 }

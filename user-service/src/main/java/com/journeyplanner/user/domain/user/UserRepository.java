@@ -21,6 +21,8 @@ interface UserRepository extends
 
     Optional<User> findByEmail(String email);
 
+    Optional<User> findById(String id);
+
     List<User> findByRole(String role);
 
     boolean existsByEmail(String email);

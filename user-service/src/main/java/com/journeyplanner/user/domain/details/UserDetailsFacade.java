@@ -21,12 +21,6 @@ public class UserDetailsFacade {
                 .orElseGet(UserDetailsDto::empty);
     }
 
-    public UserDetailsDto getDetailsById(final String id) {
-        return repository.findById(id)
-                .map(UserDetailsDto::from)
-                .orElseGet(UserDetailsDto::empty);
-    }
-
     public UserDetailsDto addOrUpdateDetails(final String email, final UpdateUserDetailsRequest request) {
         UserDetails updatedUserDetails = repository.findByEmail(email)
                 .map(d -> creator.createFrom(d, request))

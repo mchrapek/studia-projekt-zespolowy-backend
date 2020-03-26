@@ -1,0 +1,981 @@
+{
+	"info": {
+		"_postman_id": "f77f9efa-22cf-48a8-a50b-6bf85d4e8d6b",
+		"name": "journeyplanner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"Todd@journeyplanner.com\",\n\t\"password\":\"12345a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"BarbaraS@rhyta.com\",\n\t\"password\":\"12345a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Guide",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"maria@jourrapide.com\",\n\t\"password\":\"12345a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjI1OTk1LCJpYXQiOjE1ODUyMjIzOTUsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.WcEXxH4lIqPE20AW93L17cxELz_N3pcIkG6NZcIablKwtVnO6sGrEapOg_uMeRT5ynUNOCTDaRa4W3x2GzPyFg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/users?size=5&page=0&sort=firstName&secondName=Kleins",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "sort",
+							"value": "firstName"
+						},
+						{
+							"key": "secondName",
+							"value": "Kleins"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"marek@marek.pl\",\n  \"password\": \"12345a\",\n  \"firstName\": \"Marek\",\n  \"secondName\": \"Marek\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register New Guide",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjExOTU5LCJpYXQiOjE1ODUyMDgzNTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.lzfmEX7OhTg4eM8xB7Kvp9pcu3N7M2VLHxEJy_pLgVioTwaDJtvLMkMLrwTmgL1Nn4p2ZctZ7y4Dbh_dTI-yvA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"guide@guide.pl\",\n  \"password\": \"12345a\",\n  \"firstName\": \"Marek\",\n  \"secondName\": \"Marek\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/register/guides",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"register",
+						"guides"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Avatar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIxMTk4NiwiaWF0IjoxNTg1MjA4Mzg2LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.hrdSFboPm5xuFLQ9xhOk6m9f1b-8v7up7P2hYvbqfSKKk15xQeqPkPDcHDnNNCaZ0EiBY_n7QayvsiezDzHGDg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/mchrapek/Studia/PZ/studia-projekt-zespolowy-backend/docs/agile_personas/avatar_user.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8762/users/avatar",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Avatar",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIxMTk4NiwiaWF0IjoxNTg1MjA4Mzg2LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.hrdSFboPm5xuFLQ9xhOk6m9f1b-8v7up7P2hYvbqfSKKk15xQeqPkPDcHDnNNCaZ0EiBY_n7QayvsiezDzHGDg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/users/avatar",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"BarbaraS@rhyta.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/reset",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Request Reset Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjE5NDM0LCJpYXQiOjE1ODUyMTU4MzQsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.aDzm2VQOzZX49OrnXIfrofvjaadDScOuXsJ872KvKWnIWTJakyDLJp8qXtjEpaleXAwxI7AM2ieIu7mDFCDHwg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"BarbaraS@rhyta.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/reset/request",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"reset",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"token\": \"17d22ce5-d2e2-4d00-acb7-a34e331cd774\",\n  \"email\": \"BarbaraS@rhyta.com\",\n  \"newPassword\": \"12345a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/password",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Guides",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjExOTU5LCJpYXQiOjE1ODUyMDgzNTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.lzfmEX7OhTg4eM8xB7Kvp9pcu3N7M2VLHxEJy_pLgVioTwaDJtvLMkMLrwTmgL1Nn4p2ZctZ7y4Dbh_dTI-yvA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/users/guides",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"guides"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIxOTU5NSwiaWF0IjoxNTg1MjE1OTk1LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.sAhxHOWH6_MqiCOWav037ep5WfcAJtODSv6KaV3SrWVNpBfZwcP8M02Hc6mLxQyWLCZXWVZuHzs5GtCU-nkq5A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8762/users/details",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users Details By Admin",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjI1OTk1LCJpYXQiOjE1ODUyMjIzOTUsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.WcEXxH4lIqPE20AW93L17cxELz_N3pcIkG6NZcIablKwtVnO6sGrEapOg_uMeRT5ynUNOCTDaRa4W3x2GzPyFg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/users/details/380d1dad-bc3f-4cbb-9b12-7138afa170b2",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"details",
+						"380d1dad-bc3f-4cbb-9b12-7138afa170b2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIxMTk4NiwiaWF0IjoxNTg1MjA4Mzg2LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.hrdSFboPm5xuFLQ9xhOk6m9f1b-8v7up7P2hYvbqfSKKk15xQeqPkPDcHDnNNCaZ0EiBY_n7QayvsiezDzHGDg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"country\": \"Wlochy\",\n  \"city\": \"Bergamo\",\n  \"street\": \"Piazza\",\n  \"postCode\": \"00-202\",\n  \"phoneNumber\": \"222-333-666\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/details",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Block User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjExOTU5LCJpYXQiOjE1ODUyMDgzNTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.lzfmEX7OhTg4eM8xB7Kvp9pcu3N7M2VLHxEJy_pLgVioTwaDJtvLMkMLrwTmgL1Nn4p2ZctZ7y4Dbh_dTI-yvA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"marek@marek.pl\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/block",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"block"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unblock User",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjExOTU5LCJpYXQiOjE1ODUyMDgzNTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.lzfmEX7OhTg4eM8xB7Kvp9pcu3N7M2VLHxEJy_pLgVioTwaDJtvLMkMLrwTmgL1Nn4p2ZctZ7y4Dbh_dTI-yvA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"marek@marek.pl\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/users/block",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"users",
+						"block"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Journeys",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys?size=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Journey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjExOTU5LCJpYXQiOjE1ODUyMDgzNTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.lzfmEX7OhTg4eM8xB7Kvp9pcu3N7M2VLHxEJy_pLgVioTwaDJtvLMkMLrwTmgL1Nn4p2ZctZ7y4Dbh_dTI-yvA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"NewJourney\",\n  \"country\": \"Hiszpania\",\n  \"city\": \"Barcelona\",\n  \"description\": \"Day1 Super\",\n  \"transportType\": \"PLAIN\",\n  \"price\": 2330,\n  \"start\": \"2020-04-26T08:10:06.564Z\",\n  \"end\": \"2020-04-28T08:10:06.564Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Journey",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjE5ODk4LCJpYXQiOjE1ODUyMTYyOTgsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.k_JNM8OlTIT1klz-nGWwtyD9AJF2jfN1vSKhaPWoFEbj1C--rY_rkpczKMDic-SOpaOzeNlvd93OpMMgO0B33A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"NewJourney\",\n  \"country\": \"Hiszpania\",\n  \"city\": \"Barcelona\",\n  \"description\": \"Day1 Super Day22 Super\",\n  \"transportType\": \"PLAIN\",\n  \"price\": 2330\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/9522e66a-a6a2-459b-be78-7f0f10904dc6",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"9522e66a-a6a2-459b-be78-7f0f10904dc6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Journey",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjExOTU5LCJpYXQiOjE1ODUyMDgzNTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.lzfmEX7OhTg4eM8xB7Kvp9pcu3N7M2VLHxEJy_pLgVioTwaDJtvLMkMLrwTmgL1Nn4p2ZctZ7y4Dbh_dTI-yvA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/9522e66a-a6a2-459b-be78-7f0f10904dc6",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"9522e66a-a6a2-459b-be78-7f0f10904dc6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Guide to Journey",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjE5OTUxLCJpYXQiOjE1ODUyMTYzNTEsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.OOnk0qETLxdFV4rLxh25Ijt_61lOJWt46bMY7cOSEs4qEKlXr65VBhPQJI02weM4l5WBE8neRNHFKV_zVt40Aw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"maria@jourrapide.com\",\n    \"firstName\": \"Maria\",\n    \"secondName\": \"Kleins\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/9522e66a-a6a2-459b-be78-7f0f10904dc6/guides",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"9522e66a-a6a2-459b-be78-7f0f10904dc6",
+						"guides"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Guide Journeys",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYUBqb3VycmFwaWRlLmNvbSIsImlkIjoiZmQxZjJlYzQtMjFkMS00YzMyLWE2OTItZWFkZTlmZDE5Y2ZlIiwiZXhwIjoxNTg1MjE5OTg1LCJpYXQiOjE1ODUyMTYzODUsImF1dGhvcml0aWVzIjpbIlJPTEVfR1VJREUiXX0.ePbH0lrtQD18Y-r-GYhDq48Kn2kPS842pLbC-mg1HCc9wAbJwzedA6jhfacLIGZJyPIVdv5EZrczdl78K7s5Wg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/guides",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"guides"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Reservation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyMDk2NywiaWF0IjoxNTg1MjE3MzY3LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.NMkhn78vXoZU1X3xYC2y6maCr_N8hXhfgmaE-et0lJzKyLLNPW2yW-O1kew20rAGgORWluANz7TQeif5FnApuA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/57ee7379-eaa9-4029-9267-dd0eb6a51b2b/reservation",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"57ee7379-eaa9-4029-9267-dd0eb6a51b2b",
+						"reservation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Photos Ids For Journey",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/9522e66a-a6a2-459b-be78-7f0f10904dc6/photos",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"9522e66a-a6a2-459b-be78-7f0f10904dc6",
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Photo to Journey",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUb2RkQGpvdXJuZXlwbGFubmVyLmNvbSIsImlkIjoiYzVlYjIzZGMtYjZkMC00NDg1LWIwYTItNTcwNTIzNzc3MzEzIiwiZXhwIjoxNTg1MjE5OTUxLCJpYXQiOjE1ODUyMTYzNTEsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXX0.OOnk0qETLxdFV4rLxh25Ijt_61lOJWt46bMY7cOSEs4qEKlXr65VBhPQJI02weM4l5WBE8neRNHFKV_zVt40Aw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/mchrapek/Pictures/wallhaven/wallhaven-13m573.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8762/catalogue/journeys/9522e66a-a6a2-459b-be78-7f0f10904dc6/photos",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"journeys",
+						"9522e66a-a6a2-459b-be78-7f0f10904dc6",
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Photo By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8762/catalogue/photos/8800c7be-40ef-463a-ad67-aec8a5d7784d",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"catalogue",
+						"photos",
+						"8800c7be-40ef-463a-ad67-aec8a5d7784d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reservations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyNjM3NSwiaWF0IjoxNTg1MjIyNzc1LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.wXWBbUnGiSWxlxuL3s3cFZpoCDUShCd7jmZIyXKOafKC6HmFDzTT7cHCIRCINkQLY3r8-jnBUnkA9ToEd3Ivxg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Payment Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyNjgzMiwiaWF0IjoxNTg1MjIzMjMyLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.yR3BktPUAq2euueVaRRQggjeoSTynr27wMOcq-rHj2w4e3EHfj5NhFUcMRw8JBQkkPV0DE_d0hzuWxFId3z-hQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/billing/payments/827dd7ad-585c-4da6-9293-87d526fe4824",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"billing",
+						"payments",
+						"827dd7ad-585c-4da6-9293-87d526fe4824"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyNjgzMiwiaWF0IjoxNTg1MjIzMjMyLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.yR3BktPUAq2euueVaRRQggjeoSTynr27wMOcq-rHj2w4e3EHfj5NhFUcMRw8JBQkkPV0DE_d0hzuWxFId3z-hQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/billing/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"billing",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Charge Account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyMzcxOCwiaWF0IjoxNTg1MjIwMTE4LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.FnY7cGhKdhcdufX3_KyUNrfDVBAh1AfUu5_qX6RCfSy0R7MpKQEUr28tTtr106UGFL3r6MeC4ZlO-AYY0gTTzQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\":\"10000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8762/billing/accounts/charge",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"billing",
+						"accounts",
+						"charge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retry Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyMzcxOCwiaWF0IjoxNTg1MjIwMTE4LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.FnY7cGhKdhcdufX3_KyUNrfDVBAh1AfUu5_qX6RCfSy0R7MpKQEUr28tTtr106UGFL3r6MeC4ZlO-AYY0gTTzQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/billing/payments/827dd7ad-585c-4da6-9293-87d526fe4824/retry",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"billing",
+						"payments",
+						"827dd7ad-585c-4da6-9293-87d526fe4824",
+						"retry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCYXJiYXJhU0ByaHl0YS5jb20iLCJpZCI6IjM4MGQxZGFkLWJjM2YtNGNiYi05YjEyLTcxMzhhZmExNzBiMiIsImV4cCI6MTU4NTIyNjM3NSwiaWF0IjoxNTg1MjIyNzc1LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.wXWBbUnGiSWxlxuL3s3cFZpoCDUShCd7jmZIyXKOafKC6HmFDzTT7cHCIRCINkQLY3r8-jnBUnkA9ToEd3Ivxg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8762/reservations/3757f3e1-ea8c-484c-bfea-fd336f03e4c8",
+					"host": [
+						"localhost"
+					],
+					"port": "8762",
+					"path": [
+						"reservations",
+						"3757f3e1-ea8c-484c-bfea-fd336f03e4c8"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
