@@ -1,6 +1,7 @@
 package com.journeyplanner.payment.infrastructure.input.queue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.journeyplanner.common.config.events.CreateTransferEvent;
 import com.journeyplanner.payment.domain.account.AccountFacade;
 import com.journeyplanner.payment.domain.account.Transfer;
@@ -22,7 +23,8 @@ public class TransferReceiver {
     @RabbitListener(queues = "${queue.payment.name}")
     public void publish(String event) {
         try {
-            CreateTransferEvent transferEvent = new ObjectMapper().readValue(event, CreateTransferEvent.class);
+            CreateTransferEvent transferEvent = new ObjectMapper().findAndRegisterModules()
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).readValue(event, CreateTransferEvent.class);
             log.info(format("Event received : {0}", transferEvent.toString()));
             accountFacade.savePendingTransfer(from(transferEvent));
         } catch (Exception e) {

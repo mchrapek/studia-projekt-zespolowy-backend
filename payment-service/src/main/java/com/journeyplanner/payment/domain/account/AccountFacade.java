@@ -83,6 +83,13 @@ public class AccountFacade {
         Account account = accountRepository.findByEmail(transfer.getEmail())
                 .orElseGet(() -> accountRepository.save(creator.emptyAccount(transfer.getEmail())));
 
+        Transfer transferHistory = transferRepository.findFirstByPaymentIdOrderByEventTimeDesc(transfer.getPaymentId())
+                .orElseThrow(() -> new IllegalOperation(format("Cannot find payment {0}", transfer.getPaymentId())));
+
+        if (transferHistory.getStatus() == TransferStatus.ERROR) {
+            throw new IllegalOperation(format("Transaction already in error state : {0}", transfer.getId()));
+        }
+
         accountRepository.modifyAccountBalance(account.getId(), account.getBalance().add(transfer.getValue()));
 
         AccountHistory accountHistory = accountHistoryRepository

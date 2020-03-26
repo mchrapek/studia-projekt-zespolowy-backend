@@ -6,7 +6,8 @@ public class Paths {
             "/catalogue",
             "/catalogue/photos/**",
             "/catalogue/journeys",
-            "/catalogue/journeys/{\\d+}/photos"
+            "/catalogue/journeys/{\\w+}/photos",
+            "/catalogue/photos/{\\w+}"
     };
 
     public final static String[] POST_PERMIT_ALL_PATHS = {
@@ -33,26 +34,30 @@ public class Paths {
             "/users/details",
             "/users/avatar",
             "/billing/payments/**",
-            "/catalogue/journeys/{\\d+}/reservation"
+            "/catalogue/journeys/{\\w+}/reservation"
+    };
+
+    public final static String[] DELETE_USER_PATHS = {
+            "/reservations/**"
     };
 
     public final static String[] GET_ADMIN_PATHS = {
             "/users",
             "/users/details/**",
-            "/users/guides",
-            "/catalogue/journeys/{\\d+}/photos"
+            "/users/guides"
     };
 
     public final static String[] POST_ADMIN_PATHS = {
             "/users/block",
             "/users/reset/request",
             "/register/guides",
-            "/catalogue/journeys"
+            "/catalogue/journeys",
+            "/catalogue/journeys/{\\w+}/photos"
     };
 
     public final static String[] PUT_ADMIN_PATHS = {
-            "/catalogue/journeys/{\\d+}",
-            "/catalogue/journeys/{\\d+}/guides"
+            "/catalogue/journeys/{\\w+}",
+            "/catalogue/journeys/{\\w+}/guides"
     };
 
     public final static String[] DELETE_ADMIN_PATHS = {
@@ -61,6 +66,6 @@ public class Paths {
     };
 
     public final static String[] GET_GUIDE_PATHS = {
-            "/catalogue/journeys/{\\d+}/guides"
+            "/catalogue/journeys/{\\w+}/guides"
     };
 }

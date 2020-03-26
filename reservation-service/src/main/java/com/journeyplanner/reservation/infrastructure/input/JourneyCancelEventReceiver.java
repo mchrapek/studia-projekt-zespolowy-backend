@@ -1,6 +1,7 @@
 package com.journeyplanner.reservation.infrastructure.input;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.journeyplanner.common.config.events.CancelJourneyEvent;
 import com.journeyplanner.reservation.domain.reservation.ReservationFacade;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,8 @@ public class JourneyCancelEventReceiver {
     @RabbitListener(queues = "${queue.reservation.name}")
     public void publish(String event) {
         try {
-            CancelJourneyEvent cancelJourneyEvent = new ObjectMapper().readValue(event, CancelJourneyEvent.class);
+            CancelJourneyEvent cancelJourneyEvent = new ObjectMapper().findAndRegisterModules()
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).readValue(event, CancelJourneyEvent.class);
             log.info(format("Event received : {0}", cancelJourneyEvent.toString()));
             reservationFacade.createNewCancelEvent(cancelJourneyEvent);
         } catch (Exception e) {

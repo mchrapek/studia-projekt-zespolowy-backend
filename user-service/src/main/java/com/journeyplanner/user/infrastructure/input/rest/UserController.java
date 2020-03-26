@@ -124,7 +124,8 @@ public class UserController {
     @ApiOperation(value = "Get User Details By Id", notes = "Admin")
     public ResponseEntity<UserDetailsDto> getUserDetailsById(@PathVariable("id") String userId) {
 
-        return ResponseEntity.ok(userDetailsFacade.getDetailsById(userId));
+        UserDto user = userFacade.findById(userId);
+        return ResponseEntity.ok(userDetailsFacade.getDetailsByEmail(user.getEmail()));
     }
 
     @GetMapping(value = "avatar", produces = MediaType.IMAGE_JPEG_VALUE)

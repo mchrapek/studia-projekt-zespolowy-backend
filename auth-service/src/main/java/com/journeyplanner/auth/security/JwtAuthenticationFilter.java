@@ -1,6 +1,7 @@
 package com.journeyplanner.auth.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.journeyplanner.auth.security.dto.UserCredentialsRequest;
 import com.journeyplanner.auth.security.jwt.JwtTokenProvider;
 import com.journeyplanner.auth.user.AppUserService;
@@ -41,7 +42,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UserCredentialsRequest credentials =
-                    new ObjectMapper().readValue(request.getInputStream(), UserCredentialsRequest.class);
+                    new ObjectMapper().findAndRegisterModules()
+                            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                            .readValue(request.getInputStream(), UserCredentialsRequest.class);
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword(), Collections.emptyList());
 

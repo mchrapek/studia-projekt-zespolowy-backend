@@ -47,7 +47,7 @@ public class PasswordFacade {
         mailSender.publish(SendMailEvent.builder()
                 .id(UUID.randomUUID().toString())
                 .to(email)
-                .templateName(Template.RESET_PASSWORD.getPath())
+                .templateName(Template.RESET_PASSWORD_ADMIN.getPath())
                 .params(new HashMap<String, String>() {{
                     put("firstName", firstName);
                     put("token", resetToken.getToken());

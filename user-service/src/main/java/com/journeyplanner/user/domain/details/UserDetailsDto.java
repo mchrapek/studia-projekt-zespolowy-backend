@@ -28,6 +28,12 @@ public class UserDetailsDto {
     }
 
     static UserDetailsDto empty() {
-        return UserDetailsDto.builder().build();
+        return UserDetailsDto.builder()
+                .country("")
+                .city("")
+                .street("")
+                .postCode("")
+                .phoneNumber("")
+                .build();
     }
 }

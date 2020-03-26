@@ -42,7 +42,6 @@ public class AccountDto {
 class AccountHistoryEventDto {
 
     String id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     Instant createdTime;
     AccountEventType type;
     BigDecimal value;
