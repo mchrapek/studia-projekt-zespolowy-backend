@@ -1,3 +1,3 @@
 <body>
-<p>Witaj ${params.firstName} ${params.secondName} w aplikacji JourneyPlanner!</p>
+<p>Welcom ${params.firstName} ${params.secondName} in the JourneyPlanner application!</p>
 </body>

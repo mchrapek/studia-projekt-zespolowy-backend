@@ -1,4 +1,4 @@
 <body>
-<p>Witaj!</p>
-<p>Twoje konto zostało obciążone ${params.value}.</p>
+<p>Hi!</p>
+<p>Your account has been loaded ${params.value}.</p>
 </body>

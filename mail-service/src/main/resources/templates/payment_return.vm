@@ -1,4 +1,4 @@
 <body>
-<p>Witaj!</p>
-<p>Na Twoje konto została zwrócona kwota ${params.value}.</p>
+<p>Hi!</p>
+<p>An amount has been returned to your account ${params.value}.</p>
 </body>

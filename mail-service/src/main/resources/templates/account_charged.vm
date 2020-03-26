@@ -1,4 +1,4 @@
 <body>
-<p>Witaj!</p>
-<p>Twoje konto zostało doładowane środkami ${params.value}.</p>
+<p>Hi!</p>
+<p>Your account has been charged ${params.value}.</p>
 </body>
