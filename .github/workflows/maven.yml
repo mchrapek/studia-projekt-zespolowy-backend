@@ -22,3 +22,15 @@ jobs:
         java-version: 1.8
     - name: Build
       run: ./build.sh
+    - name: Test Auth-Service
+      run: cd auth-service && ./test.sh
+    - name: Test Catalogue-Service
+      run: cd catalogue-service && ./test.sh
+    - name: Test Mail-Service
+      run: cd mail-service && ./test.sh
+    - name: Test Payment-Service
+      run: cd payment-service && ./test.sh
+    - name: Test Reservation-Service
+      run: cd reservation-service && ./test.sh
+    - name: Test User-Service
+      run: cd user-service && ./test.sh
