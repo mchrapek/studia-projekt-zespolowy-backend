@@ -4,7 +4,9 @@ import com.journeyplanner.catalogue.exceptions.ResourcesNotFound;
 import com.journeyplanner.catalogue.infrastructure.input.request.AddGuideToJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.output.queue.CancelJourney;
 import com.journeyplanner.catalogue.infrastructure.output.queue.ReservationCreator;
+import com.journeyplanner.common.config.events.CancelJourneyEvent;
 import com.journeyplanner.common.config.events.CreateReservationEvent;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ public class JourneyFacade {
     private final JourneyCreator journeyCreator;
     private final JourneyUpdater journeyUpdater;
     private final ReservationCreator reservationCreator;
+    private final CancelJourney cancelJourney;
 
     public Page<JourneyDto> getAll(final Predicate predicate, final Pageable pageable) {
         return repository
@@ -58,6 +61,12 @@ public class JourneyFacade {
         if (journey.getStatus() == JourneyStatus.ACTIVE) {
             repository.updateJourneyStatus(journey.getId(), JourneyStatus.INACTIVE);
         }
+
+        cancelJourney.publish(CancelJourneyEvent.builder()
+                .id(UUID.randomUUID().toString())
+                .journeyId(journey.getId())
+                .eventTimeStamp(Instant.now())
+                .build());
     }
 
     public void createReservation(final String journeyId, final String username) {

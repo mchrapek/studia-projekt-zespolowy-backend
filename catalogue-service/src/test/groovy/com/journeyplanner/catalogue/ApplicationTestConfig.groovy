@@ -29,4 +29,7 @@ class ApplicationTestConfig {
 
     @MockBean
     ReservationCreator reservationCreator
+
+    @MockBean
+    CancelJourney cancelJourney
 }
