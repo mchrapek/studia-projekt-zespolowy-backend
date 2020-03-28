@@ -7,7 +7,8 @@
 2. [Uruchomienie](#uruchomienie)
 3. [Zasoby](#zasoby)
 4. [Event Storming - Big Picture](#event-storming---big-picture-event-storming)
-5. [Agile Personas](#agile-personas)
+5. [Architektura](#architektura)
+6. [Agile Personas](#agile-personas)
 
 ---
 ### Wymagania
@@ -57,6 +58,18 @@ plik z dashboard'em: `monitoring/jvm-micrometer_rev8.json`
 
 ![Image event-storming-big-picture](docs/event-storming-big-picture.png)
 
+
+----
+
+### Architektura
+
+#### Diagram: poziom C2
+
+![C2 diagram](docs/C4/C2.png)
+
+#### Diagram: poziom C3
+
+![C3 diagram](docs/C4/C3.png)
 
 ----
 
