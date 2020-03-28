@@ -18,7 +18,7 @@ public class JourneyCancelEventReceiver {
 
     private final ReservationFacade reservationFacade;
 
-    @RabbitListener(queues = "${queue.reservation.name}")
+    @RabbitListener(queues = "${queue.cancel-journey.name}")
     public void publish(String event) {
         try {
             CancelJourneyEvent cancelJourneyEvent = new ObjectMapper().findAndRegisterModules()
