@@ -22,7 +22,6 @@ public class ReservationController {
     public ReservationFacade reservationFacade;
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get User Reservations", notes = "User")
     public ResponseEntity<List<ReservationDto>> getUserReservation(@RequestHeader("x-username") String username) {
 
@@ -31,7 +30,6 @@ public class ReservationController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Cancel Reservation", notes = "User")
     public void cancelReservation(@RequestHeader("x-username") String username,
                                   @PathVariable("id") String paymentId) {

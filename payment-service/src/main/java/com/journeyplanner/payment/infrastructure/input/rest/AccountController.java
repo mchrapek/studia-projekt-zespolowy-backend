@@ -22,7 +22,6 @@ public class AccountController {
     private final AccountFacade accountFacade;
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get User Account", notes = "User")
     public ResponseEntity<AccountDto> get(@RequestHeader("x-username") String username) {
 
@@ -30,7 +29,6 @@ public class AccountController {
     }
 
     @PostMapping("charge")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Charge Account", notes = "User")
     public ResponseEntity<String> charge(@RequestHeader("x-username") String username,
                                          @RequestBody @Valid ChargeAccountRequest request) {

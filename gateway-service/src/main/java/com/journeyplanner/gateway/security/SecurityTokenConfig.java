@@ -3,14 +3,19 @@ package com.journeyplanner.gateway.security;
 import com.journeyplanner.common.config.paths.Paths;
 import com.journeyplanner.common.config.security.JwtProperties;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @Service
 @AllArgsConstructor
@@ -46,6 +51,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, Paths.DELETE_ADMIN_PATHS).hasRole("ADMIN")
 
                 .antMatchers(HttpMethod.GET, Paths.GET_GUIDE_PATHS).hasRole("GUIDE")
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
 
                 .anyRequest().authenticated();
     }

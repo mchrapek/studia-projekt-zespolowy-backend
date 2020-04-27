@@ -38,7 +38,6 @@ public class JourneyController {
     private final PhotoFacade photoFacade;
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get pageable Journeys", notes = "Anonymous")
     public ResponseEntity<Page<JourneyDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
             @SortDefault(sort = "start", direction = Sort.Direction.DESC)) Pageable pageable, @QuerydslPredicate(root = Journey.class) Predicate predicate) {
@@ -47,7 +46,6 @@ public class JourneyController {
     }
 
     @PostMapping
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Create Journey", notes = "Admin")
     public ResponseEntity<JourneyDto> create(@RequestBody @Valid CreateJourneyRequest request) {
 
@@ -56,7 +54,6 @@ public class JourneyController {
 
     @PutMapping("{journeyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Update Journey", notes = "Admin")
     public ResponseEntity<JourneyDto> update(@PathVariable("journeyId") String journeyId,
                                              @RequestBody @Valid UpdateJourneyRequest request) {
@@ -66,7 +63,6 @@ public class JourneyController {
 
     @DeleteMapping(value = "{journeyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Cancel Journey", notes = "Admin")
     public void cancel(@PathVariable("journeyId") String journeyId) {
 
@@ -75,7 +71,6 @@ public class JourneyController {
 
     @PostMapping("{journeyId}/reservation")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Create Journey reservation", notes = "User")
     public void createReservation(@PathVariable("journeyId") String journeyId,
                                   @RequestHeader("x-username") String username) {
@@ -84,7 +79,6 @@ public class JourneyController {
     }
 
     @GetMapping(value = "{journeyId}/photos")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get all id photos for Journey", notes = "Anonymous")
     public ResponseEntity<List<String>> getAllByJourneyId(@PathVariable("journeyId") String journeyId) {
 
@@ -92,7 +86,6 @@ public class JourneyController {
     }
 
     @PostMapping(value = "{journeyId}/photos")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add photo to Journey", notes = "Admin")
     public ResponseEntity<String> addPhoto(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
 
@@ -100,7 +93,6 @@ public class JourneyController {
     }
 
     @PutMapping("/{journeyId}/guides")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add Guide to Journey", notes = "Admin")
     public ResponseEntity<JourneyDto> addGuideToJourney(@PathVariable("journeyId") String journeyId,
                                                         @RequestBody @Valid AddGuideToJourneyRequest request) {
@@ -109,7 +101,6 @@ public class JourneyController {
     }
 
     @GetMapping("guides")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get Guide Journeys", notes = "Guide")
     public ResponseEntity<List<JourneyDto>> getGuideJourneys(@RequestHeader("x-username") String username) {
 

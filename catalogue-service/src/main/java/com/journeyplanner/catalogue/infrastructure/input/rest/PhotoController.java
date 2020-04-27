@@ -19,7 +19,6 @@ public class PhotoController {
     private final PhotoFacade photoFacade;
 
     @GetMapping(value = "{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get photo by id", notes = "Anonymous")
     public ResponseEntity<byte[]> getById(@PathVariable("id") String photoId) {
 

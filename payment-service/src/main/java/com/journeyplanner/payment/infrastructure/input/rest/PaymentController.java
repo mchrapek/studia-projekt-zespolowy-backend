@@ -20,7 +20,6 @@ public class PaymentController {
     private final AccountFacade accountFacade;
 
     @GetMapping("{id}")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get Payment", notes = "User")
     public ResponseEntity<TransferDto> getPayment(@RequestHeader("x-username") String username,
                                                   @PathVariable("id") String paymentId) {
@@ -29,7 +28,6 @@ public class PaymentController {
     }
 
     @PostMapping("{id}/retry")
-    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Retry Payment", notes = "User")
     public void retryPayment(@RequestHeader("x-username") String username,

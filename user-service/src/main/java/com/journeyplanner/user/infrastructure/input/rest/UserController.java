@@ -40,7 +40,6 @@ public class UserController {
 
     @PostMapping("register")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Register New User", notes = "Anonymous")
     public void createUser(@RequestBody @Valid CreateUserRequest request) {
 
@@ -49,7 +48,6 @@ public class UserController {
 
     @PostMapping("reset")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Send Email With Reset Password Token", notes = "Anonymous")
     public void generateResetPasswordLink(@RequestBody @Valid GenerateResetPasswordLinkRequest request) {
 
@@ -58,7 +56,6 @@ public class UserController {
 
     @PostMapping("reset/request")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Send Email With Request Reset Password", notes = "Admin")
     public void generateResetPasswordLinkByAdminRequest(@RequestBody @Valid GenerateResetPasswordLinkRequest request) {
 
@@ -67,7 +64,6 @@ public class UserController {
 
     @PostMapping("password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Reset Password", notes = "Anonymous")
     public void resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
 
@@ -76,7 +72,6 @@ public class UserController {
 
     @PostMapping("block")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add User to blacklist", notes = "Admin")
     public void addUserToBlacklist(@RequestBody @Valid AddUserToBlacklistRequest request) {
 
@@ -85,7 +80,6 @@ public class UserController {
 
     @DeleteMapping("block")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Remove User from blacklist", notes = "Admin")
     public void removeUserFromBlacklist(@RequestBody @Valid RemoveUserFromBlacklistRequest request) {
 
@@ -94,7 +88,6 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get all Users", notes = "Admin")
     public ResponseEntity<Page<UserDto>> getUsers(@PageableDefault @SortDefault.SortDefaults(@SortDefault(sort = "email", direction = Sort.Direction.DESC))
                                                           Pageable pageable, @QuerydslPredicate(root = User.class) Predicate predicate) {
@@ -103,7 +96,6 @@ public class UserController {
     }
 
     @GetMapping("details")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get User Details", notes = "User")
     public ResponseEntity<UserDetailsDto> getUserDetails(@RequestHeader("x-username") String username) {
 
@@ -111,7 +103,6 @@ public class UserController {
     }
 
     @PostMapping("details")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Update User Details", notes = "User")
     public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestHeader("x-username") String username,
                                                             @RequestBody @Valid UpdateUserDetailsRequest request) {
@@ -120,7 +111,6 @@ public class UserController {
     }
 
     @GetMapping("details/{id}")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get User Details By Id", notes = "Admin")
     public ResponseEntity<UserDetailsDto> getUserDetailsById(@PathVariable("id") String userId) {
 
@@ -129,7 +119,6 @@ public class UserController {
     }
 
     @GetMapping(value = "avatar", produces = MediaType.IMAGE_JPEG_VALUE)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get User Avatar", notes = "User")
     public ResponseEntity<byte[]> getAvatarForUser(@RequestHeader("x-username") String username) {
 
@@ -139,7 +128,6 @@ public class UserController {
 
     @PostMapping(value = "avatar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add/Update User Avatar", notes = "User")
     public void add(@RequestHeader("x-username") String username, @RequestParam("image") MultipartFile file) {
 
@@ -147,7 +135,6 @@ public class UserController {
     }
 
     @GetMapping("guides")
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Get Guides", notes = "Admin")
     public ResponseEntity<List<GuideDto>> guides() {
 
@@ -156,7 +143,6 @@ public class UserController {
 
     @PostMapping("register/guides")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin(origins = "*")
     @ApiOperation(value = "Add new guide", notes = "Admin")
     public void createGuide(@RequestBody @Valid CreateGuideRequest request) {
 
