@@ -79,8 +79,17 @@ plik z dashboard'em: `monitoring/jvm-micrometer_rev8.json`
 Admin:
 ![Admin](docs/agile_personas/admin.png)
 
+Username: `Todd@journeyplanner.com`   
+Password: `12345a`  
+
 Guide:
 ![Guide](docs/agile_personas/guide.png)
 
+Username: `maria@jourrapide.com`   
+Password: `12345a`  
+
 User:
 ![User](docs/agile_personas/user.png)
+
+Username: `BarbaraS@rhyta.com`   
+Password: `12345a`  
