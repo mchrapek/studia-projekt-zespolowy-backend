@@ -27,7 +27,7 @@ Do uruchomienia projektu niezbędny jest: `maven` oraz `docker-compose`
 ### Zasoby
 
 * **MongoDB:**  
-host: `locahost:` port: `27017`
+host: `locahost` port: `27017`
 
 * **Panel administracyjny RabbitMq:**  
 `http://localhost:15672/`  
@@ -40,6 +40,7 @@ user: `guest` password: `guest`
 `http://localhost:8761/`
 
 * **Grafan Dashboard:**  
+`http://localhost:3000/`  
 user: `admin` password: `password`  
 plik z dashboard'em: `monitoring/jvm-micrometer_rev8.json`
 
