@@ -53,7 +53,8 @@ class CreateTokenSpec extends Specification {
                 .andReturn()
 
         then:
-        result.response.getHeader("Authorization").contains("Bearer")
+        print(result.response.getContentAsString())
+        result.response.getContentAsString().contains("Bearer")
     }
 
     def "should return 400 status code without token when credentials are not valid"() {
@@ -73,7 +74,7 @@ class CreateTokenSpec extends Specification {
                 .andReturn()
 
         then:
-        result.response.getHeader("Authorization") == null
+        !result.response.getContentAsString().contains("Bearer")
     }
 
     def "should return 400 status without token when user is blocked"() {
@@ -93,6 +94,6 @@ class CreateTokenSpec extends Specification {
                 .andReturn()
 
         then:
-        result.response.getHeader("Authorization") == null
+        !result.response.getContentAsString().contains("Bearer")
     }
 }
