@@ -2,6 +2,7 @@ package com.journeyplanner.auth.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.journeyplanner.auth.security.dto.TokenResponse;
 import com.journeyplanner.auth.security.dto.UserCredentialsRequest;
 import com.journeyplanner.auth.security.jwt.JwtTokenProvider;
 import com.journeyplanner.auth.user.AppUserService;
@@ -20,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -62,7 +64,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         AppUser user = appUserService.getUserByEmail(authResult.getName())
                 .orElseThrow(() -> new AuthenticationServiceException(""));
 
-        response.addHeader(jwtProperties.getHeader(),
-                jwtProperties.getPrefix() + " " + jwtTokenProvider.createToken(user));
+        String token = jwtTokenProvider.createToken(user);
+        TokenResponse tokenResponse = new TokenResponse(jwtProperties.getPrefix(), token);
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(new ObjectMapper().writeValueAsString(tokenResponse));
+        out.flush();
     }
 }
