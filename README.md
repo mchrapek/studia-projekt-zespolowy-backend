@@ -19,7 +19,7 @@ Do uruchomienia projektu niezbędny jest: `maven` oraz `docker-compose`
 
 ### Uruchomienie
 
-* Wykonanie skryptu `build.sh`
+* Wykonanie skryptu `build.sh`.
 * W głównym katalogu projektu wykonanie komendy `docker-compose build`, a następnie `docker-compose up`.
 
 ---
