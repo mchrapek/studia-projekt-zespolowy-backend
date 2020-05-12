@@ -75,8 +75,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
-      - "KEY_STORE_PASSWORD="
-      - "KEY_PASSWORD="
+      - "KEY_STORE_PASSWORD=password"
+      - "KEY_PASSWORD=password"
     ports:
       - 8762:8762
     networks:
