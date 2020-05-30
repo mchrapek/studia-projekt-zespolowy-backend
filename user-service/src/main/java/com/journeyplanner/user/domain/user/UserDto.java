@@ -13,6 +13,7 @@ public class UserDto {
     String secondName;
     String role;
     boolean isBlocked;
+    boolean newPasswordRequired;
 
     static UserDto from(User user) {
         return UserDto.builder()
@@ -22,6 +23,7 @@ public class UserDto {
                 .secondName(user.getSecondName())
                 .role(user.getRole())
                 .isBlocked(user.isBlocked())
+                .newPasswordRequired(user.isNewPasswordRequired())
                 .build();
     }
 }

@@ -58,5 +58,6 @@ class ResetPasswordSpec extends Specification {
 
         then:
         userRepository.findByEmail(email).get().password != user.getPassword()
+        !userRepository.findByEmail(email).get().newPasswordRequired
     }
 }

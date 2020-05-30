@@ -34,4 +34,7 @@ public class User {
 
     @NonNull
     boolean isBlocked;
+
+    @NonNull
+    boolean newPasswordRequired;
 }

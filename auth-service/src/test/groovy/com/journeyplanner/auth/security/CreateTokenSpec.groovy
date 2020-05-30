@@ -39,7 +39,7 @@ class CreateTokenSpec extends Specification {
         given:
         def email = "james@bond.com"
         repository.save(new AppUser(UUID.randomUUID().toString(), email,
-                encoder.encode("12345"), "James", "Bond", "USER", Boolean.FALSE))
+                encoder.encode("12345"), "James", "Bond", "USER", Boolean.FALSE, Boolean.FALSE))
 
         and:
         def userCredentials = new UserCredentialsRequest(email, "12345")
@@ -60,7 +60,7 @@ class CreateTokenSpec extends Specification {
     def "should return 400 status code without token when credentials are not valid"() {
         given:
         repository.save(new AppUser(UUID.randomUUID().toString(), "james@bond.com",
-                encoder.encode("12345"), "James", "Bond", "USER", Boolean.FALSE))
+                encoder.encode("12345"), "James", "Bond", "USER", Boolean.FALSE, Boolean.FALSE))
 
         and:
         def userCredentials = new UserCredentialsRequest("no@exists.pl", "12345")
@@ -80,7 +80,7 @@ class CreateTokenSpec extends Specification {
     def "should return 400 status without token when user is blocked"() {
         given:
         repository.save(new AppUser(UUID.randomUUID().toString(), "gandalf@white.com",
-                encoder.encode("12345"), "Gandalf", "White", "USER", Boolean.TRUE))
+                encoder.encode("12345"), "Gandalf", "White", "USER", Boolean.TRUE, Boolean.FALSE))
 
         and:
         def userCredentials = new UserCredentialsRequest("gandalf@white.com", "12345")

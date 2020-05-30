@@ -32,4 +32,7 @@ public class AppUser {
 
     @NonNull
     boolean isBlocked;
+
+    @NonNull
+    boolean newPasswordRequired;
 }
