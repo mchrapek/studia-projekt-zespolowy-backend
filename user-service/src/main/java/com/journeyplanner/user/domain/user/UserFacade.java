@@ -71,6 +71,7 @@ public class UserFacade {
         User user = repository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email : {0}", request.getEmail())));
 
+        repository.changeNewPasswordRequired(request.getEmail(), Boolean.TRUE);
         passwordFacade.generateAndSendResetPasswordLinkWithTokenByAdmin(user.getEmail(), user.getFirstName());
     }
 
@@ -78,6 +79,7 @@ public class UserFacade {
     public void resetPassword(final ResetPasswordRequest request) {
         passwordFacade.validateToken(request.getToken(), request.getEmail());
         repository.updatePassword(request.getEmail(), passwordFacade.encodePassword(request.getNewPassword()));
+        repository.changeNewPasswordRequired(request.getEmail(), Boolean.FALSE);
     }
 
     public void block(final AddUserToBlacklistRequest request) {

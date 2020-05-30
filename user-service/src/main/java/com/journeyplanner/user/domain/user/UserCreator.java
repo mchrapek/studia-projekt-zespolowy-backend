@@ -16,6 +16,7 @@ class UserCreator {
                 .password(encodedPassword)
                 .role(UserRole.USER.getRoleName())
                 .isBlocked(Boolean.FALSE)
+                .newPasswordRequired(Boolean.FALSE)
                 .build();
     }
 
@@ -28,6 +29,7 @@ class UserCreator {
                 .password(encodedPassword)
                 .role(UserRole.GUIDE.getRoleName())
                 .isBlocked(Boolean.FALSE)
+                .newPasswordRequired(Boolean.FALSE)
                 .build();
     }
 }

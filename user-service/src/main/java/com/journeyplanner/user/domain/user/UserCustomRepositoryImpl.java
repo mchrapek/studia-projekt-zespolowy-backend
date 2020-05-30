@@ -32,4 +32,15 @@ class UserCustomRepositoryImpl implements UserCustomRepository {
 
         mongoTemplate.updateFirst(query, update, User.class);
     }
+
+    @Override
+    public void changeNewPasswordRequired(final String email, final boolean newPasswordRequired) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(email));
+
+        Update update = new Update();
+        update.set("newPasswordRequired", newPasswordRequired);
+
+        mongoTemplate.updateFirst(query, update, User.class);
+    }
 }

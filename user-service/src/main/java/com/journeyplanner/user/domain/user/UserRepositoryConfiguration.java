@@ -20,6 +20,7 @@ public class UserRepositoryConfiguration {
                 .password(passwordFacade.encodePassword("12345a"))
                 .role(UserRole.ADMIN.getRoleName())
                 .isBlocked(Boolean.FALSE)
+                .newPasswordRequired(Boolean.FALSE)
                 .build();
         if (!userRepository.findByEmail(admin.getEmail()).isPresent()) {
             userRepository.save(admin);
@@ -33,6 +34,7 @@ public class UserRepositoryConfiguration {
                 .password(passwordFacade.encodePassword("12345a"))
                 .role(UserRole.GUIDE.getRoleName())
                 .isBlocked(Boolean.FALSE)
+                .newPasswordRequired(Boolean.FALSE)
                 .build();
         if (!userRepository.findByEmail(guide.getEmail()).isPresent()) {
             userRepository.save(guide);
@@ -46,6 +48,7 @@ public class UserRepositoryConfiguration {
                 .password(passwordFacade.encodePassword("12345a"))
                 .role(UserRole.USER.getRoleName())
                 .isBlocked(Boolean.FALSE)
+                .newPasswordRequired(Boolean.FALSE)
                 .build();
         if (!userRepository.findByEmail(user.getEmail()).isPresent()) {
             userRepository.save(user);
