@@ -38,4 +38,21 @@ class JourneyUpdater {
                 .guideEmail(request.getEmail())
                 .build();
     }
+
+    Journey fromWithoutGuide(Journey journey) {
+        return Journey.builder()
+                .id(journey.getId())
+                .name(journey.getName())
+                .status(journey.getStatus())
+                .city(journey.getCity())
+                .country(journey.getCountry())
+                .description(journey.getDescription())
+                .transportType(journey.getTransportType())
+                .price(journey.getPrice())
+                .start(journey.getStart())
+                .end(journey.getEnd())
+                .guideName("")
+                .guideEmail("")
+                .build();
+    }
 }
