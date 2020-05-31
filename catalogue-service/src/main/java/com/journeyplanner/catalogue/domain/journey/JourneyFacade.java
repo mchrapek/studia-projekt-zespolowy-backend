@@ -93,7 +93,12 @@ public class JourneyFacade {
         Journey journey = repository.findById(journeyId)
                 .orElseThrow(() -> new ResourcesNotFound(format("Cannot found journey with id : {0}", journeyId)));
 
-        Journey updatedJourney = repository.save(journeyUpdater.from(journey, request));
+        Journey updatedJourney;
+        if (request.getEmail().isEmpty()) {
+            updatedJourney = repository.save(journeyUpdater.fromWithoutGuide(journey));
+        } else {
+            updatedJourney = repository.save(journeyUpdater.from(journey, request));
+        }
         log.info(format("Journey Guide updated : {0}", updatedJourney.getId()));
 
         return JourneyDto.from(updatedJourney);
