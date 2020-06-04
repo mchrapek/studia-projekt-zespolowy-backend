@@ -11,7 +11,7 @@ class JourneyUpdater {
                 .name(request.getName())
                 .status(journey.getStatus())
                 .city(request.getCity())
-                .country(request.getName())
+                .country(request.getCountry())
                 .description(request.getDescription())
                 .transportType(request.getTransportType())
                 .price(request.getPrice())
