@@ -7,11 +7,11 @@ import com.journeyplanner.catalogue.domain.photo.PhotoFacade;
 import com.journeyplanner.catalogue.infrastructure.input.request.AddGuideToJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
+import com.journeyplanner.catalogue.infrastructure.input.response.JourneyWithPhotoResponse;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/catalogue/journeys")
@@ -39,26 +40,37 @@ public class JourneyController {
 
     @GetMapping
     @ApiOperation(value = "Get pageable Journeys", notes = "Anonymous")
-    public ResponseEntity<Page<JourneyDto>> getPage(@PageableDefault @SortDefault.SortDefaults(
+    public ResponseEntity<Page<JourneyWithPhotoResponse>> getPage(@PageableDefault @SortDefault.SortDefaults(
             @SortDefault(sort = "start", direction = Sort.Direction.DESC)) Pageable pageable, @QuerydslPredicate(root = Journey.class) Predicate predicate) {
 
-        return ResponseEntity.ok(journeyFacade.getAll(predicate, pageable));
+        return ResponseEntity.ok(
+                journeyFacade.getAll(predicate, pageable)
+                        .map(e -> JourneyWithPhotoResponse.from(e, photoFacade.getAllForJourney(e.getId())))
+        );
     }
 
     @PostMapping
     @ApiOperation(value = "Create Journey", notes = "Admin")
-    public ResponseEntity<JourneyDto> create(@RequestBody @Valid CreateJourneyRequest request) {
+    public ResponseEntity<JourneyWithPhotoResponse> create(@RequestBody @Valid CreateJourneyRequest request) {
 
-        return ResponseEntity.ok(journeyFacade.create(request));
+        JourneyDto journeyDto = journeyFacade.create(request);
+
+        return ResponseEntity.ok(
+                JourneyWithPhotoResponse.from(journeyDto, photoFacade.getAllForJourney(journeyDto.getId()))
+        );
     }
 
     @PutMapping("{journeyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Update Journey", notes = "Admin")
-    public ResponseEntity<JourneyDto> update(@PathVariable("journeyId") String journeyId,
-                                             @RequestBody @Valid UpdateJourneyRequest request) {
+    public ResponseEntity<JourneyWithPhotoResponse> update(@PathVariable("journeyId") String journeyId,
+                                                           @RequestBody @Valid UpdateJourneyRequest request) {
 
-        return ResponseEntity.ok(journeyFacade.update(journeyId, request));
+        JourneyDto journeyDto = journeyFacade.update(journeyId, request);
+
+        return ResponseEntity.ok(
+                JourneyWithPhotoResponse.from(journeyDto, photoFacade.getAllForJourney(journeyDto.getId()))
+        );
     }
 
     @DeleteMapping(value = "{journeyId}")
@@ -94,16 +106,24 @@ public class JourneyController {
 
     @PutMapping("/{journeyId}/guides")
     @ApiOperation(value = "Add Guide to Journey", notes = "Admin")
-    public ResponseEntity<JourneyDto> addGuideToJourney(@PathVariable("journeyId") String journeyId,
-                                                        @RequestBody @Valid AddGuideToJourneyRequest request) {
+    public ResponseEntity<JourneyWithPhotoResponse> addGuideToJourney(@PathVariable("journeyId") String journeyId,
+                                                                      @RequestBody @Valid AddGuideToJourneyRequest request) {
 
-        return ResponseEntity.ok(journeyFacade.addGuide(journeyId, request));
+        JourneyDto journeyDto = journeyFacade.addGuide(journeyId, request);
+
+        return ResponseEntity.ok(
+                JourneyWithPhotoResponse.from(journeyDto, photoFacade.getAllForJourney(journeyDto.getId()))
+        );
     }
 
     @GetMapping("guides")
     @ApiOperation(value = "Get Guide Journeys", notes = "Guide")
-    public ResponseEntity<List<JourneyDto>> getGuideJourneys(@RequestHeader("x-username") String username) {
+    public ResponseEntity<List<JourneyWithPhotoResponse>> getGuideJourneys(@RequestHeader("x-username") String username) {
 
-        return ResponseEntity.ok(journeyFacade.getGuideJourneys(username));
+        return ResponseEntity.ok(
+                journeyFacade.getGuideJourneys(username).stream()
+                        .map(e -> JourneyWithPhotoResponse.from(e, photoFacade.getAllForJourney(e.getId())))
+                        .collect(Collectors.toList())
+        );
     }
 }
