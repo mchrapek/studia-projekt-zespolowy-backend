@@ -20,6 +20,6 @@ public class JwtProperties {
         this.secret = "SuperSecretToken";
         this.header = "Authorization";
         this.prefix = "Bearer";
-        this.expirationTime = 3600;
+        this.expirationTime = 36000;
     }
 }
