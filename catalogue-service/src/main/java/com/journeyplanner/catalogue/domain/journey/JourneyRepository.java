@@ -39,7 +39,6 @@ interface JourneyRepository extends
                 (path, values) -> Optional.ofNullable(getTemporalCondition(path, values)));
 
         bindings.excluding(root.description);
-        bindings.excluding(root.id);
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
