@@ -12,6 +12,7 @@ class ReservationCreator {
                 .start(event.getStart())
                 .end(event.getEnd())
                 .email(event.getEmail())
+                .journeyName(event.getJourneyName())
                 .journeyId(event.getJourneyId())
                 .price(event.getPrice())
                 .status(ReservationStatus.ACTIVE)
