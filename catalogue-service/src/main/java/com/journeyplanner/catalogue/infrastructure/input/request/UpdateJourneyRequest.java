@@ -28,7 +28,7 @@ public class UpdateJourneyRequest {
     String city;
 
     @NotNull(message = "Description value must not be empty")
-    @Size(min = 5, max = 80, message = "Description must be between 5 - 5000 signs")
+    @Size(min = 5, max = 5000, message = "Description must be between 5 - 5000 signs")
     String description;
 
     @NotNull(message = "Transport type value must not be empty")
