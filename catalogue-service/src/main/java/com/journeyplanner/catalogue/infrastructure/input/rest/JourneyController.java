@@ -8,6 +8,7 @@ import com.journeyplanner.catalogue.infrastructure.input.request.AddGuideToJourn
 import com.journeyplanner.catalogue.infrastructure.input.request.CreateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.request.UpdateJourneyRequest;
 import com.journeyplanner.catalogue.infrastructure.input.response.JourneyWithPhotoResponse;
+import com.journeyplanner.catalogue.infrastructure.input.response.PhotoIdResponse;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -99,9 +100,9 @@ public class JourneyController {
 
     @PostMapping(value = "{journeyId}/photos")
     @ApiOperation(value = "Add photo to Journey", notes = "Admin")
-    public ResponseEntity<String> addPhoto(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
+    public ResponseEntity<PhotoIdResponse> addPhoto(@PathVariable("journeyId") String journeyId, @RequestParam("image") MultipartFile file) {
 
-        return ResponseEntity.ok(photoFacade.add(journeyId, file));
+        return ResponseEntity.ok(new PhotoIdResponse(photoFacade.add(journeyId, file)));
     }
 
     @PutMapping("/{journeyId}/guides")
