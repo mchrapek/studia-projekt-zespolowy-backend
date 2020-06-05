@@ -16,6 +16,8 @@ public class CreateReservationEvent implements Event {
 
     @NonNull String email;
 
+    @NonNull String journeyName;
+
     @NonNull String journeyId;
 
     @NonNull BigDecimal price;

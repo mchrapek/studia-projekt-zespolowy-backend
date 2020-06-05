@@ -24,6 +24,8 @@ class Reservation {
 
     @NonNull String journeyId;
 
+    @NonNull String journeyName;
+
     @NonNull BigDecimal price;
 
     @NonNull Instant start;

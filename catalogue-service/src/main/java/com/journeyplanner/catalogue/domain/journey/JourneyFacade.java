@@ -84,6 +84,7 @@ public class JourneyFacade {
                 .end(journey.getEnd())
                 .email(username)
                 .journeyId(journey.getId())
+                .journeyName(journey.getName())
                 .price(journey.getPrice())
                 .eventTimeStamp(Instant.now())
                 .build());

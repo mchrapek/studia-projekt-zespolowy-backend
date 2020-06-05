@@ -14,6 +14,7 @@ public class ReservationDto {
     ReservationStatus status;
     String email;
     String journeyId;
+    String journeyName;
     BigDecimal price;
     Instant createdTime;
     String paymentId;
@@ -26,6 +27,7 @@ public class ReservationDto {
                 .status(reservation.getStatus())
                 .email(reservation.getEmail())
                 .journeyId(reservation.getJourneyId())
+                .journeyName(reservation.getJourneyName())
                 .price(reservation.getPrice())
                 .createdTime(reservation.getCreatedTime())
                 .paymentId(reservation.getPaymentId())

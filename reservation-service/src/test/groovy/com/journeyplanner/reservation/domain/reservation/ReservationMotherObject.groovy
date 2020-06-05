@@ -12,6 +12,7 @@ class ReservationMotherObject {
                 .end(Instant.now().plus(102, ChronoUnit.DAYS))
                 .status(ReservationStatus.ACTIVE)
                 .journeyId(journeyId)
+                .journeyName("JOURNEY_NAME")
                 .email(mail)
                 .price(new BigDecimal(1000))
                 .createdTime(Instant.now())
