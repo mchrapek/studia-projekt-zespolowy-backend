@@ -7,7 +7,8 @@ public class Paths {
             "/catalogue/photos/**",
             "/catalogue/journeys",
             "/catalogue/journeys/{\\w+}/photos",
-            "/catalogue/photos/{\\w+}"
+            "/catalogue/photos/{\\w+}",
+            "/reservations/journey/{\\w+}"
     };
 
     public final static String[] POST_PERMIT_ALL_PATHS = {

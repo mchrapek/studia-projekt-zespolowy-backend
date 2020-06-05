@@ -8,6 +8,7 @@ import com.journeyplanner.user.domain.user.User;
 import com.journeyplanner.user.domain.user.UserDto;
 import com.journeyplanner.user.domain.user.UserFacade;
 import com.journeyplanner.user.infrastructure.input.request.*;
+import com.journeyplanner.user.infrastructure.input.response.BasicInfoUserResponse;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -147,5 +148,11 @@ public class UserController {
     public void createGuide(@RequestBody @Valid CreateGuideRequest request) {
 
         userFacade.createGuide(request);
+    }
+
+    @GetMapping("basic")
+    public ResponseEntity<BasicInfoUserResponse> getUserBasicInfo(@RequestParam("email") String email) {
+
+        return ResponseEntity.ok(userFacade.findByEmail(email));
     }
 }

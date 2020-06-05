@@ -106,4 +106,12 @@ public class ReservationFacade {
         mailSender.publish(SendMailEvent.builder().id(UUID.randomUUID().toString()).to(reservation.getEmail())
                 .templateName(Template.JOURNEY_CANCELED.getPath()).params(new HashMap<>()).build());
     }
+
+    public List<String> getAllUserEmailsForJourney(String journeyId) {
+        return repository.findByJourneyId(journeyId)
+                .stream()
+                .filter(r -> r.getStatus() == ReservationStatus.ACTIVE)
+                .map(Reservation::getEmail)
+                .collect(Collectors.toList());
+    }
 }

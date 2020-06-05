@@ -7,6 +7,7 @@ import com.journeyplanner.user.domain.exceptions.ResourceNotFound;
 import com.journeyplanner.user.domain.exceptions.UserWithEmailAlreadyExists;
 import com.journeyplanner.user.domain.password.PasswordFacade;
 import com.journeyplanner.user.infrastructure.input.request.*;
+import com.journeyplanner.user.infrastructure.input.response.BasicInfoUserResponse;
 import com.journeyplanner.user.infrastructure.output.queue.MailSender;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -132,5 +133,12 @@ public class UserFacade {
         return repository.findById(id)
                 .map(UserDto::from)
                 .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with id : {0}", id)));
+    }
+
+    public BasicInfoUserResponse findByEmail(final String email) {
+        return repository.findByEmail(email)
+                .map(UserDto::from)
+                .map(BasicInfoUserResponse::from)
+                .orElseThrow(() -> new ResourceNotFound(format("Cannot found user with email : {0}", email)));
     }
 }
