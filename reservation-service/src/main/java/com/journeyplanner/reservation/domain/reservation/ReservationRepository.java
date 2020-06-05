@@ -17,5 +17,7 @@ interface ReservationRepository extends Repository<Reservation, String>, CustomR
 
     List<Reservation> getReservationByEmail(String mail);
 
+    List<Reservation> findByJourneyId(String journeyId);
+
     void deleteAll();
 }
