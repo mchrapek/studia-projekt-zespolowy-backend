@@ -3,6 +3,7 @@ package com.journeyplanner.payment.infrastructure.input.rest;
 import com.journeyplanner.payment.domain.account.AccountDto;
 import com.journeyplanner.payment.domain.account.AccountFacade;
 import com.journeyplanner.payment.infrastructure.input.request.ChargeAccountRequest;
+import com.journeyplanner.payment.infrastructure.input.response.AccountChargedResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -30,9 +31,9 @@ public class AccountController {
 
     @PostMapping("charge")
     @ApiOperation(value = "Charge Account", notes = "User")
-    public ResponseEntity<String> charge(@RequestHeader("x-username") String username,
+    public ResponseEntity<AccountChargedResponse> charge(@RequestHeader("x-username") String username,
                                          @RequestBody @Valid ChargeAccountRequest request) {
 
-        return ResponseEntity.ok(accountFacade.chargeAccount(username, request));
+        return ResponseEntity.ok(new AccountChargedResponse(accountFacade.chargeAccount(username, request)));
     }
 }
