@@ -12,7 +12,7 @@ class JourneyCreator {
                 .status(JourneyStatus.ACTIVE)
                 .name(request.getName())
                 .city(request.getCity())
-                .country(request.getName())
+                .country(request.getCountry())
                 .description(request.getDescription())
                 .transportType(request.getTransportType())
                 .price(request.getPrice())
